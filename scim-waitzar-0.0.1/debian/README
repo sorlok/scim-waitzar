@@ -1,0 +1,16 @@
+Readme: scim-waitzar
+--------------------
+
+This is the SCIM IMEngine for the Burmese language, and is based on the WaitZar romanisation. 
+
+The following output encodings are supported:
+  "Unicode 5.1+" --Used by most new Burmese fonts (Padauk, Parabaik, Myanmar3)
+  "Zawgyi"       --Used by the Zawgyi-One font, popular on the web
+  "WinInnwa"     --Used by the Win Innwa font, a legacy typesetting font
+
+The scim-waitzar project can be followed at its upstream project page:
+  http://code.google.com/p/scim-waitzar/
+...or by subscribing to the announcement mailing list:
+  http://groups.google.com/group/waitzar
+More information regarding scim-waitzar, including screenshots and a detailed guide to installation & daily usage, can be found in the User's Guide, located in /usr/share/doc/scim-waitzar/ or in the source tarball. 
+

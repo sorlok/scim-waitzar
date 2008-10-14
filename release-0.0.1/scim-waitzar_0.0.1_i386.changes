@@ -1,0 +1,32 @@
+-----BEGIN PGP SIGNED MESSAGE-----
+Hash: SHA1
+
+Format: 1.7
+Date: Fri, 05 Sep 2008 17:12:44 +0800
+Source: scim-waitzar
+Binary: scim-waitzar
+Architecture: source i386
+Version: 0.0.1
+Distribution: unstable
+Urgency: low
+Maintainer: Seth N. Hetu <sorlok_reaves@yahoo.com>
+Changed-By: Seth N. Hetu <sorlok_reaves@yahoo.com>
+Description: 
+ scim-waitzar - A SCIM IMEngine which enables romanised Burmese input
+Changes: 
+ scim-waitzar (0.0.1) unstable; urgency=low
+ .
+   * Initial Release.
+Files: 
+ c8c7a8ec25b077615693b1914461f8e8 670 utils optional scim-waitzar_0.0.1.dsc
+ 60a651062f85b068bf99ac450ce60100 931683 utils optional scim-waitzar_0.0.1.orig.tar.gz
+ f1e94953833433187a6b80c1559e0523 2626 utils optional scim-waitzar_0.0.1.diff.gz
+ 0cc50f9e972a44678a0462f066676ec4 457542 utils optional scim-waitzar_0.0.1_i386.deb
+
+-----BEGIN PGP SIGNATURE-----
+Version: GnuPG v1.4.6 (GNU/Linux)
+
+iD8DBQFI3AueDyLcmY/uwLoRArMDAJ43pql3t29RsJ8WRbltlcnZRdk06wCfby6U
+Pmf+/sB0GFRGq1WysoQNj0w=
+=bXGA
+-----END PGP SIGNATURE-----
