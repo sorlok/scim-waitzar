@@ -1,0 +1,399 @@
+<html><head>
+<meta http-equiv="content-type" content="text/html; charset=ISO-8859-1">
+
+<title>
+Chinese Debian Mini Howto
+</title>
+</head><body>
+
+<h1>
+Chinese Debian Mini Howto
+</h1>
+<hr>
+Version 0.3. Last update: April 16, 2006.
+
+<hr>
+Copyright (c)  2006  Qiming LI (Qiming.Li AT IEEE dot ORG).
+<p>
+Permission is granted to copy, distribute and/or modify this document
+under the terms of the 
+<a href="http://www.gnu.org/copyleft/fdl.html">
+GNU Free Documentation License, Version 1.2</a>
+or any later version published by the Free Software Foundation;
+with no Invariant Sections, no Front-Cover Texts, and no Back-Cover
+Texts.  A copy of the license is included in the section entitled "GNU
+Free Documentation License".
+
+</p><hr>
+<h3>0. Introduction</h3>
+The purpose of this mini howto is to help users of Debian GNU/Linux to 
+build a minimum Chinese environment, so that they 
+can read and input Chinese in their systems. 
+
+To support Chinese language display and input under 
+Debian GNU/Linux, you will need to do the following basic steps.
+<ul>
+<li><a href="#Generating_Locales">Generate relevant locales</a></li>
+<li><a href="#Installing_Fonts">Install Chinese fonts</a></li>
+<li><a href="#Installing_IM">Install an input method (IM) engine</a></li>
+<li><a href="#Setting_Locale">Set locale</a></li>
+<li><a href="#Applications">Adjust application settings (if necessary)</a></li>
+</ul>
+
+<p>In the rest of this text, I will explain these steps one by one.
+Most of the commands below need to be run 
+in a terminal with root privilege.
+
+</p><hr>
+<a name="Generating_Locales"></a><h3>1. Generating Locales</h3>
+Run <code><b>dpkg-reconfigure locales</b></code>, and choose the following items.
+<ul>
+<li>en_US ISO-8859-1</li>
+<li>zh_CN GB2312</li>
+<li>zh_CN.GBK GBK</li>
+<li> zh_CN.UTF-8 UTF-8</li>
+<li> zh_TW BIG5</li>
+<li> zh_TW.UTF-8 UTF-8</li>
+</ul>
+Some of these are optional. For example, 
+if you are using Simplified Chinese only,
+you would not need the last two items.
+After this you will be prompted for the default locale you want to use.
+
+<p>
+NOTE: Sometimes you need to reboot to get the new locales working.
+To avoid potential problems, it is strongly recommended 
+that you get this correct from the beginning when you install your system.
+
+</p><hr>
+<a name="Installing_Fonts"></a><h3>2. Installing Chinese Fonts</h3>
+Install at least the following free fonts.
+Each entry below is of the form <em>package_name (font_name)</em>.
+<ul>
+<li>ttf-arphic-gbsn00lp (AR PL SungtiL GB)</li>
+<li>ttf-arphic-gkai00mp (AR PL KaitiM GB)</li>
+<li>ttf-arphic-bsmi00lp (AR PL Mingti2L Big5)</li>
+<li>ttf-arphic-bkai00mp (AR PL KaitiM Big5)</li>
+</ul>
+The first two are for Simplified Chinese, and the other two for Traditional Chinese.
+
+<p>
+These packages can be installed by running 
+</p><p>
+<code><b>apt-get install ttf-arphic-bkai00mp ttf-arphic-bsmi00lp 
+ttf-arphic-gbsn00lp ttf-arphic-gbsn00lp</b></code> 
+
+</p><p>
+There are other fonts available. You can find them by 
+searching for "xfonts" using <em>dselect</em>
+
+</p><hr>
+<a name="Installing_IM"></a><h3>3. Installing Input Method (IM) Engine(s)</h3>
+You will need an IM engine to input Chinese characters under X.
+There are a few IMs around, including <em>xcin, chinput, scim</em>, etc.
+Personally I found scim a good tool. 
+
+<p>
+There are several packages related to scim. 
+The easiest way to install it is by running 
+</p><p>
+<code><b>apt-get install scim scim-chinese scim-tables-zh</b></code>
+</p><p>
+The package names may change in the future (as they did in the past).
+In that case,
+you can search for packages beginning with "scim" using <em>dselect</em>,
+examine their descriptions, and choose the input methods you need.
+After that <em>dselect</em> will do the rest of the job by selecting all
+dependent packages.
+
+</p><p>
+After that, create a new file <em><b>/etc/X11/Xsession.d/95xinput</b></em>
+with the following content.
+</p><p>
+</p><pre>/usr/bin/scim -d
+XMODIFIERS="@im=SCIM"
+export XMODIFIERS
+</pre> 
+
+<p>
+This script will be run every time X windows starts.
+In case you want to be more flexible, you can put something
+more complicated in the file. For example,
+</p><p>
+</p><pre>case "$LANG" in
+zh_TW*)
+    /usr/bin/scim -d
+    XMODIFIERS="@im=SCIM"
+    ;;
+zh_CN*)
+    /usr/bin/scim -d
+    XMODIFIERS="@im=SCIM"
+    ;;
+esac
+
+export XMODIFIERS
+</pre>
+
+This takes effect only when you restart X. 
+The simplest way to do that is to press "Ctrl-Alt-BackSpace".
+
+<p>
+To use scim, simply press "Ctrl-Space", and
+a small window will appear at the lower right corner
+of the desktop.
+
+</p><p>
+It is advisable that you configure scim (right click on
+    its icon on the panel, then configure) and remove
+all unwanted input methods. 
+You will need to restart scim (probably X, too) to make
+this to take effect.
+
+</p><hr>
+<a name="Setting_Locale"></a><h3>4. Setting Locale</h3>
+It is highly recommended that you use <em><b>gdm</b></em>
+or <em><b>kdm</b></em> as your X display manager, 
+because then you will be able to select your language settings 
+at the login window, which can be different from system default,
+and can be different for different login.
+
+<p>
+If you are using a X display manager that does not support this,
+you will have to put an additional line such as
+</p><p>
+<code><b>export LANG=zh_CN.gb2312</b></code>
+</p><p>
+in <em>/etc/X11/Xsession.d/95xinput</em>.
+NOTE: It would not work if you run this after you login.
+You will need to restart X for this to work.
+
+</p><p>
+REMARK: One "side effect" of this is that once you set
+the language to be Chinese, then all the menu become Chinese. 
+For those who want to keep the English menu but still want 
+to view/input Chinese, you can set locale to be zh_CN.gb2312, 
+but change the settings for some environment variables.
+For example, I have the following lines in the above file.
+</p><pre>ENCODING="en_US"
+#export LC_ALL=$ENCODING
+export LC_MESSAGES=$ENCODING
+#export LC_COLLATE=$ENCODING
+#export LC_CTYPE=$ENCODING
+export LC_TIME=$ENCODING
+export LC_NUMERIC=$ENCODING
+#export LC_MONETARY=$ENCODING
+#export LC_PAPER=$ENCODING
+#export LC_NAME=$ENCODING
+export LC_ADDRESS=$ENCODING
+export LC_TELEPHONE=$ENCODING
+export LC_MEASUREMENT=$ENCODING
+export LC_IDENTIFICATION=$ENCODING
+</pre>
+Then I got English display of menu, time and date, etc.
+You should comment/uncomment these items according
+to your needs.
+
+<p>
+Note that "scim" works fine no matter what
+locale you choose.
+
+</p><hr>
+<a name="Applications"></a><h3>5. Application Settings</h3>
+
+<h4>5.1 Web Browsers</h4>
+For applications such as Mozilla (1.7) and/or other browsers,
+usually you do not have to change much.
+If a Chinese webpage does not display correctly,
+try to check if the character encoding is correct,
+and make sure that you have installed the corresponding fonts.
+
+<p>For Mozilla version 1.6, there are some locale packages
+such as <em> mozilla-locale-zh-cn</em> or
+<em>mozilla-locale-zh-tw</em>.
+
+</p><p>For Mozilla-Firefox, you might need to install one of
+the <em> mozilla-firefox-locale-zh-cn</em> or 
+<em> mozilla-firefox-locale-zh-tw</em> packages.
+
+</p><h4>5.2 Editors</h4>
+My favorite text editor is VIM with GTK support, or simply <em>gvim</em>.
+For gvim to display Chinese characters correctly, just add the following
+lines to <em><b>$HOME/.gvimrc</b></em>.
+<p>
+</p><pre>set enc=euc-cn
+set tenc=euc-cn
+set fileencoding=euc-cn
+set guifont=AR\ PL\ KaitiM\ GB\ 12
+</pre> 
+<p>
+The last line specifies the font and the font size to use.
+You can change it to any of the four fonts as in Section 2 above,
+and adjust the font size until you feel comfortable.
+
+</p><p>
+Note that even when you set <code>LC_MESSAGE</code> to <code>en_US</code>, 
+gvim might still display Chinese menu if your locale is set to Chinese.
+In this case, you need a bit trick here.
+
+</p><p>
+Firstly, you need to create a file with the content something like
+the following.
+</p><pre>#!/bin/sh
+# Start application $1 with English environment
+
+if [ -z "$1" ]; then
+  echo "Usage: $0 app arg1 arg2 ... "
+  exit 1
+fi
+
+export LANG=en_US
+
+PROG=$1
+shift
+exec $PROG $*
+</pre>
+Let us call this file <b><code>enstart.sh</code></b>, and
+put the file in a directory that is in your <code>$PATH</code>,
+e.g., <code>/usr/local/bin</code>. Make sure that it is executable
+by running <code>chmod +x /usr/local/bin/chstart.sh</code> in a terminal.
+
+<p>
+This small shell script will set <code>$LANG</code> so that the 
+application it runs would think that it is running in a full English system.
+
+</p><p>
+To run gvim, we run <code><b>enstart.sh gvim</b></code> instead.
+You can add this to your desktop/panel shortcut, or make it an alias.
+
+</p><h4>5.3 Terminal Emulators</h4>
+<em>RXVT</em> (www.rxvt.org) is a nice terminal-emulator that
+intends to replace xterm.
+It has a variant <em>rxvt-ml</em> which supports display of
+Chinese and Japanese characters.
+
+<p>
+The <em>gnome-terminal</em>, 
+the default terminal emulator in the GNOME environment,
+supports Chinese by selecting the character encoding 
+from the terminal menu.
+
+</p><p>
+The default terminal emulator in KDE, <em>Konsole</em>, works fine
+with Chinese automatically if the locale is set correctly. 
+You can also select/change character encoding from the menu.
+
+</p><h4>5.4 Display of Chinese File Names in FAT Partitions</h4>
+You will need kernel support for this.
+To be able to mount a FAT (either 16 or 32 bit), you will need
+the following module.
+<pre>fat
+vfat
+</pre>
+To display Chinese characters properly, you will need at least
+one of the following modules:
+<pre>nls_cp936 (for simplified Chinese)
+nls_cp950 (for traditional Chinese)
+nls_utf8 (for Unicode characters)
+</pre>
+<p>
+Then in the file <em><b>/etc/fstab</b></em>, add another line 
+like the following
+</p><p>
+<code>/dev/hda5 /mnt/dos vfat noauto,user,codepage=936,iocharset=cp936 0 0</code>
+</p><p>
+for simplified Chinese, and replace the number 936 to 950 for traditional Chinese,
+and to utf8 for Unicode characters.
+NOTE: you should change the partition (/dev/hda5) and mount point (/mnt/dos) to
+the partition you want to mount, and the directory you want it to be mounted to, respectively. 
+</p><p>
+
+</p><h4>5.5 XMMS</h4>
+Unfortunately, unlike other programs,
+my XMMS does not display Chinese file/song names correctly, 
+even when I set both the system locale and the language option 
+of gdm to be <code>zh_CN.gb2312</code>, which is quite weird.
+My guess is that this has to do with the locale I set when
+I first install the system.
+
+<p>
+Fortunately, similar trick as in the case of gvim can
+be applied here, but this time we want to run with Chinese support.
+Let us create the following file and call it <code><b>chstart.sh</b></code>
+</p><pre>#!/bin/sh
+# Start application $1 with Chinese environment
+
+if [ -z "$1" ]; then
+  echo "Usage: $0 app arg1 arg2 ... "
+  exit 1
+fi
+
+export LANG=zh_CN.gb2312
+
+PROG=$1
+shift
+exec $PROG $*
+</pre>
+
+<p>
+To run XMMS, just type <code><b>chstart.sh xmms</b></code> in a terminal,
+or create a shortcut on desktop/panel to do it, or use an alias.
+
+</p><h4>5.6 Instant Messengers</h4>
+It was actually amazing to find out that popular instant messengers such
+as AMSN and Yahoo Messenger do not support Chinese.
+It is possible to input Chinese in YM, but difficult to make it displayed
+properly.
+AMSN simply stops taking any keyboard input when the locale is set to Chinese.
+
+<p>
+A work-around for AMSN is to use the <code><b>enstart.sh</b></code>
+to start it instead (but of course you cannot expect to input Chinese with it).
+
+</p><p>
+Fortunately, there are instant messengers that do support Chinese.
+Skype is an example, but only works when gdm/kdm has the locale set to
+<code>zh_CN.gb2312</code> otherwise it will not work even if you start
+it with the <code>chstart.h</code> script above.
+
+</p><p>
+GAIM is another cute IM that was reported to work with Chinese.
+It is compatible with AIM, Yahoo! Messenger, MSN Messenger, Google Talk (Jabber), etc.
+
+</p><h4>5.7 Java</h4>
+
+(This section is contributed by Guohan Lu, lguohan at gmail.com)
+
+<p>
+One of things trouble me a lot is the Java on Debian do not support 
+Chinese natively. I got the solution to Java1.5 recently (tested for GB2312).
+
+</p><p>
+Here is the way (two steps):
+<br>
+1. make a directory fallback under <code>JavaHome/lib/fonts/</code>
+<br>
+2. add a Chinese TrueType or Type 1 font under fallback
+</p><p>
+An example:
+</p><p>
+<code><b>
+  mkdir /usr/lib/j2sdk1.5-sun/jre/lib/fonts/fallback<br>
+  ln -s /usr/share/fonts/truetype/arphic/gbsn00lp.ttf .
+</b></code>
+</p><p>
+Note the trailing dot at the end of the above line.
+
+</p><p>
+Some explanations for the fallback:
+<br>
+"... If the runtime environment has a directory lib/fonts/fallback and
+this directory contains valid TrueType or Type 1 fonts, the runtime
+automatically adds these fonts as fallback fonts for 2D rendering..."
+--- from <a href="http://java.sun.com/j2se/1.5.0/docs/guide/intl/fontconfig.html">http://java.sun.com/j2se/1.5.0/docs/guide/intl/fontconfig.html</a>
+
+</p><p>
+Note: This solution should be considered as quick and dirty, the
+best solution would be change the fontconfig file for Java. But, I
+haven't figured out that yet.
+
+</p></body></html>

@@ -1,0 +1,14 @@
+# If "yes", typing 0..9 will yield Burmese numbers 0 to 9. If "no", Wait Zar won't process numbers.
+#LINUX: This option works under Linux.
+burmesenumerals = yes
+
+
+# Sets the default output encoding. Allowed values:
+#  unicode   -Outputs according to the Unicode 5.1 official encoding. (Recommended)
+#  zawgyi    -Outputs according to the Zawgyi-One custom Unicode encoding.
+#  wininnwa  -Outputs according to the Win Innwa custom ASCII encoding.
+# FYI: You can also specify "padauk", "parabaik", or "myanmar3"... 
+#  all of which default to "unicode"
+#LINUX: This option works under Linux.
+defaultencoding = unicode
+
