@@ -1,0 +1,10 @@
+//To compile XML to FO
+xsltproc  --output wz_users_guide_temp.fo  --stringparam fop1.extensions 1  custom_layer.xsl waitzar_users_guide.xml
+
+//To compile FO to PDF:
+~/fop-0.95/fop -c  userconfig.xml -fo wz_users_guide_temp.fo -pdf waitzar_users_guide.pdf
+
+//Adding a font to FOP:
+java -cp "/home/sethhetu/fop-0.95/build/fop.jar:/home/sethhetu/fop-0.95/lib/serializer-2.7.0.jar:/home/sethhetu/fop-0.95/lib/commons-logging-1.0.4.jar:/home/sethhetu/fop-0.95/lib/commons-io-1.3.1.jar:/home/sethhetu/fop-0.95/lib/xmlgraphics-commons-1.3.1.jar" org.apache.fop.fonts.apps.TTFReader ~/.fonts/Myanmar3.ttf fonts/myanmar3.xml
+//You might then do it with myanmar3-bold.xml, so that bold is covered...
+//Put it in userconfig.xml later...
