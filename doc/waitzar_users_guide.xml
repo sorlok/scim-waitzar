@@ -1,0 +1,483 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE article PUBLIC "-//OASIS//DTD DocBook XML V4.2//EN" "http://docbook.org/xml/4.2/docbookx.dtd">
+<article>
+  <title>WaitZar User's Guide</title>
+  <subtitle>SCIM Wait Zar version 0.0.1</subtitle>
+  <graphic fileref="images/wz_title.png" align="center" valign="top" scale="50"/>
+
+  <section>
+    <title>Introduction to SCIM and WaitZar</title>
+    <para>
+      If you're a Linux user who knows how to write a complex script like Chinese or Thai, chances are you've used SCIM before.
+      Even some European users prefer SCIM, although their languages do not require such a complex solution. 
+      The <command>scim-waitzar</command> project extends SCIM to support the Myanmar language.
+    
+      <figure><title>A screenshot of SCIM running on Ubuntu, showing a wide variety of Chinese input method engines</title>
+        <graphic fileref="images/scim_screenshot_ubuntu.png" align="center" valign="middle" scale="50"/>
+      </figure>
+    </para>
+          
+    <para>
+      WaitZar is a romanisation of Burmese designed specifically for fast typing on a standard keyboard. Given the fluid nature of the 
+      Myanmar unicode specification (e.g., the 4.0, 5.0, and 5.1 encodings are mutually incompatible) and the wide variety of <emphasis>ad hoc</emphasis> 
+      encodings (i.e., Zawgyi-One partial, Win Innwa's ASCII kludging, etc.), WaitZar provides a degree of solidity and flexibility above and 
+      beyond that provided by most other input schemes for Burmese. 
+    </para>
+    
+    <para>
+      The official project page of <command>scim-waitzar</command> is:
+      <literallayout><ulink url="http://scim-waitzar.googlecode.com/"/></literallayout>
+      If you would like to keep casually up-to-date on WaitZar's Windows and Linux projects, you might consider joining out mailing list, 
+      which averages about one announcement per month:
+      <literallayout><ulink url="http://groups.google.com/group/waitzar"/></literallayout>
+    </para>
+    
+  </section>
+  
+   <section>
+     <title>Requirements &amp; Installation</title>
+     <para>
+    WaitZar will run on almost any Linux distribution that also supports SCIM. In fact, by installing the <command>scim</command> package 
+    (or installing SCIM from source), you should already have everything you need. WaitZar is recommended for Ubuntu Linux, but it has also 
+    been tested on Debian Linux. Please inform us if <command>scim-waitzar</command> works (or breaks!) on your favorite brand of Linux.
+    </para>
+    
+    <para>
+    Unlike the Windows version, WaitZar under Linux requires a significant amount of installation effort. The most stable method is to build 
+    <command>scim-waitzar</command> from source; see Section 2.3. However, a great many build steps are simplified if your system supports 
+    Debian packages. See Section 2.1 if you're used to using apt-get, and Section 2.2 if you'd prefer to (manually) use dpkg. 
+    Finally, Section 2.4 explains several very important things to consider after installation (using any of the three methods.) 
+    Until WaitZar gets fully integrated into Ubuntu's <emphasis>Language</emphasis> manager, you will have to consider these. 
+    </para>
+    
+    <para>
+    You should have at least one of the following Unicode 5.1-enabled fonts installed on your system. 
+    Please see Section 2.4 for more information on how to install fonts.
+    <itemizedlist>
+      <listitem><para>Padauk</para></listitem>
+      <listitem><para>Parabaik</para></listitem>
+      <listitem><para>Myanmar 3</para></listitem>
+    </itemizedlist>
+    <literallayout>You should install one of these fonts (for example, <command>ttf-sil-padauk</command>) in order to view this document properly.</literallayout>
+    </para>
+    
+    <note>
+      <title>Note Regarding Fonts</title>
+      <para>Traditionally, Burmese fonts have defined their own <emphasis>ad hoc</emphasis> encodings, which has caused a lot of confusion
+      among novice computer users and experts alike. Even previous versions of the Unicode encoding (for example, 4.0 and 5.0) had non-negligible errors 
+      and incompatibilities. Fortunately, Unicode 5.1 has resolved most of these, and the three fonts listed all render this document with no errors.
+      </para>
+      
+      <para>Developers, please note that, when discussing character encoding incompatibilities (in, say, the "Wait Zar User Interface Specification") the documentation will
+      use the Zawgyi-One font &amp; encoding, due to its unambiguous representation of variant forms.
+      </para>
+    </note>
+
+    <section>
+      <title>Installation Using Apt</title>
+      <para>The recommended way of installing WaitZar is to use <command>apt-get</command> or the Syanptic Package Manager. 
+      In order to do this, you will have to add a line to the sources file. To do this, open a console and type:
+      <programlisting>gksudo gedit /etc/apt/sources.lst</programlisting>
+      ...and add the following repository lines at the very end. Note that these links are temporary. After we finish alpha testing, we'll put the 
+      <command>scim-waitzar</command> package at a more suitable location.
+      <programlisting>deb http://www.comp.nus.edu.sg/~sethhetu/scim_wz_0.0.1/ ./
+deb-src http://www.comp.nus.edu.sg/~sethhetu/scim_wz_0.0.1/ ./</programlisting>
+      ...then, save the file and close <command>gedit</command>, and type:
+      <programlisting>sudo apt-get update</programlisting>
+      This will update the list of packages. Finally, install <command>scim-waitzar</command>:
+      <programlisting>sudo apt-get install scim-waitzar</programlisting>
+      Of course, you can also use Synaptic at this point:
+      
+        <figure><title>After reloading your repositories, you can simply install WaitZar like any other package.</title>
+          <graphic fileref="images/synaptic_loading_waitzar.png" align="center" valign="middle" scale="50"/>
+        </figure>
+      </para>
+    </section>
+    
+    
+    <section>
+      <title>Installing the .deb File Directly</title>
+      <para>In general, the apt repository will never go offline. Nevertheless, you can always download and install the .deb package manually. 
+        Grab the latest version from:
+      <literallayout><ulink url="http://code.google.com/p/scim-waitzar/downloads/list"/></literallayout>
+      ...and then run the standard <command>dpkg</command> install command:
+      <programlisting>sudo dpkg -i scim-waitzar_*.deb</programlisting>
+      ...from the directory you downloaded the package to. You must then restart X (log out, log in). In case you are not familiar with 
+      <command>dpkg</command>, note that un-installation can be done from any directory, and requires only the logical name of the 
+      package:
+      <programlisting>sudo dpkg -r scim-waitzar</programlisting>
+      </para>
+    </section>
+    
+    
+    <section>
+      <title>Building &amp; Installing from Source</title>
+      <para>Building from source is actually quite simple, thanks to the GNU autotools. Here are the steps for the Ubuntu operating system, although 
+      they should work with any <command>automake</command>-compatible system. These instructions are for the "developer hat", since users will 
+      probably just use <command>apt-get</command> to install WaitZar. If you are wearing your "user hat", you should still be able to follow along.
+
+        <orderedlist>
+          <listitem>
+            <para>Install necessary packages, preferably with <command>apt-get</command>:
+	      <programlisting>sudo apt-get install subversion autoconf automake gettext libtool scim-dev g++</programlisting>
+            </para>
+          </listitem>
+	  
+	  <listitem>
+	    <para>Make a directory for the source files, and download them with <command>svn</command>:
+	    <programlisting>mkdir ~/scim-waitzar
+svn checkout http://scim-waitzar.googlecode.com/svn/trunk/ ~/scim-waitzar
+cd ~/scim-waitzar</programlisting>
+	    </para>
+	  </listitem>
+	  
+	  <listitem>
+	    <para>Reconfigure the system:
+	    <programlisting>autoreconf</programlisting>
+	    </para>
+	  </listitem>
+	  
+	  <listitem>
+	    <para>Run through the standard autotools lifecycle:
+	    <programlisting>./configure
+make
+sudo make install</programlisting>
+	    </para>
+	  </listitem>
+	  
+	  <listitem>
+	    <para>Log out, then log in again. WaitZar is now (almost) ready to use.</para>
+	  </listitem>
+	  
+        </orderedlist>
+      </para>
+    </section>
+
+    <section>
+      <title>Fonts &amp; Configuration Extras</title>
+      <para>Although most Linux programs have been properly internationalized, a great many users simply do not trust &ldquo;tacking another layer&rdquo; 
+      onto input (that layer being SCIM). Hence, simply installing WaitZar will not be enough &mdash;you'll also have to enable it, play around with 
+      <command>fontconfig</command>, and probably install some fonts, too. Here are some helpful hints and tricks. It should go without saying that, 
+      although these techniques are harmless, we take no responsibility for any unintentional side effects they have on your system.
+      </para>
+      
+      <para><emphasis role="bold">Enable Chinese</emphasis> &mdash; Making every application recognize SCIM is not easy; there are reports that 
+      &ldquo;SCIM won't work in Open Office&rdquo; which are only half true. Fortunately, there's a cheap trick that works well in Ubuntu: just enable Chinese, and 
+      the system will figure all this out for you. Click on &ldquo;System&rdquo; then &ldquo;Administration&rdquo;, then &ldquo;Language Support&rdquo;, 
+      and check the box marked &ldquo;Chinese&rdquo;. 
+      Several package files will be installed. Finally, check the box that reads &ldquo;Enable support to enter complex characters&rdquo;, and click &ldquo;Ok&rdquo;. 
+      You will probably have to restart. Note that, if you do not have at least one complex language installed (like Chinese), checking the box will have no 
+      effect. That is why we recommend enabling Chinese.
+       
+        <figure><title>The &ldquo;Language Support&rdquo; window. Make sure the &ldquo;complex characters&rdquo; checkbox is checked.</title>
+          <graphic fileref="images/ubuntu_enabling_chinese.png" align="center" valign="middle" scale="50"/>
+        </figure>
+      </para>
+      
+      
+      <para><emphasis role="bold">Finagle FontConfig</emphasis> &mdash; SCIM does not dictate which font should be used for its main interface, 
+      relying on <emphasis>fontconfig</emphasis> like every other program does. That means the wrong font can be picked for the wrong encoding. 
+      For example, here is what WaitZar looks like if Zawgyi-One is chosen by mistake.
+      
+        <figure><title>Trying to type &ldquo;kote&rdquo; with a mis-configured font selector. Note that this will not actually effect the typed word, just the list of choices.</title>
+          <graphic fileref="images/zawgyi_rendering_kote.png" align="center" valign="middle" scale="50"/>
+        </figure>
+	
+        We recommend listing at least one Unicode 5.1 font in local.conf's &ldquo;prefer&rdquo; tags. We've created a sample file for you that also makes your text sharper, and has 
+	Chinese fonts listed properly. You can get it here:
+	<literallayout><ulink url="http://scim-waitzar.googlecode.com/svn/trunk/local.conf"/></literallayout>
+	...copy it to 
+	<programlisting>/etc/fonts/local.conf </programlisting>
+	...using, for example:
+	<programlisting>cd /etc/fonts &amp;&amp; sudo cp local.conf  local.bak
+sudo wget http://scim-waitzar.googlecode.com/svn/trunk/scim-waitzar/local.conf</programlisting>
+        You'll probably have to restart X. (Log out/Log in).
+      </para>
+      
+      <para><emphasis role="bold">Install Some Fonts</emphasis> &mdash; You'll need at least one font installed to use WaitZar effectively. 
+      Some fonts have packages to make installation easier; for example, the <emphasis>Padauk</emphasis> font has <command>ttf-sil-padauk</command>. 
+      If no package exists, you have several options. The simplest is to make a user-level fonts directory:
+      <programlisting>mkdir ~/.fonts</programlisting>
+      ...and then copy any fonts you download to that folder. You should not have to restart X, but you might need to restart any running application 
+      you want to use the font in.
+      </para>
+    </section>
+  </section>
+  
+  
+  
+  <section>
+    <title>Basic Usage</title>
+    
+    <section>
+      <title>Introduction to SCIM</title>
+      <para>After you install <command>scim-waitzar</command>, you should take some time to get used to SCIM's unique feel. You should see a 
+      small keyboard-shaped icon in your tray, right-click it, and choose &ldquo;SCIM Setup&rdquo;. This panel can be quite confusing, so we'll briefly 
+      cover it here.
+      </para>
+      
+      <para>The &ldquo;Front End &rarr; Global Setup&rdquo; panel contains SCIM's hotkeys, and various global settings. You will probably want to 
+      change the hotkey from Ctrl+Space to <emphasis>anything</emphasis> else, if you are a programmer. 
+      
+        <figure><title>The SCIM setup window.</title>
+          <graphic fileref="images/scim_setup_page1.png" align="center" valign="middle" scale="50"/>
+        </figure>
+      </para>
+      
+      <para>The next section (IMEngine) has settings for each &ldquo;Input Method Engine&rdquo;. Recalling that SCIM provides support for 
+      multiple languages, it makes sense that each language should have its own customizations. The final section, &ldquo;Panel &rarr; GTK&rdquo;, holds 
+      most of the visual settings for SCIM. I recommend changing the &ldquo;Show&rdquo; option (under &ldquo;Toolbar&rdquo;) to &ldquo;Always&rdquo;, 
+      at least until you get used to how SCIM behaves. Note that when you click &ldquo;Ok&rdquo; to exit the setup panel, SCIM will warn you that you 
+      might need to restart SCIM for any changes to take place. The sure-fire way to do this is to log out and then log in again. Optionally, you 
+      might right-click on the SCIM icon and choose &ldquo;Reload Configuration&rdquo;. In some cases, the operating system will reload SCIM for you. 
+      Regardless, you won't be playing around with the WaitZar settings that much anyway.
+      </para>
+    </section>
+    
+    <section>
+      <title>Typing Your First Myanmar Sentence</title>
+      <para>After configuring SCIM just the way you like it, start <command>gedit</command> and then look at the lower-right corner of your screen. 
+      You'll see the SCIM toolbar; move the mouse over it and it will expand to show that you are typing in Englihsh. Click on the language and choose 
+      &ldquo;Burmese&rdquo; to switch to WaitZar. (Note that if this panel is hidden, you can always click on the SCIM icon in your tray to switch to Burmese.) 
+      Then, type &ldquo;ko&rdquo;. You will see two possibilities presented to you. You will also see the word &ldquo;<foreignphrase>&#x1000;&#x102D;&#x102F;</foreignphrase>&rdquo; 
+      inside of <command>gedit</command>. This is one of the nice features of WaitZar on Linux: you can keep your eyes on the document you are typing, and 
+      only have to look at the list of choices when something doesn't match.
+      
+        <figure><title>Choosing between two "ko"s.</title>
+          <graphic fileref="images/ko_first_sentence.png" align="center" valign="middle" scale="50"/>
+        </figure>
+      </para>
+      
+      <para>Hit &ldquo;space&rdquo;, and the cursor will move right; the list of choices will disappear. Now, type &ldquo;2&rdquo;, and you will see the 
+      Burmese numeral &ldquo;<foreignphrase>&#x1042;</foreignphrase>&rdquo;. Finally, hit &ldquo;Enter&rdquo;, and the words you typed will no longer be 
+      underlined. Why did this happen? Basically, WaitZar &ldquo;pre-edits&rdquo; anything you type. Hitting left and right works correctly in WaitZar 
+      because it delays direct typing of words. Although this may take some getting used to, it is actually quite natural, and there are several shortcuts to 
+      save you time. 
+      </para>
+    </section>
+    
+    <section>
+      <title>Additional WaitZar Hotkeys</title>
+      <para>By default, SCIM lets you switch to the <emphasis>last</emphasis> language you used by hitting Ctrl+Space. 
+      Hitting it again will switch to English.
+      </para>
+      
+      <para>When you are typing in WaitZar, several other hotkeys also take effect:
+        <itemizedlist>
+	  <listitem><para>Pressing any letter will type that letter, and attempt to form a word.</para></listitem>
+	  <listitem><para>Pressing left and right will move the cursor. When you are typing a word, left and right 
+	                              switch between the various choices.</para></listitem>
+	  <listitem><para>Pressing &ldquo;enter&rdquo; will confirm the typed sentence. If you are typing a word, hitting &ldquo;enter&rdquo; is the same 
+	                              as hitting &ldquo;space&rdquo;.</para></listitem>
+	  <listitem><para>Pressing &ldquo;space&rdquo; will move the cursor right. If the cursor is all the way to the right, hitting &ldquo;space&rdquo; will 
+	                              confirm the typed sentence. When you are typing a word, hitting &ldquo;space&rdquo; will choose the 
+				      currently-selected choice.</para></listitem>
+	  <listitem><para>Hitting the number keys (0-9) will type the burmese numeral (<foreignphrase>&#x1040;&#x002D;&#x1049;</foreignphrase>). If you are typing a word, 
+	                              hitting a number will &ldquo;shortcut&rdquo; to that word. (Try typing &ldquo;ko2&rdquo; to see this work).</para></listitem>
+	  <listitem><para>Hitting the period or comma keys will type the Burmese full or half stop characters (&ldquo;<foreignphrase>&#x104A;</foreignphrase>&rdquo; 
+	                              and &ldquo;<foreignphrase>&#x104B;</foreignphrase>&rdquo;). If you have typed part of a sentence, this will also 
+				      confirm the sentence.</para></listitem>
+	  <listitem><para>Hitting &ldquo;esc&rdquo; will cancel the sentence or word you are typing.</para></listitem>
+	  <listitem><para>Hitting &ldquo;backspace&rdquo; and &ldquo;delete&rdquo; will function as expected, deleting letters or words depending 
+	                              on the context.</para></listitem>
+	  <listitem><para>In the rare case that you are using an absolutely tiny display, hitting up and down will scroll the list of choices if there are too 
+	                             many to fit on the screen at once.</para></listitem>
+        </itemizedlist>
+      </para>
+    </section>
+    
+    <section>
+      <title>The Open Office Glitch</title>
+      <para>There are several glitches related to WaitZar; most are covered in Section 5. However, one particularly nasty bit occurs in Open Office 
+      Writer &ndash;to see it for yourself, change the font (in Open Office) to Padauk, type &ldquo;singapore&rdquo;, and then hit &ldquo;space&rdquo; twice 
+      to finalize it. The result is a mess of glyphs:
+      
+        <figure><title>Open Office seems to like resetting the font for you, even when this is actually incorrect.</title>
+          <graphic fileref="images/open_office_glitch.png" align="center" valign="middle" scale="50"/>
+        </figure>
+	
+      Fortunately, this is easy to fix: just select all the text and change the font to &ldquo;Padauk&rdquo; again. For some reason, Open Office reverts the 
+      font to <emphasis>Bitstream Vera Sans</emphasis>, an otherwise-excellent font that, unfortunately, cannot entirely handle Burmese just yet.
+      </para>
+      
+      <para>Even more fortunately, this only has to be done once, the first time you create a new document. Even if you delete everything on the page, 
+      Open Office can still manage to change the font back to Padauk the second time you enter Burmese text. 
+      </para>
+      
+      <para>On a side note, this glitch is far worse on Windows, which doesn't provide a reasonable catch-all font. In this case, the first Burmese word 
+      you type in Open Office will actually be invisible!
+      </para>
+    </section>
+    
+    <section>
+      <title>Changing the Output Encoding</title>
+      <para>A great many websites use encodings that conflict with the established standard. Criticizing them will do no good; these <emphasis>faux</emphasis>
+      encodings were all developed to suit a particular niche, and they will likely be around until the end of time. 
+      </para>
+      
+      <para>WaitZar supports two of these encodings: the Zawgyi-One font encoding, and the Win Innwa font family encoding. (Win Kalaw, for instance, is in the 
+      Win Innwa font family). To change the encoding, start typing in Burmese, and then click the &ldquo;UNI&rdquo; icon in the SCIM toolbar. Now choose the encoding you 
+      want. This will reset the next time you log in; if you want to change the encoding used by default, see Section 3.6.
+      
+        <figure><title>Changing the output encoding.</title>
+          <graphic fileref="images/output_encoding_choices.png" align="center" valign="middle" scale="50"/>
+        </figure>
+      </para>
+    </section>
+    
+    <section>
+      <title>A Note About config.txt and mywords.txt</title>
+      <para>For Windows users of WaitZar, it should come as a mildly unpleasant surprise that mywords.txt is well hidden (in /usr/share/scim-waitzar/, if you must know). 
+      The only way to add new words to WaitZar is to edit this file, log out, and log in again. This is highly unconventional by Linux standards, and 
+      future versions will change this.
+      </para>
+      
+      <para>Incidentally, config.txt does nothing. The proper way to change WaitZar's configuration settings is through the SCIM settings panel, on the &ldquo;WaitZar&rdquo; tab. 
+      You can currently only change two settings: how Burmese numbers are typed, and the default output encoding. A screenshot of this panel follows.
+ 
+        <figure><title>WaitZar's settings: here, the user has chosen to type numbers in Burmese, and to start WaitZar with Zawgyi-One by default.</title>
+          <graphic fileref="images/scim_setup_wz_tab.png" align="center" valign="middle" scale="50"/>
+        </figure>
+      </para>
+    </section>
+  </section>
+  
+  <section>
+    <title>Finding a Word</title>
+    <para><emphasis>This section describes how to find a word. It is under development...</emphasis></para>
+    
+    <section>
+      <title>The WaitZar Romanisation</title>
+      <para><emphasis>This section describes the WaitZar romanisation. It is under development.</emphasis></para>
+      
+      <section>
+        <title>Default Romanisation</title>
+        <para><em>This section describes how to find most everday words. It is under development.</em></para>
+      </section>
+      
+      <section>
+        <title>Special Romanisations</title>
+        <para><em>This section describes how pat-sint and foreign words are romanised. It is under development.</em></para>
+      </section>
+      
+      <section>
+        <title>Shortcuts</title>
+        <para><em>This section describes shortcuts like "aung" and the like. It is under development.</em></para>
+      </section>
+    </section>
+    
+    <section>
+      <title>Dictionary Lookup</title>
+      <para><emphasis>This section tells where to go for a dictionary lookup of words. It is under development.</emphasis></para>
+    </section>
+  </section>
+  
+  
+  <section>
+    <title>Known Bugs</title>
+    <para>This section details a number of issues that are known to occur with WaitZar. If you find any new issues, please submit 
+    a bug report online:
+      <literallayout><ulink url="http://code.google.com/p/scim-waitzar/issues/entry/"/></literallayout>
+    </para>
+    
+    <section>
+      <title>Pat-Sint Choices are Glitched</title>
+      <para>Even if you follow the advice in Section 2.4, you will find that some words are still incorrect when presented as choices. 
+      For example, below is a screenshot of &ldquo;singapore&rdquo; as it appears in the lookup table &ndash;note that the actual, 
+      typed version is still correct.
+      
+        <figure><title>The Myanmar text is &ldquo;decomposed&rdquo; in SCIM, but renders correctly in Open Office.</title>
+          <graphic fileref="images/glitched_patsint_rendering.png" align="center" valign="middle" scale="50"/>
+        </figure>
+      </para>
+      
+      <para>The WaitZar team is uncertain as to what is causing this glitch. There are many interacting components (cairo, pango, 
+      GTK, or even scim itself) that might be slightly off. Perhaps the issue is actually a fontconfig issue on our end. We 
+      <emphasis>could</emphasis> solve this problem by defaulting SCIM to the Zawgyi-One font, but we feel that this solution 
+      would be a cheap hack that delays the adoption of Unicode 5.1 for Burmese in Linux. Instead, we will write some test cases 
+      to determine what package is causing the glitch, and then work with those developers to resolve this problem.
+      </para>
+    </section>
+    
+    <section>
+      <title>Alt+Tab Sometimes &ldquo;Sticks&rdquo;</title>
+      <para>This appears to  be a bug in SCIM itself; under some configurations, switching to WaitZar will cause the &ldquo;Alt+Tab&rdquo; 
+      combination to &ldquo;stick&rdquo; &ndash;pressing this will outline window one is hoping to switch to, but releasing it will see you 
+      at the original window; nothing happens. Clicking on any other window will cause this bug to go away until the next time you switch 
+      languages.
+      </para>
+      
+      <para>So far, we have only found one setup where this occurs, and this behavior is apparent in other IMEngines (Chinese, Thai, etc.), 
+      so it is probably a bizarre case of SCIM and Linux interacting poorly. Please report this bug if you encounter it, and we will try 
+      our best to narrow it down and fix it.
+      </para>
+    </section>
+    
+    <section>
+      <title>Choices Stuck in the Lower-Left</title>
+      <para>Under some configurations (usually, the same ones described in Section 5.2), the list of choices will appear &ldquo;locked&rdquo; 
+      to the lower-left of the current window. See the screenshot below for an example of this annoying bug, which makes typing very difficult. 
+      Of course, you can click and drag the choices window to a more convenient location, but it will jump right back to the lower-left corner 
+      as soon as you switch the language again.
+      
+        <figure><title>The choices window is &ldquo;sticking&rdquo; to the corner of gedit. This occurs with all language IMEs (Chinese is shown here).</title>
+          <graphic fileref="images/lookup_table_glitch.png" align="center" valign="middle" scale="50"/>
+        </figure>
+      </para>
+      
+      <para>We might try re-positioning the choices window to somewhere nicer when WaitZar gets a &ldquo;focus_in()&rdquo; message, but seeing as how this is tied 
+      in to the previous bug, we decided not to hack around it until we were sure it couldn't be fixed normally.
+      </para>
+    </section>
+    
+    <section>
+      <title>The Console Looks Glitchy</title>
+      <para>Have a look at the following screenshot.
+      
+        <figure><title>Notice how the text does not compose correctly in the console.</title>
+          <graphic fileref="images/console_rendering_glitch.png" align="center" valign="middle" scale="50"/>
+        </figure>
+      </para>
+      
+      <para>If this is what you see when you try to type WaitZar in the console, there's no need a file a bug 
+      report; we're aware. If you actually see proper Burmese, then <emphasis>please</emphasis> let us know how 
+      to configure the console to make this work. (<emphasis role="bold"><emphasis>Note:</emphasis></emphasis> 
+      using Zawgyi-One or Win Innwa is <emphasis>not</emphasis> the solution we are looking for.)
+    </section>
+  </section>
+  
+  <appendix>
+    <title>License</title>
+    <para><command>scim-waitzar</command> is licensed under the GNU General Public License v3, although some 
+    parts of it are licensed under the Apache License v2, and a small amount is licensed under the GNU General 
+    Public License v2.
+    </para>
+    
+    <para>This means that <command>scim-waitzar</command> is Open Source, of course, and free software as well. 
+    The original WaitZar on Windows is licensed under a BSD-style license; we chose to license 
+    <command>scim-waitzar</command> under the GPL to make it more compatible with the GNU philosophy, and chose 
+    version 3.0 to help strictly enforce that this software is not used in a non-open way.
+    </para>
+    
+    <para>Of course, our concerns apply only to Linux, really. The WaitZar library API, available from:
+      <literallayout><ulink url="http://code.google.com/p/waitzar/downloads/list"/></literallayout>
+    ...contains the majority of the encapsulated functionality; both the Windows <emphasis>and</emphasis> 
+    the Linux project build primarily off of this library, adding only implementation-specific code. 
+    Furthermore, the library is released under the Apache License, with the intention of not forcing any 
+    restrictions on developers. 
+    </para>
+    
+    <para>Discussion about WaitZar is generally taken with both appreciation and seriousness, and occurs 
+    primarily on the mmgeeks forum, in English:
+      <literallayout><ulink url="http://mmgeeks.org/forum/"/></literallayout>
+    </para>
+  </appendix>
+  
+  <appendix>
+    <title>How It Works</title>
+    <para><emphasis>This section explains the use of trigram models in language modeling. It is currently
+    under development.</emphasis></para>
+  </appendix>
+  
+  
+</article>
