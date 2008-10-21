@@ -3,7 +3,16 @@
 <article>
   <title>WaitZar User's Guide</title>
   <subtitle>SCIM Wait Zar version 0.0.1</subtitle>
-  <graphic fileref="images/wz_title.png" align="center" valign="top" scale="50"/>
+  
+  <articleinfo>
+    <author>
+      <honorific>Mr</honorific>
+      <firstname>Seth</firstname>
+      <surname>Hetu</surname>
+      <othername role='mi'>N</othername>
+    </author>
+    <graphic fileref="images/wz_title.png" align="center" valign="top" scale="50"/>
+  </articleinfo>
 
   <section>
     <title>Introduction to SCIM and WaitZar</title>

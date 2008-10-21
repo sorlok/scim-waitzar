@@ -3,11 +3,19 @@
   <xsl:import href="/usr/share/xml/docbook/stylesheet/nwalsh/fo/docbook.xsl"/>
   <xsl:include href="wz_titlepage.xsl"/>
   
+  <!-- Page numbering: Skip the first page -->
+
+  
   <!-- Customization parameters -->
   <xsl:param name="admon.graphics" select="1"/>
   <xsl:param name="section.autolabel" select="1"/>
   <xsl:param name="symbol.font.family">Padauk,Myanmar3,Bitstream Vera Sans</xsl:param>
   <xsl:param name="body.start.indent">0pt</xsl:param>
+  
+  <!-- Break on every section (I was just going to do the TOC, but this looks nice. -->
+  <xsl:attribute-set name="section.level1.properties">
+    <xsl:attribute name="break-before">page</xsl:attribute>
+  </xsl:attribute-set>
   
   <!-- Bold & blue hyperlinks -->
   <xsl:attribute-set name="xref.properties">
