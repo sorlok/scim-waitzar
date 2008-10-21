@@ -352,17 +352,17 @@ sudo wget http://scim-waitzar.googlecode.com/svn/trunk/scim-waitzar/local.conf</
       
       <section>
         <title>Default Romanisation</title>
-        <para><em>This section describes how to find most everday words. It is under development.</em></para>
+        <para><emphasis>This section describes how to find most everday words. It is under development.</emphasis></para>
       </section>
       
       <section>
         <title>Special Romanisations</title>
-        <para><em>This section describes how pat-sint and foreign words are romanised. It is under development.</em></para>
+        <para><emphasis>This section describes how pat-sint and foreign words are romanised. It is under development.</emphasis></para>
       </section>
       
       <section>
         <title>Shortcuts</title>
-        <para><em>This section describes shortcuts like "aung" and the like. It is under development.</em></para>
+        <para><emphasis>This section describes shortcuts like "aung" and the like. It is under development.</emphasis></para>
       </section>
     </section>
     
@@ -443,6 +443,7 @@ sudo wget http://scim-waitzar.googlecode.com/svn/trunk/scim-waitzar/local.conf</
       report; we're aware. If you actually see proper Burmese, then <emphasis>please</emphasis> let us know how 
       to configure the console to make this work. (<emphasis role="bold"><emphasis>Note:</emphasis></emphasis> 
       using Zawgyi-One or Win Innwa is <emphasis>not</emphasis> the solution we are looking for.)
+      </para>
     </section>
   </section>
   
