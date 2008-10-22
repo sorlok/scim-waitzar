@@ -63,6 +63,13 @@
       <xsl:apply-templates/>
     </fo:inline>
   </xsl:template>
+  
+    <!-- Hack to get the symbol displayed correctly... -->
+  <xsl:template match="property">
+    <fo:inline font-family="Symbol">
+      <xsl:apply-templates/>
+    </fo:inline>
+  </xsl:template>
 
   <!-- Program Listings in Monospace -->
   <xsl:template match="programlisting">
