@@ -396,7 +396,7 @@ sudo wget http://scim-waitzar.googlecode.com/svn/trunk/scim-waitzar/local.conf</
       typed version is still correct.
       
         <figure><title>The Myanmar text is &ldquo;decomposed&rdquo; in SCIM, but renders correctly in Open Office.</title>
-          <graphic fileref="images/glitched_patsint_rendering.png" align="center" valign="middle" scale="50"/>
+          <graphic fileref="images/glitched_patsint_rendering.png" align="center" valign="middle" scale="70"/>
         </figure>
       </para>
       
