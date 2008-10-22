@@ -62,7 +62,7 @@
     <para>
     You should have at least one of the following Unicode 5.1-enabled fonts installed on your system. 
     Please see Section 2.4 for more information on how to install fonts.
-    <itemizedlist>
+    <itemizedlist spacing="compact">
       <listitem><para>Padauk</para></listitem>
       <listitem><para>Parabaik</para></listitem>
       <listitem><para>Myanmar 3</para></listitem>
@@ -188,7 +188,7 @@ sudo make install</programlisting>
       relying on <emphasis>fontconfig</emphasis> like every other program does. That means the wrong font can be picked for the wrong encoding. 
       For example, here is what WaitZar looks like if Zawgyi-One is chosen by mistake.
       
-        <figure><title>Trying to type &ldquo;kote&rdquo; with a mis-configured font selector. Note that this will not actually effect the typed word, just the list of choices.</title>
+        <figure><title>Trying to type &ldquo;kote&rdquo; with a mis-configured font selector. Note that this will not actually affect the typed word, just the list of choices.</title>
           <graphic fileref="images/zawgyi_rendering_kote.png" align="center" valign="middle" scale="50"/>
         </figure>
 	
@@ -199,7 +199,7 @@ sudo make install</programlisting>
 	<programlisting>/etc/fonts/local.conf </programlisting>
 	...using, for example:
 	<programlisting>cd /etc/fonts &amp;&amp; sudo cp local.conf  local.bak
-sudo wget http://scim-waitzar.googlecode.com/svn/trunk/scim-waitzar/local.conf</programlisting>
+sudo wget http://scim-waitzar.googlecode.com/svn/trunk/local.conf</programlisting>
         You'll probably have to restart X. (Log out/Log in).
       </para>
       
@@ -220,12 +220,12 @@ sudo wget http://scim-waitzar.googlecode.com/svn/trunk/scim-waitzar/local.conf</
     
     <section>
       <title>Introduction to SCIM</title>
-      <para>After you install <command>scim-waitzar</command>, you should take some time to get used to SCIM's unique feel. You should see a 
-      small keyboard-shaped icon in your tray, right-click it, and choose &ldquo;SCIM Setup&rdquo;. This panel can be quite confusing, so we'll briefly 
-      cover it here.
+      <para>After you install <command>scim-waitzar</command>, you should take some time to get used to SCIM's unique feel. You will see a 
+      small keyboard-shaped icon in your tray, right-click it, and choose &ldquo;SCIM Setup&rdquo;. This panel can be quite confusing for new users, 
+      so we'll briefly cover it here.
       </para>
       
-      <para>The &ldquo;Front End &rarr; Global Setup&rdquo; panel contains SCIM's hotkeys, and various global settings. You will probably want to 
+      <para>The &ldquo;Front End <property>&rarr;</property> Global Setup&rdquo; panel contains SCIM's hotkeys, and various global settings. You will probably want to 
       change the hotkey from Ctrl+Space to <emphasis>anything</emphasis> else, if you are a programmer. 
       
         <figure><title>The SCIM setup window.</title>
@@ -234,7 +234,7 @@ sudo wget http://scim-waitzar.googlecode.com/svn/trunk/scim-waitzar/local.conf</
       </para>
       
       <para>The next section (IMEngine) has settings for each &ldquo;Input Method Engine&rdquo;. Recalling that SCIM provides support for 
-      multiple languages, it makes sense that each language should have its own customizations. The final section, &ldquo;Panel &rarr; GTK&rdquo;, holds 
+      multiple languages, it makes sense that each language should have its own customizations. The final section, &ldquo;Panel <property>&rarr;</property> GTK&rdquo;, holds 
       most of the visual settings for SCIM. I recommend changing the &ldquo;Show&rdquo; option (under &ldquo;Toolbar&rdquo;) to &ldquo;Always&rdquo;, 
       at least until you get used to how SCIM behaves. Note that when you click &ldquo;Ok&rdquo; to exit the setup panel, SCIM will warn you that you 
       might need to restart SCIM for any changes to take place. The sure-fire way to do this is to log out and then log in again. Optionally, you 
@@ -272,7 +272,7 @@ sudo wget http://scim-waitzar.googlecode.com/svn/trunk/scim-waitzar/local.conf</
       </para>
       
       <para>When you are typing in WaitZar, several other hotkeys also take effect:
-        <itemizedlist>
+        <itemizedlist spacing="compact">
 	  <listitem><para>Pressing any letter will type that letter, and attempt to form a word.</para></listitem>
 	  <listitem><para>Pressing left and right will move the cursor. When you are typing a word, left and right 
 	                              switch between the various choices.</para></listitem>
@@ -309,7 +309,7 @@ sudo wget http://scim-waitzar.googlecode.com/svn/trunk/scim-waitzar/local.conf</
       font to <emphasis>Bitstream Vera Sans</emphasis>, an otherwise-excellent font that, unfortunately, cannot entirely handle Burmese just yet.
       </para>
       
-      <para>Even more fortunately, this only has to be done once, the first time you create a new document. Even if you delete everything on the page, 
+      <para>Even more fortunately, this only has to be done once: the first time you create a new document. Even if you delete everything on the page, 
       Open Office can still manage to change the font back to Padauk the second time you enter Burmese text. 
       </para>
       
@@ -320,7 +320,7 @@ sudo wget http://scim-waitzar.googlecode.com/svn/trunk/scim-waitzar/local.conf</
     
     <section>
       <title>Changing the Output Encoding</title>
-      <para>A great many websites use encodings that conflict with the established standard. Criticizing them will do no good; these <emphasis>faux</emphasis>
+      <para>A great many websites use encodings that conflict with the established standard. Criticizing them will do no good; these <emphasis>ad hoc</emphasis>
       encodings were all developed to suit a particular niche, and they will likely be around until the end of time. 
       </para>
       
@@ -411,7 +411,7 @@ sudo wget http://scim-waitzar.googlecode.com/svn/trunk/scim-waitzar/local.conf</
     <section>
       <title>Alt+Tab Sometimes &ldquo;Sticks&rdquo;</title>
       <para>This appears to  be a bug in SCIM itself; under some configurations, switching to WaitZar will cause the &ldquo;Alt+Tab&rdquo; 
-      combination to &ldquo;stick&rdquo; &ndash;pressing this will outline window one is hoping to switch to, but releasing it will see you 
+      combination to &ldquo;stick&rdquo; &ndash;pressing this will outline the window one is hoping to switch to, but releasing it will see you 
       at the original window; nothing happens. Clicking on any other window will cause this bug to go away until the next time you switch 
       languages.
       </para>
