@@ -4,6 +4,23 @@
   <xsl:include href="wz_titlepage.xsl"/>
   
   <!-- Page numbering: Skip the first page -->
+  <!-- Still can't figure out how to do this... -->
+  
+  <!-- Add a border around figures -->
+  <xsl:attribute-set name="formal.object.properties">
+    <xsl:attribute name="border-style">solid</xsl:attribute>
+    <xsl:attribute name="border-width">1px</xsl:attribute>
+    <xsl:attribute name="padding-left">5px</xsl:attribute>
+    <xsl:attribute name="padding-right">5px</xsl:attribute>
+    <xsl:attribute name="padding-bottom">5px</xsl:attribute>
+  </xsl:attribute-set> 
+
+<!-- This necessitates some changes to figure titles, as well. -->
+  <xsl:attribute-set name="formal.title.properties">
+      <xsl:attribute name="font-style">italic</xsl:attribute>
+      <xsl:attribute name="font-weight">normal</xsl:attribute>
+      <xsl:attribute name="hyphenate">false</xsl:attribute>
+  </xsl:attribute-set>
 
   
   <!-- Customization parameters -->
@@ -49,7 +66,7 @@
 
   <!-- Program Listings in Monospace -->
   <xsl:template match="programlisting">
-    <fo:block text-align="start" wrap-option="no-wrap" space-before.minimum="0.8em" space-before.optimum="1em" space-before.maximum="1.2em" space-after.minimum="0.8em" space-after.optimum="1em" space-after.maximum="1.2em" hyphenate="false" white-space-collapse="false" white-space-treatment="preserve" linefeed-treatment="preserve" font-family="Bitstream Vera Sans" font-weight="normal" font-style="normal">
+    <fo:block text-align="start" wrap-option="wrap" space-before.minimum="0.8em" space-before.optimum="1em" space-before.maximum="1.2em" space-after.minimum="0.8em" space-after.optimum="1em" space-after.maximum="1.2em" hyphenate="false" white-space-collapse="false" white-space-treatment="preserve" linefeed-treatment="preserve" font-family="Bitstream Vera Sans" font-weight="normal" font-style="normal" font-size="8pt">
       <xsl:apply-templates/>
     </fo:block>
   </xsl:template>
