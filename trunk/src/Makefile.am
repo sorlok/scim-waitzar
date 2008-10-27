@@ -6,12 +6,6 @@ AM_CPPFLAGS = \
 noinst_HEADERS = \
 	gettext.h \
 	intl.h \
-	waitzar-lib/fontconv.h \
-	waitzar-lib/fontmap.h \
-	waitzar-lib/lib.h \
-	waitzar-lib/SentenceList.h \
-	waitzar-lib/regex.h \
-	waitzar-lib/WordBuilder.h \
 	scim_waitzar_keymap.h \
 	scim_waitzar_imengine_factory.h \
 	scim_waitzar_imengine.h \
@@ -22,18 +16,17 @@ moduledir = $(SCIM_MODULEDIR)/IMEngine
 module_LTLIBRARIES = waitzar.la
 
 waitzar_la_SOURCES = \
-	waitzar-lib/fontconv.cpp \
-	waitzar-lib/fontmap.cpp \
-	waitzar-lib/lib.cpp \
-	waitzar-lib/regex.cpp \
-	waitzar-lib/WordBuilder.cpp \
-	waitzar-lib/SentenceList.cpp \
 	scim_waitzar_keymap.cpp \
 	scim_waitzar_imengine_factory.cpp \
 	scim_waitzar_imengine.cpp \
 	scim_waitzar_lookup_table.cpp 
+	
+INCLUDES = $(DEPS_CFLAGS)
+waitzar_la_LIBADD = $(DEPS_LIBS)
 
-files_USERGUIDE = ../WaitZar_User_Guide.doc
+files_USERGUIDE = \
+			      ../doc/waitzar_users_guide.xml \
+			      ../doc/waitzar_users_guide.pdf
 
 waitzar_la_docdir = ${datadir}/doc/${PACKAGE} 
 

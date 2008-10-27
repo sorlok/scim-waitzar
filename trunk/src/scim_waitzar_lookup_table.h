@@ -27,9 +27,10 @@
 #define __SCIM_WAITZAR_LOOKUP_TABLE_H__
 
 #include <scim.h>
-#include "waitzar-lib/WordBuilder.h"
+#include <waitzar/WordBuilder.h>
 
 using namespace scim;
+using namespace waitzar;
 
 /**
  * A very simple lookup table that contains strings of Burmese words indexed from 1..10

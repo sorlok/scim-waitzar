@@ -893,6 +893,8 @@ FFLAGS
 ac_ct_F77
 LIBTOOL
 PKG_CONFIG
+DEPS_CFLAGS
+DEPS_LIBS
 SCIM_CFLAGS
 SCIM_LIBS
 SCIM_GTKUTILS_CFLAGS
@@ -923,6 +925,8 @@ CXXCPP
 F77
 FFLAGS
 PKG_CONFIG
+DEPS_CFLAGS
+DEPS_LIBS
 SCIM_CFLAGS
 SCIM_LIBS
 SCIM_GTKUTILS_CFLAGS
@@ -1544,6 +1548,8 @@ Some influential environment variables:
   F77         Fortran 77 compiler command
   FFLAGS      Fortran 77 compiler flags
   PKG_CONFIG  path to pkg-config utility
+  DEPS_CFLAGS C compiler flags for DEPS, overriding pkg-config
+  DEPS_LIBS   linker flags for DEPS, overriding pkg-config
   SCIM_CFLAGS C compiler flags for SCIM, overriding pkg-config
   SCIM_LIBS   linker flags for SCIM, overriding pkg-config
   SCIM_GTKUTILS_CFLAGS
@@ -7761,7 +7767,7 @@ ia64-*-hpux*)
   ;;
 *-*-irix6*)
   # Find out which ABI we are using.
-  echo '#line 7764 "configure"' > conftest.$ac_ext
+  echo '#line 7770 "configure"' > conftest.$ac_ext
   if { (eval echo "$as_me:$LINENO: \"$ac_compile\"") >&5
   (eval $ac_compile) 2>&5
   ac_status=$?
@@ -10346,11 +10352,11 @@ else
    -e 's:.*FLAGS}\{0,1\} :&$lt_compiler_flag :; t' \
    -e 's: [^ ]*conftest\.: $lt_compiler_flag&:; t' \
    -e 's:$: $lt_compiler_flag:'`
-   (eval echo "\"\$as_me:10349: $lt_compile\"" >&5)
+   (eval echo "\"\$as_me:10355: $lt_compile\"" >&5)
    (eval "$lt_compile" 2>conftest.err)
    ac_status=$?
    cat conftest.err >&5
-   echo "$as_me:10353: \$? = $ac_status" >&5
+   echo "$as_me:10359: \$? = $ac_status" >&5
    if (exit $ac_status) && test -s "$ac_outfile"; then
      # The compiler can only warn and ignore the option if not recognized
      # So say no if there are warnings other than the usual output.
@@ -10636,11 +10642,11 @@ else
    -e 's:.*FLAGS}\{0,1\} :&$lt_compiler_flag :; t' \
    -e 's: [^ ]*conftest\.: $lt_compiler_flag&:; t' \
    -e 's:$: $lt_compiler_flag:'`
-   (eval echo "\"\$as_me:10639: $lt_compile\"" >&5)
+   (eval echo "\"\$as_me:10645: $lt_compile\"" >&5)
    (eval "$lt_compile" 2>conftest.err)
    ac_status=$?
    cat conftest.err >&5
-   echo "$as_me:10643: \$? = $ac_status" >&5
+   echo "$as_me:10649: \$? = $ac_status" >&5
    if (exit $ac_status) && test -s "$ac_outfile"; then
      # The compiler can only warn and ignore the option if not recognized
      # So say no if there are warnings other than the usual output.
@@ -10740,11 +10746,11 @@ else
    -e 's:.*FLAGS}\{0,1\} :&$lt_compiler_flag :; t' \
    -e 's: [^ ]*conftest\.: $lt_compiler_flag&:; t' \
    -e 's:$: $lt_compiler_flag:'`
-   (eval echo "\"\$as_me:10743: $lt_compile\"" >&5)
+   (eval echo "\"\$as_me:10749: $lt_compile\"" >&5)
    (eval "$lt_compile" 2>out/conftest.err)
    ac_status=$?
    cat out/conftest.err >&5
-   echo "$as_me:10747: \$? = $ac_status" >&5
+   echo "$as_me:10753: \$? = $ac_status" >&5
    if (exit $ac_status) && test -s out/conftest2.$ac_objext
    then
      # The compiler can only warn and ignore the option if not recognized
@@ -13117,7 +13123,7 @@ else
   lt_dlunknown=0; lt_dlno_uscore=1; lt_dlneed_uscore=2
   lt_status=$lt_dlunknown
   cat > conftest.$ac_ext <<EOF
-#line 13120 "configure"
+#line 13126 "configure"
 #include "confdefs.h"
 
 #if HAVE_DLFCN_H
@@ -13217,7 +13223,7 @@ else
   lt_dlunknown=0; lt_dlno_uscore=1; lt_dlneed_uscore=2
   lt_status=$lt_dlunknown
   cat > conftest.$ac_ext <<EOF
-#line 13220 "configure"
+#line 13226 "configure"
 #include "confdefs.h"
 
 #if HAVE_DLFCN_H
@@ -15618,11 +15624,11 @@ else
    -e 's:.*FLAGS}\{0,1\} :&$lt_compiler_flag :; t' \
    -e 's: [^ ]*conftest\.: $lt_compiler_flag&:; t' \
    -e 's:$: $lt_compiler_flag:'`
-   (eval echo "\"\$as_me:15621: $lt_compile\"" >&5)
+   (eval echo "\"\$as_me:15627: $lt_compile\"" >&5)
    (eval "$lt_compile" 2>conftest.err)
    ac_status=$?
    cat conftest.err >&5
-   echo "$as_me:15625: \$? = $ac_status" >&5
+   echo "$as_me:15631: \$? = $ac_status" >&5
    if (exit $ac_status) && test -s "$ac_outfile"; then
      # The compiler can only warn and ignore the option if not recognized
      # So say no if there are warnings other than the usual output.
@@ -15722,11 +15728,11 @@ else
    -e 's:.*FLAGS}\{0,1\} :&$lt_compiler_flag :; t' \
    -e 's: [^ ]*conftest\.: $lt_compiler_flag&:; t' \
    -e 's:$: $lt_compiler_flag:'`
-   (eval echo "\"\$as_me:15725: $lt_compile\"" >&5)
+   (eval echo "\"\$as_me:15731: $lt_compile\"" >&5)
    (eval "$lt_compile" 2>out/conftest.err)
    ac_status=$?
    cat out/conftest.err >&5
-   echo "$as_me:15729: \$? = $ac_status" >&5
+   echo "$as_me:15735: \$? = $ac_status" >&5
    if (exit $ac_status) && test -s out/conftest2.$ac_objext
    then
      # The compiler can only warn and ignore the option if not recognized
@@ -17320,11 +17326,11 @@ else
    -e 's:.*FLAGS}\{0,1\} :&$lt_compiler_flag :; t' \
    -e 's: [^ ]*conftest\.: $lt_compiler_flag&:; t' \
    -e 's:$: $lt_compiler_flag:'`
-   (eval echo "\"\$as_me:17323: $lt_compile\"" >&5)
+   (eval echo "\"\$as_me:17329: $lt_compile\"" >&5)
    (eval "$lt_compile" 2>conftest.err)
    ac_status=$?
    cat conftest.err >&5
-   echo "$as_me:17327: \$? = $ac_status" >&5
+   echo "$as_me:17333: \$? = $ac_status" >&5
    if (exit $ac_status) && test -s "$ac_outfile"; then
      # The compiler can only warn and ignore the option if not recognized
      # So say no if there are warnings other than the usual output.
@@ -17424,11 +17430,11 @@ else
    -e 's:.*FLAGS}\{0,1\} :&$lt_compiler_flag :; t' \
    -e 's: [^ ]*conftest\.: $lt_compiler_flag&:; t' \
    -e 's:$: $lt_compiler_flag:'`
-   (eval echo "\"\$as_me:17427: $lt_compile\"" >&5)
+   (eval echo "\"\$as_me:17433: $lt_compile\"" >&5)
    (eval "$lt_compile" 2>out/conftest.err)
    ac_status=$?
    cat out/conftest.err >&5
-   echo "$as_me:17431: \$? = $ac_status" >&5
+   echo "$as_me:17437: \$? = $ac_status" >&5
    if (exit $ac_status) && test -s out/conftest2.$ac_objext
    then
      # The compiler can only warn and ignore the option if not recognized
@@ -19644,11 +19650,11 @@ else
    -e 's:.*FLAGS}\{0,1\} :&$lt_compiler_flag :; t' \
    -e 's: [^ ]*conftest\.: $lt_compiler_flag&:; t' \
    -e 's:$: $lt_compiler_flag:'`
-   (eval echo "\"\$as_me:19647: $lt_compile\"" >&5)
+   (eval echo "\"\$as_me:19653: $lt_compile\"" >&5)
    (eval "$lt_compile" 2>conftest.err)
    ac_status=$?
    cat conftest.err >&5
-   echo "$as_me:19651: \$? = $ac_status" >&5
+   echo "$as_me:19657: \$? = $ac_status" >&5
    if (exit $ac_status) && test -s "$ac_outfile"; then
      # The compiler can only warn and ignore the option if not recognized
      # So say no if there are warnings other than the usual output.
@@ -19934,11 +19940,11 @@ else
    -e 's:.*FLAGS}\{0,1\} :&$lt_compiler_flag :; t' \
    -e 's: [^ ]*conftest\.: $lt_compiler_flag&:; t' \
    -e 's:$: $lt_compiler_flag:'`
-   (eval echo "\"\$as_me:19937: $lt_compile\"" >&5)
+   (eval echo "\"\$as_me:19943: $lt_compile\"" >&5)
    (eval "$lt_compile" 2>conftest.err)
    ac_status=$?
    cat conftest.err >&5
-   echo "$as_me:19941: \$? = $ac_status" >&5
+   echo "$as_me:19947: \$? = $ac_status" >&5
    if (exit $ac_status) && test -s "$ac_outfile"; then
      # The compiler can only warn and ignore the option if not recognized
      # So say no if there are warnings other than the usual output.
@@ -20038,11 +20044,11 @@ else
    -e 's:.*FLAGS}\{0,1\} :&$lt_compiler_flag :; t' \
    -e 's: [^ ]*conftest\.: $lt_compiler_flag&:; t' \
    -e 's:$: $lt_compiler_flag:'`
-   (eval echo "\"\$as_me:20041: $lt_compile\"" >&5)
+   (eval echo "\"\$as_me:20047: $lt_compile\"" >&5)
    (eval "$lt_compile" 2>out/conftest.err)
    ac_status=$?
    cat out/conftest.err >&5
-   echo "$as_me:20045: \$? = $ac_status" >&5
+   echo "$as_me:20051: \$? = $ac_status" >&5
    if (exit $ac_status) && test -s out/conftest2.$ac_objext
    then
      # The compiler can only warn and ignore the option if not recognized
@@ -22735,9 +22741,7 @@ LIBTOOL='$(SHELL) $(top_builddir)/libtool'
 #AC_SUBST(LIBTOOL_EXPORT_OPTIONS)
 
 
-
-#Necessary Libraries
-SCIM_VERSION=0.99.8
+#Include libwaitzar
 
 
 if test "x$ac_cv_env_PKG_CONFIG_set" != "xset"; then
@@ -22858,6 +22862,123 @@ echo "${ECHO_T}no" >&6; }
 	fi
 
 fi
+
+pkg_failed=no
+{ echo "$as_me:$LINENO: checking for DEPS" >&5
+echo $ECHO_N "checking for DEPS... $ECHO_C" >&6; }
+
+if test -n "$PKG_CONFIG"; then
+    if test -n "$DEPS_CFLAGS"; then
+        pkg_cv_DEPS_CFLAGS="$DEPS_CFLAGS"
+    else
+        if test -n "$PKG_CONFIG" && \
+    { (echo "$as_me:$LINENO: \$PKG_CONFIG --exists --print-errors \"waitzar-1.0 >= 1.0.0\"") >&5
+  ($PKG_CONFIG --exists --print-errors "waitzar-1.0 >= 1.0.0") 2>&5
+  ac_status=$?
+  echo "$as_me:$LINENO: \$? = $ac_status" >&5
+  (exit $ac_status); }; then
+  pkg_cv_DEPS_CFLAGS=`$PKG_CONFIG --cflags "waitzar-1.0 >= 1.0.0" 2>/dev/null`
+else
+  pkg_failed=yes
+fi
+    fi
+else
+	pkg_failed=untried
+fi
+if test -n "$PKG_CONFIG"; then
+    if test -n "$DEPS_LIBS"; then
+        pkg_cv_DEPS_LIBS="$DEPS_LIBS"
+    else
+        if test -n "$PKG_CONFIG" && \
+    { (echo "$as_me:$LINENO: \$PKG_CONFIG --exists --print-errors \"waitzar-1.0 >= 1.0.0\"") >&5
+  ($PKG_CONFIG --exists --print-errors "waitzar-1.0 >= 1.0.0") 2>&5
+  ac_status=$?
+  echo "$as_me:$LINENO: \$? = $ac_status" >&5
+  (exit $ac_status); }; then
+  pkg_cv_DEPS_LIBS=`$PKG_CONFIG --libs "waitzar-1.0 >= 1.0.0" 2>/dev/null`
+else
+  pkg_failed=yes
+fi
+    fi
+else
+	pkg_failed=untried
+fi
+
+
+
+if test $pkg_failed = yes; then
+
+if $PKG_CONFIG --atleast-pkgconfig-version 0.20; then
+        _pkg_short_errors_supported=yes
+else
+        _pkg_short_errors_supported=no
+fi
+        if test $_pkg_short_errors_supported = yes; then
+	        DEPS_PKG_ERRORS=`$PKG_CONFIG --short-errors --errors-to-stdout --print-errors "waitzar-1.0 >= 1.0.0"`
+        else
+	        DEPS_PKG_ERRORS=`$PKG_CONFIG --errors-to-stdout --print-errors "waitzar-1.0 >= 1.0.0"`
+        fi
+	# Put the nasty error message in config.log where it belongs
+	echo "$DEPS_PKG_ERRORS" >&5
+
+	{ { echo "$as_me:$LINENO: error: Package requirements (waitzar-1.0 >= 1.0.0) were not met:
+
+$DEPS_PKG_ERRORS
+
+Consider adjusting the PKG_CONFIG_PATH environment variable if you
+installed software in a non-standard prefix.
+
+Alternatively, you may set the environment variables DEPS_CFLAGS
+and DEPS_LIBS to avoid the need to call pkg-config.
+See the pkg-config man page for more details.
+" >&5
+echo "$as_me: error: Package requirements (waitzar-1.0 >= 1.0.0) were not met:
+
+$DEPS_PKG_ERRORS
+
+Consider adjusting the PKG_CONFIG_PATH environment variable if you
+installed software in a non-standard prefix.
+
+Alternatively, you may set the environment variables DEPS_CFLAGS
+and DEPS_LIBS to avoid the need to call pkg-config.
+See the pkg-config man page for more details.
+" >&2;}
+   { (exit 1); exit 1; }; }
+elif test $pkg_failed = untried; then
+	{ { echo "$as_me:$LINENO: error: The pkg-config script could not be found or is too old.  Make sure it
+is in your PATH or set the PKG_CONFIG environment variable to the full
+path to pkg-config.
+
+Alternatively, you may set the environment variables DEPS_CFLAGS
+and DEPS_LIBS to avoid the need to call pkg-config.
+See the pkg-config man page for more details.
+
+To get pkg-config, see <http://pkg-config.freedesktop.org/>.
+See \`config.log' for more details." >&5
+echo "$as_me: error: The pkg-config script could not be found or is too old.  Make sure it
+is in your PATH or set the PKG_CONFIG environment variable to the full
+path to pkg-config.
+
+Alternatively, you may set the environment variables DEPS_CFLAGS
+and DEPS_LIBS to avoid the need to call pkg-config.
+See the pkg-config man page for more details.
+
+To get pkg-config, see <http://pkg-config.freedesktop.org/>.
+See \`config.log' for more details." >&2;}
+   { (exit 1); exit 1; }; }
+else
+	DEPS_CFLAGS=$pkg_cv_DEPS_CFLAGS
+	DEPS_LIBS=$pkg_cv_DEPS_LIBS
+        { echo "$as_me:$LINENO: result: yes" >&5
+echo "${ECHO_T}yes" >&6; }
+	:
+fi
+
+
+
+
+#Necessary Libraries
+SCIM_VERSION=0.99.8
 
 pkg_failed=no
 { echo "$as_me:$LINENO: checking for SCIM" >&5
@@ -23928,6 +24049,8 @@ FFLAGS!$FFLAGS$ac_delim
 ac_ct_F77!$ac_ct_F77$ac_delim
 LIBTOOL!$LIBTOOL$ac_delim
 PKG_CONFIG!$PKG_CONFIG$ac_delim
+DEPS_CFLAGS!$DEPS_CFLAGS$ac_delim
+DEPS_LIBS!$DEPS_LIBS$ac_delim
 SCIM_CFLAGS!$SCIM_CFLAGS$ac_delim
 SCIM_LIBS!$SCIM_LIBS$ac_delim
 SCIM_GTKUTILS_CFLAGS!$SCIM_GTKUTILS_CFLAGS$ac_delim
@@ -23943,7 +24066,7 @@ LIBOBJS!$LIBOBJS$ac_delim
 LTLIBOBJS!$LTLIBOBJS$ac_delim
 _ACEOF
 
-  if test `sed -n "s/.*$ac_delim\$/X/p" conf$$subs.sed | grep -c X` = 39; then
+  if test `sed -n "s/.*$ac_delim\$/X/p" conf$$subs.sed | grep -c X` = 41; then
     break
   elif $ac_last_try; then
     { { echo "$as_me:$LINENO: error: could not make $CONFIG_STATUS" >&5

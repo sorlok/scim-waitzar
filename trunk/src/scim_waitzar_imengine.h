@@ -26,10 +26,11 @@
 #define __SCIM_WAITZAR_IMENGINE_H__
 
 #include <scim.h>
+#include <waitzar/WordBuilder.h>
+#include <waitzar/SentenceList.h>
+
 #include "scim_waitzar_keymap.h"
 #include "scim_waitzar_lookup_table.h"
-#include "waitzar-lib/WordBuilder.h"
-#include "waitzar-lib/SentenceList.h"
 
 using namespace scim;
 
