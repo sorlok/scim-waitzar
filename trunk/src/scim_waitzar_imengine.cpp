@@ -154,15 +154,38 @@ WaitZarInstance::WaitZarInstance (WaitZarFactory* factory,
 	fflush(logFile);
     }
 
+    
+    //Try to find the model & mywords files
+    char* modelPath = new char[200];
+    char* mywordsPath = new char[200];
+    strcpy(modelPath, "/usr/share/waitzar/Myanmar.model");
+    if (fopen(modelPath)==NULL) {
+	strcpy(modelPath, "/usr/local/share/waitzar/Myanmar.model");
+        if (fopen(modelPath)==NULL) {
+            fprintf(logFile, "ERROR: Cannot find model file. WaitZar will not function.\n");
+	    fflush(logFile);
+	}
+    }
+    strcpy(mywordsPath, "/usr/share/waitzar/mywords.txt");
+    if (fopen(mywordsPath)==NULL) {
+	strcpy(mywordsPath, "/usr/local/share/waitzar/mywords.txt");
+        if (fopen(mywordsPath)==NULL) {
+            fprintf(logFile, "WARNING: Cannot find mywords file. WaitZar will still function, but this is odd.\n");
+	    fflush(logFile);
+	}
+    }
 
     delete [] userHomeWZ;
-    model = new WordBuilder(SCIM_WAITZAR_MODEL_FILE, SCIM_WAITZAR_MYWORDS_FILE);
+    model = new WordBuilder(modelPath, mywordsPath);
     model->setOutputEncoding(def_encoding);
 
     if (LOG_ON) {
         fprintf(logFile, "Model has loaded correctly.\n");
         fflush(logFile);
     }
+    
+    delete [] modelPath;
+    delete [] mywordsPath;
     
     
     //Init all data structures 

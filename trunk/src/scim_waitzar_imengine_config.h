@@ -29,13 +29,6 @@
     #define SCIM_WAITZAR_ICON_FILE           (SCIM_ICONDIR"/scim-waitzar.png")
 #endif
 
-#ifndef SCIM_WAITZAR_MODEL_FILE
-    #define SCIM_WAITZAR_MODEL_FILE             (SCIM_WAITZAR_MODELDIR"/Myanmar.model")
-#endif
-
-#ifndef SCIM_WAITZAR_MYWORDS_FILE
-    #define SCIM_WAITZAR_MYWORDS_FILE     (SCIM_WAITZAR_MODELDIR"/mywords.txt")
-#endif
 
 //Configuration options
 #define SCIM_CONFIG_IMENGINE_WAITZAR_BURMESE_NUMERALS  "/IMEngine/WaitZar/BurmeseNumerals"
