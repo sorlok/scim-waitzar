@@ -29,9 +29,10 @@
 #include <gtk/gtk.h>
 #include <gtk/scimkeyselection.h>
 #include <scim.h>
+#include <waitzar/WordBuilder.h>
+
 #include "scim_waitzar_imengine.h"
 #include "scim_waitzar_imengine_config.h"
-#include "waitzar-lib/WordBuilder.h"
 
 //Test
 /*#define ENCODING_UNICODE 1

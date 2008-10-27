@@ -26,6 +26,11 @@ AC_PROG_LIBTOOL
 #AC_SUBST(LIBTOOL_EXPORT_OPTIONS)
 
 
+#Include libwaitzar
+PKG_CHECK_MODULES(DEPS, waitzar-1.0 >= 1.0.0)
+AC_SUBST(DEPS_CFLAGS)
+AC_SUBST(DEPS_LIBS)
+
 
 #Necessary Libraries
 dnl *************
