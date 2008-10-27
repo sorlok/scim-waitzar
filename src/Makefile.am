@@ -37,7 +37,9 @@ files_USERGUIDE = ../WaitZar_User_Guide.doc
 
 waitzar_la_docdir = ${datadir}/doc/${PACKAGE} 
 
-waitzar_la_doc_DATA = ../WaitZar_User_Guide.doc
+waitzar_la_doc_DATA = \
+                                    ../doc/waitzar_users_guide.xml \
+                                    ../doc/waitzar_users_guide.pdf
 
 EXTRA_DIST = ${files_USERGUIDE}
 
