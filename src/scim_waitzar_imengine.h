@@ -28,6 +28,8 @@
 #include <scim.h>
 #include <waitzar/WordBuilder.h>
 #include <waitzar/SentenceList.h>
+#include <vector>
+#include <string>
 
 #include "scim_waitzar_keymap.h"
 #include "scim_waitzar_lookup_table.h"

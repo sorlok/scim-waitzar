@@ -121,6 +121,11 @@ WaitZarInstance::WaitZarInstance (WaitZarFactory* factory,
 	}
     }
     
+    //Special mywords file?
+    char* mywordsPath2 = new char[200];
+    strcpy(mywordsPath2, userHomeWZ);
+    strcat(mywordsPath2, "/mywords.txt");
+    
     //Re-create our log file
     if (LOG_ON) {
         strcat(userHomeWZ, "/wzlog.txt");
@@ -129,6 +134,40 @@ WaitZarInstance::WaitZarInstance (WaitZarFactory* factory,
    	    //Disable logging...
  	    LOG_ON = false;
         }
+    }
+    
+    //Try to find the model file & mywords file(s)
+    char* modelPath = new char[200];
+    char* mywordsPath = new char[200];
+    strcpy(modelPath, "/usr/share/waitzar/Myanmar.model");
+    if (fopen(modelPath,  "r")==NULL) {
+	strcpy(modelPath, "/usr/local/share/waitzar/Myanmar.model");
+        if (fopen(modelPath,  "r")==NULL) {
+	    if (LOG_ON) {
+                fprintf(logFile, "ERROR: Cannot find model file. WaitZar will not function.\n");
+	        fflush(logFile);
+	    }
+	}
+    }
+    strcpy(mywordsPath, "/usr/share/waitzar/mywords.txt");
+    if (fopen(mywordsPath,  "r")==NULL) {
+	strcpy(mywordsPath, "/usr/local/share/waitzar/mywords.txt");
+        if (fopen(mywordsPath,  "r")==NULL) {
+	    strcpy(mywordsPath, "");
+	    if (LOG_ON) {
+                fprintf(logFile, "WARNING: Cannot find mywords file. WaitZar will still function, but this is odd.\n");
+	        fflush(logFile);
+	    }
+	}
+    }
+    std::vector<std::string> myWords;
+    if (strlen(mywordsPath)>0) {
+      myWords.push_back(mywordsPath);
+    }
+    if (fopen(mywordsPath2, "r")!=NULL) {
+      myWords.push_back(mywordsPath2);
+    } else {
+      strcpy(mywordsPath2, "");
     }
     
     //Sample log lines...
@@ -142,8 +181,12 @@ WaitZarInstance::WaitZarInstance (WaitZarFactory* factory,
 	fflush(logFile);
         fprintf(logFile, "Scim was last re-started: %s\n", asctime (timeinfo));
 	fflush(logFile);
-        fprintf(logFile, "Checking for model in: %s\n", SCIM_WAITZAR_MODEL_FILE);
+        fprintf(logFile, "Model found at: %s\n", modelPath);
 	fflush(logFile);
+	if (strlen(mywordsPath2)>0) {
+          fprintf(logFile, "User-defiend dictionary found at: %s\n", mywordsPath2);
+	  fflush(logFile);
+	}
         fprintf(logFile, "Icon is located in: %s\n", SCIM_WAITZAR_ICON_FILE);
 	fflush(logFile);
         fprintf(logFile, "Settings: \n");
@@ -154,29 +197,8 @@ WaitZarInstance::WaitZarInstance (WaitZarFactory* factory,
 	fflush(logFile);
     }
 
-    
-    //Try to find the model & mywords files
-    char* modelPath = new char[200];
-    char* mywordsPath = new char[200];
-    strcpy(modelPath, "/usr/share/waitzar/Myanmar.model");
-    if (fopen(modelPath)==NULL) {
-	strcpy(modelPath, "/usr/local/share/waitzar/Myanmar.model");
-        if (fopen(modelPath)==NULL) {
-            fprintf(logFile, "ERROR: Cannot find model file. WaitZar will not function.\n");
-	    fflush(logFile);
-	}
-    }
-    strcpy(mywordsPath, "/usr/share/waitzar/mywords.txt");
-    if (fopen(mywordsPath)==NULL) {
-	strcpy(mywordsPath, "/usr/local/share/waitzar/mywords.txt");
-        if (fopen(mywordsPath)==NULL) {
-            fprintf(logFile, "WARNING: Cannot find mywords file. WaitZar will still function, but this is odd.\n");
-	    fflush(logFile);
-	}
-    }
-
     delete [] userHomeWZ;
-    model = new WordBuilder(modelPath, mywordsPath);
+    model = new WordBuilder(modelPath, myWords);
     model->setOutputEncoding(def_encoding);
 
     if (LOG_ON) {
@@ -186,6 +208,7 @@ WaitZarInstance::WaitZarInstance (WaitZarFactory* factory,
     
     delete [] modelPath;
     delete [] mywordsPath;
+    delete [] mywordsPath2;
     
     
     //Init all data structures 
