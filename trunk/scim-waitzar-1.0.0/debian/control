@@ -1,0 +1,44 @@
+Source: scim-waitzar
+Section: utils
+Priority: optional
+Maintainer: Seth N. Hetu <sorlok_reaves@yahoo.com>
+Homepage: http://code.google.com/p/scim-waitzar/
+Vcs-Browser: http://code.google.com/p/scim-waitzar/source/browse/
+Vcs-Svn: http://scim-waitzar.googlecode.com/svn/trunk/
+Build-Depends: debhelper (>= 5), dpkg-dev (>= 1.14.13), autotools-dev, pkg-config, gettext, libscim-dev (>= 1.4.6)
+Standards-Version: 3.8.0
+
+Package: scim-waitzar
+Section: utils
+Architecture: any
+Depends: ${shlibs:Depends}, ${misc:Depends}
+Description: Burmese typing system (IME) for Linux
+ This package enables Burmese input for windowed Linux
+ applications. Once installed, users will 
+ be able to type "burglish" style words and have them 
+ transformed into standard Burmese letters. This process is
+ similar to scim-pinyin, or scim-anthy's romaji-kana 
+ conversion.
+ .
+ As an IMEngine, scim-waitzar extends SCIM (the "smart common input 
+ method platform"). Naturally, it allows the user to switch easily
+ between typing Burmese and English through the use of hotkeys.
+ Properly formatted Unicode text is output by default, and can be 
+ rendered with a font such as ttf-sil-padauk. In addition, one can 
+ change the output encoding of Burmese text at runtime, which enables 
+ typing in popular legacy fonts such as Zawgyi-One and Win Innwa.
+ .
+ WaitZar features its own custom romanisation, designed to be both
+ easier to learn and faster to type than other Burmese romanisations.
+ WaitZar's word list was compiled from scans of books and online forums;
+ if users find a word which is not in the list, they can easily add
+ that word to a custom dictionary.
+ .
+ This package does not allow letter-by-letter typing of Burmese; 
+ for such functionality consider the scim-kmfl-imengine package.
+ Other outstanding features include a reverse-lookup of unknown words,
+ and enhanced pre-edit functionality, both of which are in the planning
+ stages.
+ .
+ You should install this package if you would like the option of typing
+ in Burmese. Be aware that this package is still experimental.
