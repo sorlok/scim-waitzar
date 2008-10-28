@@ -1,0 +1,14 @@
+scim-waitzar (1.0.0) unstable; urgency=low
+
+  * Changed documentation to DocBook format
+  * Added the ability to use a local mywords.txt dictionary
+  * Migrated the WaitZar model into a separate library
+
+ -- Seth N. Hetu <sorlok_reaves@yahoo.com>  Tue, 29 Oct 2008 23:00:00 +0800
+
+
+scim-waitzar (0.0.1) unstable; urgency=low
+
+  * Initial release (Closes: #nnnn)
+
+ -- Seth N. Hetu <sorlok_reaves@yahoo.com>  Fri, 05 Sep 2008 17:12:44 +0800
