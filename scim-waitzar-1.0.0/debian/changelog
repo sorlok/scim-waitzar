@@ -9,6 +9,6 @@ scim-waitzar (1.0.0) unstable; urgency=low
 
 scim-waitzar (0.0.1) unstable; urgency=low
 
-  * Initial release (Closes: #nnnn)
+  * Initial release (Closes: #503891)
 
  -- Seth N. Hetu <sorlok_reaves@yahoo.com>  Fri, 05 Sep 2008 17:12:44 +0800
