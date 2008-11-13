@@ -4,7 +4,7 @@
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
- *  the Free Software Foundation; either version 2, or (at your option)
+ *  the Free Software Foundation; either version 3, or (at your option)
  *  any later version.
  *
  *  This program is distributed in the hope that it will be useful,
@@ -54,7 +54,7 @@ static Property _waitzar_encoding_zawgyi_prop       (SCIM_PROP_WAITZAR_ENCODING_
 static Property _waitzar_encoding_wininnwa_prop     (SCIM_PROP_WAITZAR_ENCODING_WININNWA, "Win Innwa");
 
 
-//Use "C" language linking for our function names (i.e., don't allow C++ to mangle the names to allow signature overloading.) 
+//Use "C" language linking for our function names (i.e., don't allow C++ to mangle the names to allow signature overloading.)
 //This allows SCIM to call our init functions in a global way. (I think...)
 //Not working... how am I doing this wrongly? Ah, nevermind. I'll just set it manually.
 /*extern "C" {
@@ -85,7 +85,7 @@ static Property _waitzar_encoding_wininnwa_prop     (SCIM_PROP_WAITZAR_ENCODING_
     {
         if (engine != 0) return IMEngineFactoryPointer (0);
         if (_scim_pinyin_factory.null ()) {
-            PinyinFactory *factory = new PinyinFactory (_scim_config); 
+            PinyinFactory *factory = new PinyinFactory (_scim_config);
             if (factory && factory->valid ())
                 _scim_pinyin_factory = factory;
             else
@@ -105,11 +105,11 @@ WaitZarInstance::WaitZarInstance (WaitZarFactory* factory,
 {
 	this->LOG_ON = true;
 	this->typeMyanmarNumerals = type_numerals;
-	
+
 	blank_lookup.nullifyCandidateLabels();
 	blank_lookup.forceCandidate(L" ");
 
-	
+
     //Create our user's scim-waitzar directory
     char* userHomeWZ = new char[500];
     strcpy(userHomeWZ, getenv ("HOME"));
@@ -120,12 +120,12 @@ WaitZarInstance::WaitZarInstance (WaitZarFactory* factory,
 		LOG_ON = false;
 	}
     }
-    
+
     //Special mywords file?
     char* mywordsPath2 = new char[200];
     strcpy(mywordsPath2, userHomeWZ);
     strcat(mywordsPath2, "/mywords.txt");
-    
+
     //Re-create our log file
     if (LOG_ON) {
         strcat(userHomeWZ, "/wzlog.txt");
@@ -135,7 +135,7 @@ WaitZarInstance::WaitZarInstance (WaitZarFactory* factory,
  	    LOG_ON = false;
         }
     }
-    
+
     //Try to find the model file & mywords file(s)
     char* modelPath = new char[200];
     char* mywordsPath = new char[200];
@@ -169,14 +169,14 @@ WaitZarInstance::WaitZarInstance (WaitZarFactory* factory,
     } else {
       strcpy(mywordsPath2, "");
     }
-    
+
     //Sample log lines...
     if (LOG_ON) {
         time_t rawtime;
         struct tm * timeinfo;
         time ( &rawtime );
         timeinfo = localtime ( &rawtime );
-	    
+
         fprintf(logFile, "WaitZar log file.\n");
 	fflush(logFile);
         fprintf(logFile, "Scim was last re-started: %s\n", asctime (timeinfo));
@@ -205,13 +205,13 @@ WaitZarInstance::WaitZarInstance (WaitZarFactory* factory,
         fprintf(logFile, "Model has loaded correctly.\n");
         fflush(logFile);
     }
-    
+
     delete [] modelPath;
     delete [] mywordsPath;
     delete [] mywordsPath2;
-    
-    
-    //Init all data structures 
+
+
+    //Init all data structures
    // currSelectionID = 0;
     /*currStr = new wchar_t[50];
     wcscpy(currStr, L"");
@@ -228,16 +228,16 @@ WaitZarInstance::WaitZarInstance (WaitZarFactory* factory,
     guess_string = new wchar_t[100];
     wcscpy(guess_string, L"");
     sentence = new SentenceList();
-    
+
     aux_string = new wchar_t[150];
     wcscpy(aux_string, L"");
     typed_string = new wchar_t[150];
     wcscpy(typed_string, L"");
-    
+
     //Used for any single keypress's additional needs
     extra_str = new wchar_t[500];
-    
-    
+
+
     has_focus = false;
 }
 
@@ -250,14 +250,14 @@ void WaitZarInstance::focus_in ()
 {
 	this->resetInstance();
 	this->loadProperties();
-	
+
 	has_focus = true;
 }
 
 void WaitZarInstance::focus_out ()
 {
 	has_focus = false;
-	
+
 	this->resetInstance();
 }
 
@@ -279,16 +279,16 @@ void WaitZarInstance::trigger_property (const String &property)
 	    newEncoding = ENCODING_WININNWA;
 	    newLbl = "WI";
 	}
-	
+
 	if (newEncoding>0 && newEncoding!=currEncoding) {
 	    //Update our model.
 	    model->setOutputEncoding(newEncoding);
-		
+
 	    //Update our label
 	    _waitzar_encoding_prop.set_label (newLbl);
 	    update_property (_waitzar_encoding_prop);
 	}
-	
+
 }
 
 
@@ -300,10 +300,10 @@ void WaitZarInstance::loadProperties()
     proplist.push_back (_waitzar_encoding_unicode_prop);
     proplist.push_back (_waitzar_encoding_zawgyi_prop);
     proplist.push_back (_waitzar_encoding_wininnwa_prop);
-	
+
     //Now, register these properties
     register_properties(proplist);
-	
+
     //Set tooltips
     _waitzar_encoding_prop.set_tip (_("The encoding of the text WaitZar outputs. Change this only if you know what you're doing."));
     _waitzar_encoding_unicode_prop.set_tip (_("The encoding as defined in Unicode 5.1 and later. The default & recommended option."));
@@ -312,7 +312,7 @@ void WaitZarInstance::loadProperties()
     update_property (_waitzar_encoding_zawgyi_prop);
     _waitzar_encoding_wininnwa_prop.set_tip (_("The encoding used by the Win Innwa font family (inc. Win Kalaw), a popular legacy font which conflicts with ASCII."));
     update_property (_waitzar_encoding_wininnwa_prop);
-	
+
     //Finally, double-check the label... although this really shouldn't change.
     String newLbl = "";
     int encoding = model->getOutputEncoding();
@@ -350,8 +350,8 @@ bool WaitZarInstance::process_key_event (const KeyEvent& key)
     ) {
 	return false;
     }
-    
-    
+
+
     //INPUT:
     //(a-z)
     if (key.code>='a' && key.code<='z') {
@@ -360,7 +360,7 @@ bool WaitZarInstance::process_key_event (const KeyEvent& key)
 	    int len = wcslen(typed_string);
 	    typed_string[len] = key.code;
 	    typed_string[len+1] = 0x0000;
-	
+
 	    //Update all guesses
 	    updateGuesses();
 	}
@@ -464,7 +464,7 @@ bool WaitZarInstance::process_key_event (const KeyEvent& key)
 	    } else {
 		didDelete = sentence->deleteNext();
 	    }
-	    
+
 	    //Delete this word
 	    if (didDelete) {
 		recalcPrefixString();
@@ -491,7 +491,7 @@ bool WaitZarInstance::process_key_event (const KeyEvent& key)
 	    return true;
 	}
     }
-    
+
     //Global else:
     return false;
 }
@@ -511,7 +511,7 @@ inline bool WaitZarInstance::isHangingPhrase()
 
 
 void WaitZarInstance::updateGuesses()
-{	
+{
     //Update aux_string
     if (wcslen(model->getParenString())==0)
         wcscpy(aux_string, typed_string);
@@ -525,7 +525,7 @@ void WaitZarInstance::updateGuesses()
 	    hide_aux_string();
 	    hide_lookup_table();
 	}
-		
+
     //Update the current guess
     wcscpy(guess_string, L"");
     if (model->getPossibleWords().size()>0)
@@ -536,22 +536,22 @@ void WaitZarInstance::updateGuesses()
         show_preedit_string();
     else
         hide_preedit_string();
-    
+
    /* fprintf(logFile, "now on: %ls\n", typed_string);
     fprintf(logFile, "   prefix_string: %ls\n", prefix_string);
     fprintf(logFile, "   guess_string: %ls\n", guess_string);
     fprintf(logFile, "   postfix_string: %ls\n", postfix_string);
     fflush(logFile);*/
-	
+
     //Update the candidate table & cursor
     lookup.setCandidates(model);
     lookup.show_cursor(model->getPossibleWords().size()>0);
     lookup.set_cursor_pos(model->getCurrSelectedID()); //I think...
     update_lookup_table(lookup);
-	
+
     //Update the caret
     update_preedit_caret(wcslen(prefix_string));
-	
+
     //TEMP: Bugfix on behalf of SCIM
     if (lookup.number_of_candidates()==0) {
 	update_lookup_table(blank_lookup);
@@ -561,7 +561,7 @@ void WaitZarInstance::updateGuesses()
 
 void WaitZarInstance::moveRight(int amt)
 {
-    //Move the cursor 
+    //Move the cursor
     if (model->moveRight(amt)) {
 	updateGuesses();
     }
@@ -575,15 +575,15 @@ void WaitZarInstance::pickGuess(int id)
     if (guess.first) {
         //Append in the correct location
 	sentence->insert(guess.second);
-	
+
 	//Update the prefix string & model
 	recalcPrefixString();
 	model->reset(false);
 	wcscpy(typed_string, L"");
-	
+
 	//Update all visible strings
 	updateGuesses();
-	
+
 	//Update the caret
 	//updateCaret();
     }
@@ -596,7 +596,7 @@ void WaitZarInstance::typeSentence(const wchar_t* extra)
     wcscat(prefix_string, postfix_string);
     wcscat(prefix_string, extra);
     commit_string(prefix_string);
-	
+
     //Reset
     resetInstance();
 }
@@ -606,10 +606,10 @@ void WaitZarInstance::resetInstance()
 {
     //Reset the model
     model->reset(true);
-	
+
     //Reset our array & counter
     sentence->clear();
-    
+
     //Reset all strings
     wcscpy(prefix_string, L"");
     wcscpy(postfix_string, L"");
@@ -627,11 +627,11 @@ void WaitZarInstance::recalcPrefixString()
     int put_count = 0;
     wchar_t *temp = new wchar_t[100];
     int currChars = 0;
-	
+
     for (std::list<int>::iterator addIT=sentence->begin(); addIT!=sentence->end(); addIT++) {
 	std::vector<unsigned short> strokes = model->getWordKeyStrokes(*addIT);
 	copyStringFromKeyStrokes(temp, strokes);
-		    
+
 	//Append to prefix or postfix?
 	// The final preedit_string is displayed as prefix + guess + postfix
 	if (sentence->getCursorIndex() >= put_count++) {
@@ -665,7 +665,7 @@ void WaitZarInstance::reset()
 }
 
 
-void WaitZarInstance::copyStringFromKeyStrokes(wchar_t* dest, std::vector<unsigned short> src) 
+void WaitZarInstance::copyStringFromKeyStrokes(wchar_t* dest, std::vector<unsigned short> src)
 {
 	for (int i=0; i<src.size(); i++) {
 	    dest[i] = src[i];
