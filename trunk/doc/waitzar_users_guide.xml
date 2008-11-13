@@ -370,31 +370,106 @@ gedit --encoding UTF-8 ~/.scim-waitzar/mywords.txt</programlisting>
   
   <section>
     <title>Finding a Word</title>
-    <para><emphasis>This section describes how to find a word. It is under development...</emphasis></para>
+    <para>Although WaitZar was designed to be natural to use, there will come a time when you do not know how to type a word in WaitZar. 
+    Fortunately, as of release 1.6 on Windows (and 1.0.0 on Linux), WaitZar now ships with version 2.0 of the WaitZar romanisation. This romanisation was 
+    designed to be simple and effective, and to make looking up unknown words easy. We will now discuss how this works.</para>
     
     <section>
       <title>The WaitZar Romanisation</title>
-      <para><emphasis>This section describes the WaitZar romanisation. It is under development.</emphasis></para>
+      <para>The WaitZar romanisation was designed around three simple principles:
+      <itemizedlist spacing="compact">
+        <listitem><para>There should be a few simple rules which most words follow.</para></listitem>
+        <listitem><para>All words should be easy to guess, even if you don’t know the rules.</para></listitem>
+        <listitem><para>Each Burmese word gets exactly one English romanisation.</para></listitem>
+      </itemizedlist>
+      The first rule is covered in the next section (on the default romanisation), and the second rule is relevant throughout. 
+      The final rule may seem silly: why not allow <foreignphrase>&#x101E;&#x102C;</foreignphrase> = &ldquo;tar&rdquo; or &ldquo;thar&rdquo; or &ldquo;ttar&rdquo;? 
+      Our main reason for enforcing this rule is efficiency. Once you learn that <foreignphrase>&#x101E;&#x102C;</foreignphrase> = &ldquo;thar&rdquo; in WaitZar, 
+      then you will start to get annoyed if you see <foreignphrase>&#x101E;&#x102C;</foreignphrase> when you type &ldquo;tar&rdquo; or &ldquo;ttar&rdquo;. Through 
+      decisions like this, we try to make our system agreeable to both novices and experts.
+      </para>
       
       <section>
         <title>Default Romanisation</title>
-        <para><emphasis>This section describes how to find most everday words. It is under development.</emphasis></para>
+        <para>Most Burmese words can be thought of as an onset combined with a rhyme. For example: <inlinegraphic scale="80" fileref="images/inline_non.png"/>, pronounced 
+	&ldquo;non&rdquo;, can be broken up into <inlinegraphic scale="80" fileref="images/inline_na.png"/> = &ldquo;n(a)&rdquo; and <inlinegraphic scale="80" fileref="images/inline_on.png"/> 
+	= &ldquo;on&rdquo;. Words can actually be broken up further, into consonants, medials, vowels, tones, and finals, but a unique quality of onsets and rhymes is that they can 
+	be spelled the same way when they appear in different words. For example:
+	
+        <informalfigure>
+          <graphic fileref="images/table_example_onsetrhyme.png" align="center" valign="middle" scale="80"/>
+        </informalfigure>
+       </para>
+       
+       <para>The rhymes always follow their phonetic pronunciation; the onsets are more structures. The following rules apply to onsets:
+        <orderedlist>
+          <listitem><para>Install necessary packages, preferably with <command>apt-get</command></para></listitem>
+	  <listitem><para>Install necessary packages, preferably with <command>apt-get</command></para></listitem>
+	  <listitem><para>Install necessary packages, preferably with <command>apt-get</command></para></listitem>
+	</orderedlist>
+        
+	For reference, here is the current list of rhymes and onsets. Within a rhyme, a dash indicates where onsets may be plugged in. 
+	We apologize for the large size of these tables; we were forced to include them as images, since none of the Unicode-enabled fonts allows Burmese syllable fragments
+	to be displayed in Docbook. The alternative was to require you to install the (non-compliant) Zawgyi-One font, which we felt was unreasonable. 
+	
+	<informalfigure>
+          <graphic fileref="images/table_onsets.png" align="center" valign="middle" scale="80"/>
+        </informalfigure>
+	
+        <inlinegraphic fileref="images/table_rhymes_1_to_10.png" align="center" valign="middle" scale="75"/>
+        <inlinegraphic fileref="images/table_rhymes_11_to_20.png" align="center" valign="middle" scale="75"/>
+	<inlinegraphic fileref="images/table_rhymes_21_to_30.png" align="center" valign="middle" scale="75"/>
+	<inlinegraphic fileref="images/table_rhymes_31_to_40.png" align="center" valign="middle" scale="75"/>
+	<inlinegraphic fileref="images/table_rhymes_41_to_50.png" align="center" valign="middle" scale="75"/>
+	<inlinegraphic fileref="images/table_rhymes_51_to_60.png" align="center" valign="middle" scale="75"/>
+	<inlinegraphic fileref="images/table_rhymes_61_to_7x.png" align="center" valign="middle" scale="75"/>
+	</para>
+	
+	<para><emphasis role="bold">Warning:</emphasis> You may have noticed that &ldquo;<foreignphrase>&#x1021;</foreignphrase>&rdquo; is not romanised as 
+	&ldquo;a&rdquo;. This is because it functions as a silent, &ldquo;placeholder&rdquo; onset in spoken Burmese. Instead of typing, for example, "aa", "aone", "aote", 
+	one would simply type "a", "one", or "ote". This is consistent with how most Burmese type.
+	</para>
+	
+	<para><emphasis role="bold">Bigger Warning:</emphasis> Please be careful not to read the rhymes with an English pronunciation. For example, when typing "one",
+	do <emphasis>not</emphasis> read it to sound like the English numeral 1. If you consider a consonant in front of the word (e.g., "kone") then you won't run into
+	this problem.
+	</para>
       </section>
       
       <section>
         <title>Special Romanisations</title>
-        <para><emphasis>This section describes how pat-sint and foreign words are romanised. It is under development.</emphasis></para>
+        <para>Some words don’t fall into any simple pattern, and you’ll just have to memorize them. These include pat-sint and foreign words. Also, there are six words that directly 
+	contradict our onset + rhyme rule; these include “lhyo” (not “sho”) for example. The following table lists these six words, and the pat-sint words. For brevity, we do not include
+	foreign words, which romanize to their foreign spelling.
+	
+        <inlinegraphic fileref="images/table_specials_1_to_10.png" align="center" valign="top" scale="82"/>
+        <inlinegraphic fileref="images/table_specials_11_to_20.png" align="center" valign="top" scale="82"/>
+	<inlinegraphic fileref="images/table_specials_21_to_30.png" align="center" valign="top" scale="82"/>
+	<inlinegraphic fileref="images/table_specials_31_to_4x.png" align="center" valign="top" scale="82"/>
+      </para>
       </section>
       
       <section>
         <title>Shortcuts</title>
-        <para><emphasis>This section describes shortcuts like "aung" and the like. It is under development.</emphasis></para>
+        <para>WaitZar uses two shortcuts to speed up typing.
+      <itemizedlist spacing="compact">
+        <listitem><para>Any word containing “aung” can shorten it to simply “g”. For example, “kaung” can be typed as “kg”. 
+	“Aung” by itself can be shortened to “ag”. </para></listitem>
+        <listitem><para>All words should be easy to guess, even if you don’t know the rules.</para></listitem>
+        <listitem><para>If only one set of words is possible at any point, the sequence to that set is parenthesised. For example, 
+	typing “singa” is sufficient for WaitZar to guess that you want “singapore”. </para></listitem>
+      </itemizedlist>
+      </para>
       </section>
     </section>
     
     <section>
       <title>Dictionary Lookup</title>
-      <para><emphasis>This section tells where to go for a dictionary lookup of words. It is under development.</emphasis></para>
+      <para>If, for any reason, you cannot find the word you want to type in WaitZar, you can search for it in the generated wordlist:
+      <literallayout><ulink url="http://waitzar.googlecode.com/svn/trunk/eclipse_project/wordlist.generated.txt"/></literallayout>
+      In the future, WaitZar will allow you to search within the program itself; for now, you will have to manually look for your word. Please note that you will 
+      need Zawgyi-One installed to view the generated wordlist (most development is done in Zawgyi-One to avoid ambiguity errors).
+      </para>
     </section>
   </section>
   
