@@ -29,5 +29,6 @@ is licensed under the GPL, see above.
 
 The following files are licensed under the LGPL:
   src/gettext.h
+  src/intl.h
 
 This package relies on the libwaitzar package, which is licensed under the Apache license version 2.
