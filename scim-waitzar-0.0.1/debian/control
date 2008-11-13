@@ -5,7 +5,7 @@ Maintainer: Seth N. Hetu <sorlok_reaves@yahoo.com>
 Homepage: http://code.google.com/p/scim-waitzar/
 Vcs-Browser: http://code.google.com/p/scim-waitzar/source/browse/
 Vcs-Svn: http://scim-waitzar.googlecode.com/svn/trunk/
-Build-Depends: debhelper (>= 5), dpkg-dev (>= 1.14.13), autotools-dev, pkg-config, gettext, libscim-dev (>= 1.4.6)
+Build-Depends: debhelper (>= 5), dpkg-dev (>= 1.14.13), autotools-dev, pkg-config, gettext, libscim-dev (>= 1.4.6), libwaitzar (>= 1.0.0)
 Standards-Version: 3.8.0
 
 Package: scim-waitzar
