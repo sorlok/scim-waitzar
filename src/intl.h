@@ -1,5 +1,6 @@
 /* -*- Mode: C; tab-width: 4; indent-tabs-mode: nil; c-basic-offset: 4 -*- */
 /*
+ *  Borrowed from the scim-thai project:
  *  Copyright (C) 2006 Theppitak Karoonboonyanan <thep@linux.thai.net>
  *
  *  This program is free software; you can redistribute it and/or modify

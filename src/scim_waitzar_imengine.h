@@ -4,7 +4,7 @@
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
- *  the Free Software Foundation; either version 2, or (at your option)
+ *  the Free Software Foundation; either version 3, or (at your option)
  *  any later version.
  *
  *  This program is distributed in the hope that it will be useful,
@@ -79,7 +79,7 @@ private:
     FILE * logFile;
     WordBuilder *model;
     WaitZarKeymap           m_keymap;
-    
+
     //Data structures for user interaction: prefix-string
     wchar_t                    *preedit_string;
     wchar_t                    *prefix_string;
@@ -107,12 +107,12 @@ private:
     void pickGuess(int id);
     void typeSentence(const wchar_t* extra);
     void resetInstance();
-    
+
     //Helpers
     void recalcPrefixString();
     void updateCaret();
     void loadProperties();
-    
+
     //Statics
     WZLookupTable          lookup;
     WZLookupTable          blank_lookup;

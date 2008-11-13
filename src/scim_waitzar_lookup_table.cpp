@@ -4,7 +4,7 @@
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
- *  the Free Software Foundation; either version 2, or (at your option)
+ *  the Free Software Foundation; either version 3, or (at your option)
  *  any later version.
  *
  *  This program is distributed in the hope that it will be useful,
@@ -81,37 +81,37 @@ void WZLookupTable::regenerateCandidateLabels()
 
 
 /**
- * Can set to NULL to clear all entries... 
+ * Can set to NULL to clear all entries...
  */
 void WZLookupTable::setCandidates(WordBuilder *currentModelState)
 {
 	//Delete old entries
 	this->clear();
-	
+
 	//Add new entries?
-	if (currentModelState==NULL) 
+	if (currentModelState==NULL)
 	    return;
-	
+
 	//Construct a string for each new word
 	std::vector<unsigned int> words = currentModelState->getPossibleWords();
 	for (int i=0; i<words.size(); i++) {
-	    //Get this word (in Myanmar3) 
+	    //Get this word (in Myanmar3)
 	    //unsigned int oldOut = currentModelState->getOutputEncoding();
 	    //currentModelState->setOutputEncoding(ENCODING_UNICODE);
 	    std::vector<unsigned short> wordKeys = currentModelState->getWordKeyStrokes(words[i], ENCODING_UNICODE);
 	    //currentModelState->setOutputEncoding(oldOut);
-	
+
 	    //Copy this word's key strokes
 	    WideString word;// = new wchar_t[wordKeys.size()+1];
 	    for (int x=0; x<wordKeys.size(); x++) {
 		    word += ((wchar_t)wordKeys[x]);
 	    }
 	    //word[wordKeys.size()] = 0x0000;
-	    
+
 	    //Put it in our array
 	    possible_entries.push_back(word);
 	}
-	
+
 }
 
 
@@ -126,19 +126,19 @@ WideString WZLookupTable::get_candidate (int index) const
 {
     if (index < 0 || index >= (int) number_of_candidates ())
         return WideString ();
-    
+
     return possible_entries[index];
 }
 
 
 
-   void WZLookupTable::clear () 
+   void WZLookupTable::clear ()
   {
         LookupTable::clear ();
         possible_entries.clear();
     }
-    
-    uint32 WZLookupTable::number_of_candidates () const 
+
+    uint32 WZLookupTable::number_of_candidates () const
     {
         return possible_entries.size();
     }

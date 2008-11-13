@@ -4,7 +4,7 @@
  *
  *  This program is free software; you can redistribute it and/or modify
  *  it under the terms of the GNU General Public License as published by
- *  the Free Software Foundation; either version 2, or (at your option)
+ *  the Free Software Foundation; either version 3, or (at your option)
  *  any later version.
  *
  *  This program is distributed in the hope that it will be useful,
@@ -55,7 +55,7 @@ using namespace scim;
 #define scim_setup_module_save_config     waitzar_imengine_setup_LTX_scim_setup_module_save_config
 #define scim_setup_module_query_changed   waitzar_imengine_setup_LTX_scim_setup_module_query_changed
 
-#define LIST_ICON_SIZE 20 
+#define LIST_ICON_SIZE 20
 
 static GtkWidget * create_setup_window ();
 static void        load_config (const ConfigPointer& config);
@@ -178,7 +178,7 @@ static GtkWidget* create_setup_window ()
         GtkWidget*   label;
         GtkWidget*   vbox;
         GtkWidget*   alignment;
-	    
+
 	//Group our two configurable options
         GSList*      numerals_radiobutton_group = NULL;
         GSList*      encoding_radiobutton_group = NULL;
@@ -225,8 +225,8 @@ static GtkWidget* create_setup_window ()
         gtk_tooltips_set_tip(tooltips, __burmese_numerals_no_radio, _(__burmese_numerals_no_tooltip), NULL);
         gtk_radio_button_set_group(GTK_RADIO_BUTTON (__burmese_numerals_no_radio), numerals_radiobutton_group);
         numerals_radiobutton_group = gtk_radio_button_get_group(GTK_RADIO_BUTTON(__burmese_numerals_no_radio));
-	
-	
+
+
 
 	//////////////////////////////////////////////////////////////////
         //default_encoding configuration option
@@ -275,7 +275,7 @@ static GtkWidget* create_setup_window ()
 	//////////////////////////////////////////////////////////////////
         //Connect signals for button toggling, toggle these buttons
 	//////////////////////////////////////////////////////////////////
-	
+
         g_signal_connect((gpointer)__burmese_numerals_yes_radio, "toggled", G_CALLBACK(on_burmese_numerals_yes_radio_toggled), NULL);
         g_signal_connect((gpointer)__burmese_numerals_no_radio, "toggled", G_CALLBACK(on_burmese_numerals_no_radio_toggled), NULL);
 	g_signal_connect((gpointer)__output_encoding_unicode_radio, "toggled", G_CALLBACK(on_output_encoding_unicode_radio_toggled), NULL);
@@ -344,7 +344,7 @@ void save_config(const ConfigPointer& config)
     //Don't save to a null config file.
     if (config.null())
         return;
-    
+
     //Flash our file: burmese_numerals
     int id = 0;
     for (int i=0; i<__burmese_numerals_config_opts; i++) {
@@ -360,9 +360,9 @@ void save_config(const ConfigPointer& config)
 	    id = i;
     }
     config->write(String(SCIM_CONFIG_IMENGINE_WAITZAR_DEFAULT_ENCODING), String(__default_encoding_config_string[id]));
-    
+
     //The update is complete
-    __has_changed = false;        
+    __has_changed = false;
 }
 
 
