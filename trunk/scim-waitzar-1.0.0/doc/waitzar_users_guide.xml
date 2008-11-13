@@ -403,9 +403,9 @@ gedit --encoding UTF-8 ~/.scim-waitzar/mywords.txt</programlisting>
        
        <para>The rhymes always follow their phonetic pronunciation; the onsets are more structures. The following rules apply to onsets:
         <orderedlist>
-          <listitem><para>Install necessary packages, preferably with <command>apt-get</command></para></listitem>
-	  <listitem><para>Install necessary packages, preferably with <command>apt-get</command></para></listitem>
-	  <listitem><para>Install necessary packages, preferably with <command>apt-get</command></para></listitem>
+          <listitem><para>The first sound of the Myanmar letter is the Roman letter.</para></listitem>
+	  <listitem><para>If two onsets share the same first sound, the less common onset has an “h” after it. (For example: <foreignphrase>&#x1012;</foreignphrase> is “d”, but <foreignphrase>&#x1013;</foreignphrase> is “dh”)</para></listitem>
+	  <listitem><para>Rarely-used letters won't add an “h”. (For example: <foreignphrase>&#x1020;</foreignphrase> and <foreignphrase>&#x100E;</foreignphrase> are both “n”, even though <foreignphrase>&#x1014;</foreignphrase> is also “n”).</para></listitem>
 	</orderedlist>
         
 	For reference, here is the current list of rhymes and onsets. Within a rhyme, a dash indicates where onsets may be plugged in. 
