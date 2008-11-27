@@ -28,8 +28,8 @@
           
     <para>
       WaitZar is a romanisation of Burmese designed specifically for fast typing on a standard keyboard. Given the fluid nature of the 
-      Myanmar unicode specification (e.g., the 4.0, 5.0, and 5.1 encodings are mutually incompatible) and the wide variety of <emphasis>ad hoc</emphasis> 
-      encodings (i.e., Zawgyi-One partial, Win Innwa's ASCII kludging, etc.), WaitZar provides a degree of solidity and flexibility above and 
+      Myanmar unicode specification (i.e., the 4.0, 5.0, and 5.1 encodings are mutually incompatible) and the wide variety of <emphasis>ad hoc</emphasis> 
+      encodings (e.g., Zawgyi-One partial, Win Innwa's ASCII kludging, etc.), WaitZar provides a degree of solidity and flexibility above and 
       beyond that provided by most other input schemes for Burmese. 
     </para>
     
@@ -47,7 +47,7 @@
      <title>Requirements &amp; Installation</title>
      <para>
     WaitZar will run on almost any Linux distribution that also supports SCIM. In fact, by installing the <command>scim</command> package 
-    (or installing SCIM from source), you should already have everything you need. WaitZar is recommended for Ubuntu Linux, but it has also 
+    (or building SCIM from source), you should already have everything you need. WaitZar is recommended for Ubuntu Linux, but it has also 
     been tested on Debian Linux. Please inform us if <command>scim-waitzar</command> works (or breaks!) on your favorite brand of Linux.
     </para>
     
@@ -77,7 +77,7 @@
       and incompatibilities. Fortunately, Unicode 5.1 has resolved most of these, and the three fonts listed all render this document with no errors.
       </para>
       
-      <para>Developers, please note that, when discussing character encoding incompatibilities (in, say, the "Wait Zar User Interface Specification") the documentation will
+      <para>Developers, please note that, when discussing character encoding incompatibilities (in, say, the "Wait Zar User Interface Specification"), the documentation will
       use the Zawgyi-One font &amp; encoding, due to its unambiguous representation of variant forms.
       </para>
     </note>
@@ -89,8 +89,8 @@
       <programlisting>gksudo gedit /etc/apt/sources.lst</programlisting>
       ...and add the following repository lines at the very end. Note that these links are temporary. After we finish alpha testing, we'll put the 
       <command>scim-waitzar</command> package at a more suitable location.
-      <programlisting>deb http://www.comp.nus.edu.sg/~sethhetu/scim_wz_0.0.1/ ./
-deb-src http://www.comp.nus.edu.sg/~sethhetu/scim_wz_0.0.1/ ./</programlisting>
+      <programlisting>deb http://www.comp.nus.edu.sg/~sethhetu/scim_wz_1.0.0/ ./
+deb-src http://www.comp.nus.edu.sg/~sethhetu/scim_wz_1.0.0/ ./</programlisting>
       ...then, save the file and close <command>gedit</command>, and type:
       <programlisting>sudo apt-get update</programlisting>
       This will update the list of packages. Finally, install <command>scim-waitzar</command>:
@@ -109,8 +109,10 @@ deb-src http://www.comp.nus.edu.sg/~sethhetu/scim_wz_0.0.1/ ./</programlisting>
       <para>In general, the apt repository will never go offline. Nevertheless, you can always download and install the .deb package manually. 
         Grab the latest version from:
       <literallayout><ulink url="http://code.google.com/p/scim-waitzar/downloads/list"/></literallayout>
+      ...and the latest version of libwaitzar from:
+      <literallayout><ulink url="http://code.google.com/p/waitzar/downloads/list"/></literallayout>
       ...and then run the standard <command>dpkg</command> install command:
-      <programlisting>sudo dpkg -i scim-waitzar_*.deb</programlisting>
+      <programlisting>sudo dpkg -i libwaitzar_*.deb scim-waitzar_*.deb</programlisting>
       ...from the directory you downloaded the package to. You must then restart X (log out, log in). In case you are not familiar with 
       <command>dpkg</command>, note that un-installation can be done from any directory, and requires only the logical name of the 
       package:
@@ -128,7 +130,8 @@ deb-src http://www.comp.nus.edu.sg/~sethhetu/scim_wz_0.0.1/ ./</programlisting>
         <orderedlist>
           <listitem>
             <para>Install necessary packages, preferably with <command>apt-get</command>:
-	      <programlisting>sudo apt-get install subversion autoconf automake gettext libtool scim-dev g++</programlisting>
+	      <programlisting>sudo apt-get install subversion autoconf automake gettext libtool scim-dev g++ libwaitzar-dev</programlisting>
+	      If apt cannot find libwaitzar-dev, you can build and install that from source as well, using instructions similar to those provided in this section.
             </para>
           </listitem>
 	  
@@ -176,7 +179,7 @@ sudo make install</programlisting>
       and check the box marked &ldquo;Chinese&rdquo;. 
       Several package files will be installed. Finally, check the box that reads &ldquo;Enable support to enter complex characters&rdquo;, and click &ldquo;Ok&rdquo;. 
       You will probably have to restart. Note that, if you do not have at least one complex language installed (like Chinese), checking the box will have no 
-      effect. That is why we recommend enabling Chinese.
+      effect. That is why we recommend enabling Chinese, specifically.
        
         <figure><title>The &ldquo;Language Support&rdquo; window. Make sure the &ldquo;complex characters&rdquo; checkbox is checked.</title>
           <graphic fileref="images/ubuntu_enabling_chinese.png" align="center" valign="middle" scale="50"/>
@@ -248,7 +251,7 @@ sudo wget http://scim-waitzar.googlecode.com/svn/trunk/local.conf</programlistin
       <para>After configuring SCIM just the way you like it, start <command>gedit</command> and then look at the lower-right corner of your screen. 
       You'll see the SCIM toolbar; move the mouse over it and it will expand to show that you are typing in Englihsh. Click on the language and choose 
       &ldquo;Burmese&rdquo; to switch to WaitZar. (Note that if this panel is hidden, you can always click on the SCIM icon in your tray to switch to Burmese.) 
-      Then, type &ldquo;ko&rdquo;. You will see two possibilities presented to you. You will also see the word &ldquo;<foreignphrase>&#x1000;&#x102D;&#x102F;</foreignphrase>&rdquo; 
+      Then, type &ldquo;ko&rdquo;. You will see two possibilities presented to you. You will also see the word &ldquo;<inlinegraphic scale="80" fileref="images/inline_ko.png"/>&rdquo; 
       inside of <command>gedit</command>. This is one of the nice features of WaitZar on Linux: you can keep your eyes on the document you are typing, and 
       only have to look at the list of choices when something doesn't match.
       
@@ -356,7 +359,7 @@ sudo wget http://scim-waitzar.googlecode.com/svn/trunk/local.conf</programlistin
       <programlisting><foreignphrase>မ</foreignphrase> = ma</programlisting>
       Note that, for legacy reasons, you will have to enter the word you require in the Zawgyi-One encoding. If you have the word in a different encoding,
       the following web site provides excellent software for converting it:
-      <literallayout><ulink url="http://burglish.googlepages.com/fontconv.htm/"/></literallayout>
+      <literallayout><ulink url="http://burglish.googlepages.com/fontconv.htm"/></literallayout>
       </para>
       
       <para>The only remaining detail is <emphasis>which</emphasis> mywords.txt file to edit. For global changes to WaitZar, you can change 
@@ -383,16 +386,16 @@ gedit --encoding UTF-8 ~/.scim-waitzar/mywords.txt</programlisting>
         <listitem><para>Each Burmese word gets exactly one English romanisation.</para></listitem>
       </itemizedlist>
       The first rule is covered in the next section (on the default romanisation), and the second rule is relevant throughout. 
-      The final rule may seem silly: why not allow <foreignphrase>&#x101E;&#x102C;</foreignphrase> = &ldquo;tar&rdquo; or &ldquo;thar&rdquo; or &ldquo;ttar&rdquo;? 
-      Our main reason for enforcing this rule is efficiency. Once you learn that <foreignphrase>&#x101E;&#x102C;</foreignphrase> = &ldquo;thar&rdquo; in WaitZar, 
-      then you will start to get annoyed if you see <foreignphrase>&#x101E;&#x102C;</foreignphrase> when you type &ldquo;tar&rdquo; or &ldquo;ttar&rdquo;. Through 
+      The final rule may seem silly: why not allow <inlinegraphic scale="80" fileref="images/inline_thar.png"/> = &ldquo;tar&rdquo; or &ldquo;thar&rdquo; or &ldquo;ttar&rdquo;? 
+      Our main reason for enforcing this rule is efficiency. Once you learn that <inlinegraphic scale="80" fileref="images/inline_thar.png"/> = &ldquo;thar&rdquo; in WaitZar, 
+      then you will start to get annoyed if you see <inlinegraphic scale="80" fileref="images/inline_thar.png"/> when you type &ldquo;tar&rdquo; or &ldquo;ttar&rdquo;. Through 
       decisions like this, we try to make our system agreeable to both novices and experts.
       </para>
       
       <section>
         <title>Default Romanisation</title>
         <para>Most Burmese words can be thought of as an onset combined with a rhyme. For example: <inlinegraphic scale="80" fileref="images/inline_non.png"/>, pronounced 
-	&ldquo;non&rdquo;, can be broken up into <inlinegraphic scale="80" fileref="images/inline_na.png"/> = &ldquo;n(a)&rdquo; and <inlinegraphic scale="80" fileref="images/inline_on.png"/> 
+	&ldquo;non&rdquo;, can be broken up into <foreignphrase>&#x1014;</foreignphrase> = &ldquo;n(a)&rdquo; and <inlinegraphic scale="80" fileref="images/inline_on.png"/> 
 	= &ldquo;on&rdquo;. Words can actually be broken up further, into consonants, medials, vowels, tones, and finals, but a unique quality of onsets and rhymes is that they can 
 	be spelled the same way when they appear in different words. For example:
 	
@@ -401,7 +404,7 @@ gedit --encoding UTF-8 ~/.scim-waitzar/mywords.txt</programlisting>
         </informalfigure>
        </para>
        
-       <para>The rhymes always follow their phonetic pronunciation; the onsets are more structures. The following rules apply to onsets:
+       <para>The rhymes always follow their phonetic pronunciation; the onsets are more structured. The following rules apply to onsets:
         <orderedlist>
           <listitem><para>The first sound of the Myanmar letter is the Roman letter.</para></listitem>
 	  <listitem><para>If two onsets share the same first sound, the less common onset has an “h” after it. (For example: <foreignphrase>&#x1012;</foreignphrase> is “d”, but <foreignphrase>&#x1013;</foreignphrase> is “dh”)</para></listitem>
@@ -409,8 +412,9 @@ gedit --encoding UTF-8 ~/.scim-waitzar/mywords.txt</programlisting>
 	</orderedlist>
         
 	For reference, here is the current list of rhymes and onsets. Within a rhyme, a dash indicates where onsets may be plugged in. 
-	We apologize for the large size of these tables; we were forced to include them as images, since none of the Unicode-enabled fonts allows Burmese syllable fragments
-	to be displayed in Docbook. The alternative was to require you to install the (non-compliant) Zawgyi-One font, which we felt was unreasonable. 
+	We apologize for the large size of these tables; we were forced to include them as images, since none of the Unicode-enabled fonts provides a convenient
+	way for representing Burmese syllable fragments. The alternative was to require you to install the (non-compliant) Zawgyi-One font, which we felt was 
+	unreasonable. 
 	
 	<informalfigure>
           <graphic fileref="images/table_onsets.png" align="center" valign="middle" scale="80"/>
@@ -455,7 +459,6 @@ gedit --encoding UTF-8 ~/.scim-waitzar/mywords.txt</programlisting>
       <itemizedlist spacing="compact">
         <listitem><para>Any word containing “aung” can shorten it to simply “g”. For example, “kaung” can be typed as “kg”. 
 	“Aung” by itself can be shortened to “ag”. </para></listitem>
-        <listitem><para>All words should be easy to guess, even if you don’t know the rules.</para></listitem>
         <listitem><para>If only one set of words is possible at any point, the sequence to that set is parenthesised. For example, 
 	typing “singa” is sufficient for WaitZar to guess that you want “singapore”. </para></listitem>
       </itemizedlist>
