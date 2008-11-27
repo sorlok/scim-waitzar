@@ -452,21 +452,22 @@ gedit --encoding UTF-8 ~/.scim-waitzar/mywords.txt</programlisting>
 	foreign words, which romanize to their foreign spelling.
 	
 	<informalfigure>
-          <graphic fileref="images/table_specials_1_to_10.png" align="center" valign="middle" scale="75"/>
+          <graphic fileref="images/specials_page_1.png" align="center" valign="middle" scale="75"/>
         </informalfigure>
 	
-	<informalfigure>
-          <graphic fileref="images/table_specials_11_to_20.png" align="center" valign="middle" scale="75"/>
-        </informalfigure>
-	
-	<informalfigure>
-          <graphic fileref="images/table_specials_21_to_30.png" align="center" valign="middle" scale="75"/>
-        </informalfigure>
-	
-	<informalfigure>
-          <graphic fileref="images/table_specials_31_to_4x.png" align="center" valign="middle" scale="75"/>
+	     <informalfigure>
+          <graphic fileref="images/specials_page_2.png" align="center" valign="middle" scale="75"/>
         </informalfigure>
       </para>
+	  
+	  <para>
+	  <emphasis role="bold">Note:</emphasis>  At the time of publication, the following three special 
+	  last-minute exceptions were added:	
+	  <informalfigure>
+          <graphic fileref="images/specials_extra.png" align="center" valign="middle" scale="75"/>
+        </informalfigure>
+	  </para>
+	  
       </section>
       
       <section>
