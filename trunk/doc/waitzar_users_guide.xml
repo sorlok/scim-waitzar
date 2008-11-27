@@ -417,19 +417,19 @@ gedit --encoding UTF-8 ~/.scim-waitzar/mywords.txt</programlisting>
 	unreasonable. 
 	
 	<informalfigure>
-          <graphic fileref="images/table_onsets.png" align="center" valign="middle" scale="80"/>
+          <graphic fileref="images/table_onsets.png" align="center" valign="middle" scale="75"/>
         </informalfigure>
 	
 	<informalfigure>
-          <graphic fileref="images/rhymes_page_1.png" align="center" valign="middle" scale="80"/>
+          <graphic fileref="images/rhymes_page_1.png" align="center" valign="middle" scale="75"/>
         </informalfigure>
 
 	<informalfigure>
-          <graphic fileref="images/rhymes_page_2.png" align="center" valign="middle" scale="80"/>
+          <graphic fileref="images/rhymes_page_2.png" align="center" valign="middle" scale="75"/>
         </informalfigure>
 	
 	<informalfigure>
-          <graphic fileref="images/rhymes_page_3.png" align="center" valign="middle" scale="80"/>
+          <graphic fileref="images/rhymes_page_3.png" align="center" valign="middle" scale="75"/>
         </informalfigure>
 	
 	</para>
@@ -451,10 +451,21 @@ gedit --encoding UTF-8 ~/.scim-waitzar/mywords.txt</programlisting>
 	contradict our onset + rhyme rule; these include “lhyo” (not “sho”) for example. The following table lists these six words, and the pat-sint words. For brevity, we do not include
 	foreign words, which romanize to their foreign spelling.
 	
-        <inlinegraphic fileref="images/table_specials_1_to_10.png" align="center" valign="top" scale="82"/>
-        <inlinegraphic fileref="images/table_specials_11_to_20.png" align="center" valign="top" scale="82"/>
-	<inlinegraphic fileref="images/table_specials_21_to_30.png" align="center" valign="top" scale="82"/>
-	<inlinegraphic fileref="images/table_specials_31_to_4x.png" align="center" valign="top" scale="82"/>
+	<informalfigure>
+          <graphic fileref="images/table_specials_1_to_10.png" align="center" valign="middle" scale="75"/>
+        </informalfigure>
+	
+	<informalfigure>
+          <graphic fileref="images/table_specials_11_to_20.png" align="center" valign="middle" scale="75"/>
+        </informalfigure>
+	
+	<informalfigure>
+          <graphic fileref="images/table_specials_21_to_30.png" align="center" valign="middle" scale="75"/>
+        </informalfigure>
+	
+	<informalfigure>
+          <graphic fileref="images/table_specials_31_to_4x.png" align="center" valign="middle" scale="75"/>
+        </informalfigure>
       </para>
       </section>
       
