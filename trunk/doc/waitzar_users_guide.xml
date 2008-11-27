@@ -420,13 +420,18 @@ gedit --encoding UTF-8 ~/.scim-waitzar/mywords.txt</programlisting>
           <graphic fileref="images/table_onsets.png" align="center" valign="middle" scale="80"/>
         </informalfigure>
 	
-        <inlinegraphic fileref="images/table_rhymes_1_to_10.png" align="center" valign="middle" scale="75"/>
-        <inlinegraphic fileref="images/table_rhymes_11_to_20.png" align="center" valign="middle" scale="75"/>
-	<inlinegraphic fileref="images/table_rhymes_21_to_30.png" align="center" valign="middle" scale="75"/>
-	<inlinegraphic fileref="images/table_rhymes_31_to_40.png" align="center" valign="middle" scale="75"/>
-	<inlinegraphic fileref="images/table_rhymes_41_to_50.png" align="center" valign="middle" scale="75"/>
-	<inlinegraphic fileref="images/table_rhymes_51_to_60.png" align="center" valign="middle" scale="75"/>
-	<inlinegraphic fileref="images/table_rhymes_61_to_7x.png" align="center" valign="middle" scale="75"/>
+	<informalfigure>
+          <graphic fileref="images/rhymes_page_1.png" align="center" valign="middle" scale="80"/>
+        </informalfigure>
+
+	<informalfigure>
+          <graphic fileref="images/rhymes_page_2.png" align="center" valign="middle" scale="80"/>
+        </informalfigure>
+	
+	<informalfigure>
+          <graphic fileref="images/rhymes_page_3.png" align="center" valign="middle" scale="80"/>
+        </informalfigure>
+	
 	</para>
 	
 	<para><emphasis role="bold">Warning:</emphasis> You may have noticed that &ldquo;<foreignphrase>&#x1021;</foreignphrase>&rdquo; is not romanised as 
