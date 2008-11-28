@@ -26,13 +26,15 @@ waitzar_la_LIBADD = $(DEPS_LIBS)
 
 files_USERGUIDE = \
 			      ../doc/waitzar_users_guide.xml \
-			      ../doc/waitzar_users_guide.pdf
+			      ../doc/waitzar_users_guide.pdf \
+			      ../doc/images.tgz
 
-waitzar_la_docdir = ${datadir}/doc/${PACKAGE} 
+waitzar_la_docdir = ${datadir}/doc/${PACKAGE}
 
 waitzar_la_doc_DATA = \
                                     ../doc/waitzar_users_guide.xml \
-                                    ../doc/waitzar_users_guide.pdf
+                                    ../doc/waitzar_users_guide.pdf \
+				    ../doc/images.tgz
 
 EXTRA_DIST = ${files_USERGUIDE}
 
