@@ -1,4 +1,4 @@
-SUBDIRS = src data
+SUBDIRS = src data 
 
 #Probably necessary for gettext
 EXTRA_DIST = \
