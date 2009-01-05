@@ -3,6 +3,7 @@
 
 AC_PREREQ(2.59)
 AC_INIT(scim-waitzar, 1.0.0, sorlok_reaves@yahoo.com)
+AC_CONFIG_MACRO_DIR([m4])
 AC_CONFIG_SRCDIR([src/scim_waitzar_imengine.h])
 AC_CONFIG_HEADER([config.h])
 
