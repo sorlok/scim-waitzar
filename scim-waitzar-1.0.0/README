@@ -77,7 +77,7 @@ dpkg-buildpackage -i -rfakeroot -ksorlok_reaves@yahoo.com
 
 
 Some useful checks:
-lintian package-version.changes
+lintian -I -E package-version.changes
 sudo piuparts binpackage-version.deb
 
 Finally:
