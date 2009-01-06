@@ -27,7 +27,7 @@
 #define __SCIM_WAITZAR_LOOKUP_TABLE_H__
 
 #include <scim.h>
-#include <waitzar/WordBuilder.h>
+#include <WordBuilder.h>
 
 using namespace scim;
 using namespace waitzar;
