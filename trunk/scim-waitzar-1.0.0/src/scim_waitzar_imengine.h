@@ -26,8 +26,8 @@
 #define __SCIM_WAITZAR_IMENGINE_H__
 
 #include <scim.h>
-#include <waitzar/WordBuilder.h>
-#include <waitzar/SentenceList.h>
+#include <WordBuilder.h>
+#include <SentenceList.h>
 #include <vector>
 #include <string>
 
