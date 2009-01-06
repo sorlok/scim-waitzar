@@ -139,9 +139,9 @@ WaitZarInstance::WaitZarInstance (WaitZarFactory* factory,
     //Try to find the model file & mywords file(s)
     char* modelPath = new char[200];
     char* mywordsPath = new char[200];
-    strcpy(modelPath, "/usr/share/waitzar/Myanmar.model");
+    strcpy(modelPath, "/usr/share/waitzar/model2/Myanmar.model");
     if (fopen(modelPath,  "r")==NULL) {
-	strcpy(modelPath, "/usr/local/share/waitzar/Myanmar.model");
+	strcpy(modelPath, "/usr/local/share/waitzar/model2/Myanmar.model");
         if (fopen(modelPath,  "r")==NULL) {
 	    if (LOG_ON) {
                 fprintf(logFile, "ERROR: Cannot find model file. WaitZar will not function.\n");
@@ -149,9 +149,9 @@ WaitZarInstance::WaitZarInstance (WaitZarFactory* factory,
 	    }
 	}
     }
-    strcpy(mywordsPath, "/usr/share/waitzar/mywords.txt");
+    strcpy(mywordsPath, "/usr/share/waitzar/model2/mywords.txt");
     if (fopen(mywordsPath,  "r")==NULL) {
-	strcpy(mywordsPath, "/usr/local/share/waitzar/mywords.txt");
+	strcpy(mywordsPath, "/usr/local/share/waitzar/model2/mywords.txt");
         if (fopen(mywordsPath,  "r")==NULL) {
 	    strcpy(mywordsPath, "");
 	    if (LOG_ON) {
