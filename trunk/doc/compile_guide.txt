@@ -42,7 +42,7 @@ xsltproc  --output wz_users_guide_temp.fo  --stringparam fop1.extensions 1  cust
 ~/fop-0.95/fop -c  userconfig.xml -fo wz_users_guide_temp.fo -pdf waitzar_users_guide.pdf
 
 //----add the sun-java note about FOP to README.sources
-
+//----also add that hyphenation may be wrong if fop <0.94 is used, but the doc is still perfectly readable.
 
 
 
