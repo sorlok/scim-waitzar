@@ -8,31 +8,31 @@
       <fonts>
 	<font  metrics-url="fonts/myanmar3.xml"  
                kerning="yes" 
-               embed-url="/home/sethhetu/.fonts/Myanmar3.ttf">
+               embed-url="fonts/Myanmar3.ttf">
           <font-triplet name="Myanmar3" style="normal" weight="normal"/>
         </font>
 
 	<font  metrics-url="fonts/myanmar3-bold.xml"  
                kerning="yes" 
-               embed-url="/home/sethhetu/.fonts/Myanmar3.ttf">
+               embed-url="fonts/Myanmar3.ttf">
           <font-triplet name="Myanmar3" style="normal" weight="bold"/>
         </font>
       
         <font  metrics-url="fonts/vera.xml" 
                kerning="yes" 
-               embed-url="/var/lib/defoma/gs.d/dirs/fonts/Vera.ttf">
+               embed-url="/usr/share/fonts/truetype/ttf-bitstream-vera/Vera.ttf">
           <font-triplet name="Bitstream Vera Sans" style="normal" weight="normal"/>
         </font>
 	
         <font  metrics-url="fonts/vera-italic.xml" 
                kerning="yes" 
-               embed-url="/var/lib/defoma/gs.d/dirs/fonts/Vera.ttf">
+               embed-url="/usr/share/fonts/truetype/ttf-bitstream-vera/Vera.ttf">
           <font-triplet name="Bitstream Vera Sans" style="italic" weight="normal"/>
         </font>
 	
         <font  metrics-url="fonts/vera-bold.xml" 
                kerning="yes" 
-               embed-url="/var/lib/defoma/gs.d/dirs/fonts/Vera.ttf">
+               embed-url="/usr/share/fonts/truetype/ttf-bitstream-vera/Vera.ttf">
           <font-triplet name="Bitstream Vera Sans" style="normal" weight="bold"/>
         </font>
       </fonts>
@@ -40,6 +40,5 @@
         
   </renderers>
 </fop>
-
 
 
