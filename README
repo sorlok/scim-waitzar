@@ -1,8 +1,7 @@
 SCIM-WaitZar
 ---------
 
-For users:
-----------
+This is the SCIM IMEngine for the Burmese language, and is based on the WaitZar romanisation. 
 
 The scim-waitzar library implements a SCIM IMEngine for Myanmar text support,
 using the WaitZar romanisation and input method.
@@ -13,13 +12,13 @@ The following three output encodings are supported:
   - Win Innwa
 *recommended
 
-To customize WaitZar, please refer to the folders:
-  "/usr/share/waitzar/" for all users
-...and
-  "~/.waitzar/: for the current user
-The files "config.txt" and "mywords.txt" contain configuration properties and custom words respectively.
-Please see the files in "/usr/share/waitzar/" for further documentation and examples. Note that settings and words
-in "~/.waitzar/mywords.txt" will over-ride those in "/usr/share/waitzar/"
+To customize WaitZar for the current user, please refer to the folder:
+  "~/.scim-waitzar/
+...which also contains WaitZar's startup log.
+
+The file "mywords.txt" contain custom words.
+
+Please see the files in /usr/share/doc/scim-waitzar for further documentation and examples. 
 
 For more information, or to get involved, please see the scim-waitzar page:
   http://scim-waitzar.googlecode.com/
@@ -27,8 +26,10 @@ For more information, or to get involved, please see the scim-waitzar page:
   http://code.google.com/p/waitzar/
 
 
-For developers:
----------------
+----------------------------------------
+The following section is for developers:
+----------------------------------------
+
 Some developers have had trouble compiling the scim-waitzar package. If you are just a normal user, you should probably skip this section, especially if you are using Ubuntu, which manages packages for you.
 If you are developing WaitZar, or if you want to build it locally, here are the commands to do so, from a CLEAN install of Ubuntu Hardy Heron.
 
