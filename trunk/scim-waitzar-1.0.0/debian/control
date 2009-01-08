@@ -8,6 +8,17 @@ Vcs-Svn: http://scim-waitzar.googlecode.com/svn/trunk/
 Build-Depends: debhelper (>= 5), dpkg-dev (>= 1.14.13), autotools-dev, pkg-config, gettext, libscim-dev (>= 1.4.6)
 Standards-Version: 3.8.0
 
+
+Package: scim-waitzar-doc
+Section: doc
+Architecture: all
+Suggests: scim-waitzar, ttf-sil-padauk
+Build-Depends: docbook-xml, docbook-xsl-doc-pdf, xsltproc, fop, perl5, ttf-bitstream-vera, fontconfig
+Description: documentation for scim-waitzar
+ This package provide documentation and setup guidelines for 
+ the scim-waitzar Burmese input system.
+
+
 Package: scim-waitzar
 Section: utils
 Architecture: any
