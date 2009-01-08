@@ -1,13 +1,48 @@
-//To compile XML to FO
-xsltproc  --output wz_users_guide_temp.fo  --stringparam fop1.extensions 1  custom_layer.xsl waitzar_users_guide.xml
+Required packages:
+docbook-xml
+docbook-xsl-doc-pdf
+xsltproc
+fop
+perl
+ttf-bitstream-vera
+fontconfig
 
-//To compile FO to PDF: (Note: Ubuntu users may have to switch to sun-java; install it, then run: sudo update-alternatives --config java)
-~/fop-0.95/fop -c  userconfig.xml -fo wz_users_guide_temp.fo -pdf waitzar_users_guide.pdf
+License for MM3 is LGPL2+
+https://fedoraproject.org/wiki/Myanmar3_font
 
-//If you need to re-generate the title-page xsl:
+
+//Step 1: Re-generate the title page
 xsltproc --output  wz_titlepage.xsl /usr/share/xml/docbook/stylesheet/nwalsh/template/titlepage.xsl titlepage.templates.xml
 
-//Adding a font to FOP:
+//Step 2: Adding new fonts to FO:
+//   We will skip this step in the package build... I'm just listing it here for maintainers of this document.
 java -cp "/home/sethhetu/fop-0.95/build/fop.jar:/home/sethhetu/fop-0.95/lib/serializer-2.7.0.jar:/home/sethhetu/fop-0.95/lib/commons-logging-1.0.4.jar:/home/sethhetu/fop-0.95/lib/commons-io-1.3.1.jar:/home/sethhetu/fop-0.95/lib/xmlgraphics-commons-1.3.1.jar" org.apache.fop.fonts.apps.TTFReader ~/.fonts/Myanmar3.ttf fonts/myanmar3.xml
-//You might then do it with myanmar3-bold.xml, so that bold is covered...
-//Put it in userconfig.xml later...
+
+//Step 2: Adding fonts manually:
+We need to replace the embed-url in each of the userconfig.xml entries with:
+fc-match NAME //Where NAME is the font-triplet NAME
+--> pipe into:
+find /usr/share/fonts -name RES1
+
+e.g.:
+fc-match Bitstream Vera Sans
+    Vera.ttf: "Bitstream Vera Sans" "Roman"
+find /usr/share/fonts -name Vera.ttf
+    /usr/share/fonts/truetype/ttf-bitstream-vera/Vera.ttf
+...and this is what we plug in (except for Myanmar 3!)
+
+//There's a perl script and userconfig.in.xml to help with this.
+./config_parser.pl userconfig.in.xml userconfig.xml
+
+
+//Step 3: compile XML to FO
+xsltproc  --output wz_users_guide_temp.fo  --stringparam fop1.extensions 1  custom_layer.xsl waitzar_users_guide.xml
+
+//Step 4: Compile FO to PDF: (Note: Ubuntu users may have to switch to sun-java; install it, then run: sudo update-alternatives --config java)
+~/fop-0.95/fop -c  userconfig.xml -fo wz_users_guide_temp.fo -pdf waitzar_users_guide.pdf
+
+//----add the sun-java note about FOP to README.sources
+
+
+
+
