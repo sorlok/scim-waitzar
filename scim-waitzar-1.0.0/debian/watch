@@ -3,5 +3,5 @@ version=3
 
 # Site path
 http://code.google.com/p/scim-waitzar/(.)/ \
-  http://scim-waitzar[.]googlecode[.]com/files/scim-waitzar-([0-9.]+)[.]tar[.]gz
+  http://scim-waitzar\.googlecode\.com/files/scim-waitzar-([0-9.]+)\.tar\.gz
 
