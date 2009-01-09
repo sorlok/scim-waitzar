@@ -571,8 +571,7 @@ gedit --encoding UTF-8 ~/.scim-waitzar/mywords.txt</programlisting>
   <appendix>
     <title>License</title>
     <para><command>scim-waitzar</command> is licensed under the GNU General Public License v3, although some 
-    parts of it are licensed under the Apache License v2, and a small amount is licensed under the GNU General 
-    Public License v2.
+    parts of it are licensed under the Apache License v2.
     </para>
     
     <para>This means that <command>scim-waitzar</command> is Open Source, of course, and free software as well. 
