@@ -33,4 +33,7 @@ The following files are licensed under the LGPL:
 The following files are licensed under the GPL version 2:
   src/intl.h
 
+The following files are licensed under the LGPL version 2+:
+  doc/fonts/Myanmar3.ttf
+
 This package relies on the libwaitzar package, which is licensed under the Apache license version 2.
