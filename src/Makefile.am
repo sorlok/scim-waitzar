@@ -24,20 +24,15 @@ waitzar_la_SOURCES = \
 INCLUDES = $(DEPS_CFLAGS)
 waitzar_la_LIBADD = $(DEPS_LIBS)
 
-files_USERGUIDE = \
-			      ../doc/waitzar_users_guide.xml \
-			      ../doc/waitzar_users_guide.pdf 
-
 waitzar_la_docdir = ${datadir}/doc/${PACKAGE}
 
-waitzar_la_doc_DATA = \
-                                    ../doc/waitzar_users_guide.xml \
-                                    ../doc/waitzar_users_guide.pdf
 
-nobase_waitzar_la_doc_DATA = \
-                       ../doc/images/console_rendering_glitch.png
 
-EXTRA_DIST = ${files_USERGUIDE}
+
+
+#nobase_waitzar_la_doc_DATA = ${files_USERGUIDE}
+
+#EXTRA_DIST = ${files_USERGUIDE}
 
 waitzar_la_CFLAGS = $(SCIM_CFLAGS) $(SCIM_DEBUG_FLAGS) 
 waitzar_la_CXXFLAGS = $(SCIM_CFLAGS) $(SCIM_DEBUG_FLAGS) 
