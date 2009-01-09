@@ -32,7 +32,10 @@ waitzar_la_docdir = ${datadir}/doc/${PACKAGE}
 
 waitzar_la_doc_DATA = \
                                     ../doc/waitzar_users_guide.xml \
-                                    ../doc/waitzar_users_guide.pdf i
+                                    ../doc/waitzar_users_guide.pdf
+
+nobase_waitzar_la_doc_DATA = \
+                       ../doc/images/console_rendering_glitch.png
 
 EXTRA_DIST = ${files_USERGUIDE}
 

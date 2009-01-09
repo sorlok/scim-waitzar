@@ -54,7 +54,7 @@ while ($line = <IN_FILE>) {
 close (IN_FILE);
 close (OUT_FILE);
 
-
+print "Created $ARGV[1] from $ARGV[0]\n";
 
 
 

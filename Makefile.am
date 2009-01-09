@@ -1,4 +1,4 @@
-SUBDIRS = src data 
+SUBDIRS = doc src data
 
 #Recommended line:
 ACLOCAL_AMFLAGS = -I m4
