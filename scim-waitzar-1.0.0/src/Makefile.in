@@ -15,7 +15,6 @@
 @SET_MAKE@
 
 
-
 srcdir = @srcdir@
 top_srcdir = @top_srcdir@
 VPATH = @srcdir@
@@ -58,7 +57,7 @@ am__vpath_adj = case $$p in \
   esac;
 am__strip_dir = `echo $$p | sed -e 's|^.*/||'`;
 am__installdirs = "$(DESTDIR)$(moduledir)" \
-	"$(DESTDIR)$(setupmoduledir)" "$(DESTDIR)$(waitzar_la_docdir)"
+	"$(DESTDIR)$(setupmoduledir)"
 moduleLTLIBRARIES_INSTALL = $(INSTALL)
 setupmoduleLTLIBRARIES_INSTALL = $(INSTALL)
 LTLIBRARIES = $(module_LTLIBRARIES) $(setupmodule_LTLIBRARIES)
@@ -91,8 +90,6 @@ CXXLINK = $(LIBTOOL) --tag=CXX --mode=link $(CXXLD) $(AM_CXXFLAGS) \
 SOURCES = $(waitzar_imengine_setup_la_SOURCES) $(waitzar_la_SOURCES)
 DIST_SOURCES = $(am__waitzar_imengine_setup_la_SOURCES_DIST) \
 	$(waitzar_la_SOURCES)
-waitzar_la_docDATA_INSTALL = $(INSTALL_DATA)
-DATA = $(waitzar_la_doc_DATA)
 HEADERS = $(noinst_HEADERS)
 ETAGS = etags
 CTAGS = ctags
@@ -262,18 +259,11 @@ waitzar_la_SOURCES = \
 
 INCLUDES = $(DEPS_CFLAGS)
 waitzar_la_LIBADD = $(DEPS_LIBS)
-files_USERGUIDE = \
-			      ../doc/waitzar_users_guide.xml \
-			      ../doc/waitzar_users_guide.pdf \
-			      ../doc/images.tgz
-
 waitzar_la_docdir = ${datadir}/doc/${PACKAGE}
-waitzar_la_doc_DATA = \
-                                    ../doc/waitzar_users_guide.xml \
-                                    ../doc/waitzar_users_guide.pdf \
-				    ../doc/images.tgz
 
-EXTRA_DIST = ${files_USERGUIDE}
+#nobase_waitzar_la_doc_DATA = ${files_USERGUIDE}
+
+#EXTRA_DIST = ${files_USERGUIDE}
 waitzar_la_CFLAGS = $(SCIM_CFLAGS) $(SCIM_DEBUG_FLAGS) 
 waitzar_la_CXXFLAGS = $(SCIM_CFLAGS) $(SCIM_DEBUG_FLAGS) 
 waitzar_la_LDFLAGS = \
@@ -467,23 +457,6 @@ clean-libtool:
 distclean-libtool:
 	-rm -f libtool
 uninstall-info-am:
-install-waitzar_la_docDATA: $(waitzar_la_doc_DATA)
-	@$(NORMAL_INSTALL)
-	test -z "$(waitzar_la_docdir)" || $(mkdir_p) "$(DESTDIR)$(waitzar_la_docdir)"
-	@list='$(waitzar_la_doc_DATA)'; for p in $$list; do \
-	  if test -f "$$p"; then d=; else d="$(srcdir)/"; fi; \
-	  f=$(am__strip_dir) \
-	  echo " $(waitzar_la_docDATA_INSTALL) '$$d$$p' '$(DESTDIR)$(waitzar_la_docdir)/$$f'"; \
-	  $(waitzar_la_docDATA_INSTALL) "$$d$$p" "$(DESTDIR)$(waitzar_la_docdir)/$$f"; \
-	done
-
-uninstall-waitzar_la_docDATA:
-	@$(NORMAL_UNINSTALL)
-	@list='$(waitzar_la_doc_DATA)'; for p in $$list; do \
-	  f=$(am__strip_dir) \
-	  echo " rm -f '$(DESTDIR)$(waitzar_la_docdir)/$$f'"; \
-	  rm -f "$(DESTDIR)$(waitzar_la_docdir)/$$f"; \
-	done
 
 ID: $(HEADERS) $(SOURCES) $(LISP) $(TAGS_FILES)
 	list='$(SOURCES) $(HEADERS) $(LISP) $(TAGS_FILES)'; \
@@ -534,7 +507,6 @@ distclean-tags:
 	-rm -f TAGS ID GTAGS GRTAGS GSYMS GPATH tags
 
 distdir: $(DISTFILES)
-	$(mkdir_p) $(distdir)/../doc
 	@srcdirstrip=`echo "$(srcdir)" | sed 's|.|.|g'`; \
 	topsrcdirstrip=`echo "$(top_srcdir)" | sed 's|.|.|g'`; \
 	list='$(DISTFILES)'; for file in $$list; do \
@@ -563,9 +535,9 @@ distdir: $(DISTFILES)
 	done
 check-am: all-am
 check: check-am
-all-am: Makefile $(LTLIBRARIES) $(DATA) $(HEADERS)
+all-am: Makefile $(LTLIBRARIES) $(HEADERS)
 installdirs:
-	for dir in "$(DESTDIR)$(moduledir)" "$(DESTDIR)$(setupmoduledir)" "$(DESTDIR)$(waitzar_la_docdir)"; do \
+	for dir in "$(DESTDIR)$(moduledir)" "$(DESTDIR)$(setupmoduledir)"; do \
 	  test -z "$$dir" || $(mkdir_p) "$$dir"; \
 	done
 install: install-am
@@ -614,7 +586,7 @@ info: info-am
 info-am:
 
 install-data-am: install-moduleLTLIBRARIES \
-	install-setupmoduleLTLIBRARIES install-waitzar_la_docDATA
+	install-setupmoduleLTLIBRARIES
 
 install-exec-am:
 
@@ -643,7 +615,7 @@ ps: ps-am
 ps-am:
 
 uninstall-am: uninstall-info-am uninstall-moduleLTLIBRARIES \
-	uninstall-setupmoduleLTLIBRARIES uninstall-waitzar_la_docDATA
+	uninstall-setupmoduleLTLIBRARIES
 
 .PHONY: CTAGS GTAGS all all-am check check-am clean clean-generic \
 	clean-libtool clean-moduleLTLIBRARIES \
@@ -653,13 +625,12 @@ uninstall-am: uninstall-info-am uninstall-moduleLTLIBRARIES \
 	install-data install-data-am install-exec install-exec-am \
 	install-info install-info-am install-man \
 	install-moduleLTLIBRARIES install-setupmoduleLTLIBRARIES \
-	install-strip install-waitzar_la_docDATA installcheck \
-	installcheck-am installdirs maintainer-clean \
-	maintainer-clean-generic mostlyclean mostlyclean-compile \
-	mostlyclean-generic mostlyclean-libtool pdf pdf-am ps ps-am \
-	tags uninstall uninstall-am uninstall-info-am \
-	uninstall-moduleLTLIBRARIES uninstall-setupmoduleLTLIBRARIES \
-	uninstall-waitzar_la_docDATA
+	install-strip installcheck installcheck-am installdirs \
+	maintainer-clean maintainer-clean-generic mostlyclean \
+	mostlyclean-compile mostlyclean-generic mostlyclean-libtool \
+	pdf pdf-am ps ps-am tags uninstall uninstall-am \
+	uninstall-info-am uninstall-moduleLTLIBRARIES \
+	uninstall-setupmoduleLTLIBRARIES
 
 # Tell versions [3.59,3.63) of GNU make to not export all variables.
 # Otherwise a system limit (for SysV at least) may be exceeded.

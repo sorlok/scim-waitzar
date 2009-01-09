@@ -1,4 +1,4 @@
-SUBDIRS = src data 
+SUBDIRS = doc src data
 
 #Recommended line:
 ACLOCAL_AMFLAGS = -I m4
@@ -6,5 +6,6 @@ ACLOCAL_AMFLAGS = -I m4
 #Probably necessary for gettext
 EXTRA_DIST = \
              config.rpath \
-             local.conf
+             local.conf \
+             doc/waitzar_users_guide.pdf
 

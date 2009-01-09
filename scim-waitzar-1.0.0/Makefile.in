@@ -216,7 +216,7 @@ sbindir = @sbindir@
 sharedstatedir = @sharedstatedir@
 sysconfdir = @sysconfdir@
 target_alias = @target_alias@
-SUBDIRS = src data 
+SUBDIRS = doc src data
 
 #Recommended line:
 ACLOCAL_AMFLAGS = -I m4
@@ -224,7 +224,8 @@ ACLOCAL_AMFLAGS = -I m4
 #Probably necessary for gettext
 EXTRA_DIST = \
              config.rpath \
-             local.conf
+             local.conf \
+             doc/waitzar_users_guide.pdf
 
 all: config.h
 	$(MAKE) $(AM_MAKEFLAGS) all-recursive
@@ -426,7 +427,7 @@ distclean-tags:
 distdir: $(DISTFILES)
 	$(am__remove_distdir)
 	mkdir $(distdir)
-	$(mkdir_p) $(distdir)/m4
+	$(mkdir_p) $(distdir)/doc $(distdir)/m4
 	@srcdirstrip=`echo "$(srcdir)" | sed 's|.|.|g'`; \
 	topsrcdirstrip=`echo "$(top_srcdir)" | sed 's|.|.|g'`; \
 	list='$(DISTFILES)'; for file in $$list; do \
