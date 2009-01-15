@@ -6,16 +6,16 @@
   
     <renderer mime="application/pdf">
       <fonts>
-	<font  metrics-url="fonts/myanmar3.xml"  
+	<font  metrics-url="fonts/padauk.xml"  
                kerning="yes" 
-               embed-url="fonts/Myanmar3.ttf">
-          <font-triplet name="Myanmar3" style="normal" weight="normal"/>
+               embed-url="/usr/share/fonts/truetype/ttf-sil-padauk/Padauk.ttf">
+          <font-triplet name="Padauk" style="normal" weight="normal"/>
         </font>
 
 	<font  metrics-url="fonts/myanmar3-bold.xml"  
                kerning="yes" 
-               embed-url="fonts/Myanmar3.ttf">
-          <font-triplet name="Myanmar3" style="normal" weight="bold"/>
+               embed-url="/usr/share/fonts/truetype/ttf-sil-padauk/Padauk.ttf">
+          <font-triplet name="Padauk" style="normal" weight="bold"/>
         </font>
       
         <font  metrics-url="fonts/vera.xml" 

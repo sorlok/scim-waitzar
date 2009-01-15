@@ -57,9 +57,9 @@
     </fo:inline>
   </xsl:template>
 
-  <!-- Foreign phrases in Myanmar3 -->
+  <!-- Foreign phrases in Padauk -->
   <xsl:template match="foreignphrase">
-    <fo:inline font-family="Myanmar3">
+    <fo:inline font-family="Padauk">
       <xsl:apply-templates/>
     </fo:inline>
   </xsl:template>
