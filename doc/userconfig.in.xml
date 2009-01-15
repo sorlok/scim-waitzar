@@ -1,0 +1,44 @@
+<fop version="1.0">
+
+  <base>./</base>
+
+  <renderers>
+  
+    <renderer mime="application/pdf">
+      <fonts>
+	<font  metrics-url="fonts/padauk.xml"  
+               kerning="yes" 
+               embed-url="{fontembed:2}">
+          <font-triplet name="{fontembed:2:Padauk}" style="normal" weight="normal"/>
+        </font>
+
+	<font  metrics-url="fonts/myanmar3-bold.xml"  
+               kerning="yes" 
+               embed-url="{fontembed:2}">
+          <font-triplet name="{fontembed:2:Padauk}" style="normal" weight="bold"/>
+        </font>
+      
+        <font  metrics-url="fonts/vera.xml" 
+               kerning="yes" 
+               embed-url="{fontembed:1}">
+          <font-triplet name="{fontembed:1:Bitstream Vera Sans}" style="normal" weight="normal"/>
+        </font>
+	
+        <font  metrics-url="fonts/vera-italic.xml" 
+               kerning="yes" 
+               embed-url="{fontembed:1}">
+          <font-triplet name="{fontembed:1:Bitstream Vera Sans}" style="italic" weight="normal"/>
+        </font>
+	
+        <font  metrics-url="fonts/vera-bold.xml" 
+               kerning="yes" 
+               embed-url="{fontembed:1}">
+          <font-triplet name="{fontembed:1:Bitstream Vera Sans}" style="normal" weight="bold"/>
+        </font>
+      </fonts>
+    </renderer>
+        
+  </renderers>
+</fop>
+
+
