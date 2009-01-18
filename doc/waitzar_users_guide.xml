@@ -7,7 +7,7 @@
   <articleinfo>
     <author>
       <honorific>Mr</honorific>
-      <firstname>Seth</firstname>
+      <firstname><?dbhtml-include href="imghead.html"?>Seth</firstname>
       <surname>Hetu</surname>
       <othername role='mi'>N</othername>
     </author>
@@ -251,7 +251,7 @@ sudo wget http://scim-waitzar.googlecode.com/svn/trunk/local.conf</programlistin
       <para>After configuring SCIM just the way you like it, start <command>gedit</command> and then look at the lower-right corner of your screen. 
       You'll see the SCIM toolbar; move the mouse over it and it will expand to show that you are typing in Englihsh. Click on the language and choose 
       &ldquo;Burmese&rdquo; to switch to WaitZar. (Note that if this panel is hidden, you can always click on the SCIM icon in your tray to switch to Burmese.) 
-      Then, type &ldquo;ko&rdquo;. You will see two possibilities presented to you. You will also see the word &ldquo;<inlinegraphic scale="80" fileref="images/inline_ko.png"/>&rdquo; 
+      Then, type &ldquo;ko&rdquo;. You will see two possibilities presented to you. You will also see the word &ldquo;<inlinegraphic scale="80" fileref="images/inline_ko.png" role="pdf"/><foreignphrase role="html">&#x1000;&#x102D;&#x102F;</foreignphrase>&rdquo; 
       inside of <command>gedit</command>. This is one of the nice features of WaitZar on Linux: you can keep your eyes on the document you are typing, and 
       only have to look at the list of choices when something doesn't match.
       
@@ -386,16 +386,16 @@ gedit --encoding UTF-8 ~/.scim-waitzar/mywords.txt</programlisting>
         <listitem><para>Each Burmese word gets exactly one English romanisation.</para></listitem>
       </itemizedlist>
       The first rule is covered in the next section (on the default romanisation), and the second rule is relevant throughout. 
-      The final rule may seem silly: why not allow <inlinegraphic scale="80" fileref="images/inline_thar.png"/> = &ldquo;tar&rdquo; or &ldquo;thar&rdquo; or &ldquo;ttar&rdquo;? 
-      Our main reason for enforcing this rule is efficiency. Once you learn that <inlinegraphic scale="80" fileref="images/inline_thar.png"/> = &ldquo;thar&rdquo; in WaitZar, 
-      then you will start to get annoyed if you see <inlinegraphic scale="80" fileref="images/inline_thar.png"/> when you type &ldquo;tar&rdquo; or &ldquo;ttar&rdquo;. Through 
+      The final rule may seem silly: why not allow <inlinegraphic scale="80" fileref="images/inline_thar.png" role="pdf"/><foreignphrase role="html">&#x101E;&#x102C;</foreignphrase> = &ldquo;tar&rdquo; or &ldquo;thar&rdquo; or &ldquo;ttar&rdquo;? 
+      Our main reason for enforcing this rule is efficiency. Once you learn that <inlinegraphic scale="80" fileref="images/inline_thar.png" role="pdf"/><foreignphrase role="html">&#x101E;&#x102C;</foreignphrase> = &ldquo;thar&rdquo; in WaitZar, 
+      then you will start to get annoyed if you see <inlinegraphic scale="80" fileref="images/inline_thar.png" role="pdf"/><foreignphrase role="html">&#x101E;&#x102C;</foreignphrase> when you type &ldquo;tar&rdquo; or &ldquo;ttar&rdquo;. Through 
       decisions like this, we try to make our system agreeable to both novices and experts.
       </para>
       
       <section>
         <title>Default Romanisation</title>
-        <para>Most Burmese words can be thought of as an onset combined with a rhyme. For example: <inlinegraphic scale="80" fileref="images/inline_non.png"/>, pronounced 
-	&ldquo;non&rdquo;, can be broken up into <foreignphrase>&#x1014;</foreignphrase> = &ldquo;n(a)&rdquo; and <inlinegraphic scale="80" fileref="images/inline_on.png"/> 
+        <para>Most Burmese words can be thought of as an onset combined with a rhyme. For example: <inlinegraphic scale="80" fileref="images/inline_non.png" role="pdf"/><foreignphrase role="html">&#x1014;&#x103D;&#x1036;</foreignphrase>, pronounced 
+	&ldquo;non&rdquo;, can be broken up into <foreignphrase>&#x1014;</foreignphrase> = &ldquo;n(a)&rdquo; and <inlinegraphic scale="80" fileref="images/inline_on.png" role="pdf"/><foreignphrase role="html">-&#x103D;&#x1036;</foreignphrase> 
 	= &ldquo;on&rdquo;. Words can actually be broken up further, into consonants, medials, vowels, tones, and finals, but a unique quality of onsets and rhymes is that they can 
 	be spelled the same way when they appear in different words. For example:
 	

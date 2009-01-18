@@ -41,8 +41,12 @@ xsltproc  --output wz_users_guide_temp.fo  --stringparam fop1.extensions 1  cust
 //Step 4: Compile FO to PDF: (Note: Ubuntu users may have to switch to sun-java; install it, then run: sudo update-alternatives --config java)
 ~/fop-0.95/fop -c  userconfig.xml -fo wz_users_guide_temp.fo -pdf waitzar_users_guide.pdf
 
-//----add the sun-java note about FOP to README.sources
+//----add the sun-java note about FOP 
 //----also add that hyphenation may be wrong if fop <0.94 is used, but the doc is still perfectly readable. (This is reported as fixed in 0.95, but not confirmed).
+
+For html output, try:
+xsltproc --output waitzar_users_guide.html --stringparam html.stylesheet  wz_styles.css  /usr/share/xml/docbook/stylesheet/nwalsh/html/docbook.xsl  waitzar_users_guide.xml
+
 
 
 
