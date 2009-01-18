@@ -1,6 +1,11 @@
 SUBDIRS = images fonts
 
-waitzar_users_guide.pdf : userconfig.xml wz_users_guide_temp.fo
+waitzar_users_guide.html : wz_styles.css  waitzar_users_guide.html.xml  imghead.html
+	xsltproc --output waitzar_users_guide.html --stringparam html.stylesheet  wz_styles.css  /usr/share/xml/docbook/stylesheet/nwalsh/html/docbook.xsl  waitzar_users_guide.html.xml
+
+html: waitzar_users_guide.html
+
+pdf : userconfig.xml wz_users_guide_temp.fo
 	cd @srcdir@ && fop -c userconfig.xml -fo wz_users_guide_temp.fo -pdf waitzar_users_guide.pdf
 
 userconfig.xml : userconfig.in.xml config_parser.pl
@@ -9,8 +14,15 @@ userconfig.xml : userconfig.in.xml config_parser.pl
 wz_titlepage.xsl : titlepage.templates.xml
 	xsltproc --output  @srcdir@/wz_titlepage.xsl /usr/share/xml/docbook/stylesheet/nwalsh/template/titlepage.xsl @srcdir@/titlepage.templates.xml
 
-wz_users_guide_temp.fo : custom_layer.xsl waitzar_users_guide.xml wz_titlepage.xsl
-	xsltproc  --output @srcdir@/wz_users_guide_temp.fo  --stringparam fop1.extensions 1  @srcdir@/custom_layer.xsl @srcdir@/waitzar_users_guide.xml
+waitzar_users_guide.html.xml : waitzar_users_guide.xml
+	xsltproc  --output  waitzar_users_guide.html.xml --stringparam  profile.role  "html" /usr/share/xml/docbook/stylesheet/nwalsh/profiling/profile.xsl waitzar_users_guide.xml
+
+waitzar_users_guide.pdf.xml : waitzar_users_guide.xml
+	xsltproc  --output  waitzar_users_guide.pdf.xml --stringparam  profile.role  "pdf" /usr/share/xml/docbook/stylesheet/nwalsh/profiling/profile.xsl waitzar_users_guide.xml
+
+
+wz_users_guide_temp.fo : custom_layer.xsl waitzar_users_guide.pdf.xml wz_titlepage.xsl
+	xsltproc  --output @srcdir@/wz_users_guide_temp.fo  --stringparam fop1.extensions 1  @srcdir@/custom_layer.xsl @srcdir@/waitzar_users_guide.pdf.xml
 
 mydocdir=$(docdir)
 mydoc_DATA=	\
