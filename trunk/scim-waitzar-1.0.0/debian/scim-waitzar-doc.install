@@ -3,6 +3,7 @@ usr/share/doc/scim-waitzar/*.pl
 usr/share/doc/scim-waitzar/*.xsl
 usr/share/doc/scim-waitzar/*.xml
 usr/share/doc/scim-waitzar/*.html
+usr/share/doc/scim-waitzar/*.css
 usr/share/doc/scim-waitzar/images/*.png
 usr/share/doc/scim-waitzar/fonts/*.xml
 
