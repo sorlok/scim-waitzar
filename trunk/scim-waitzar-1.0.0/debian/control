@@ -5,7 +5,7 @@ Maintainer: Seth N. Hetu <sorlok_reaves@yahoo.com>
 Homepage: http://code.google.com/p/scim-waitzar/
 Vcs-Browser: http://code.google.com/p/scim-waitzar/source/browse/
 Vcs-Svn: http://scim-waitzar.googlecode.com/svn/trunk/
-Build-Depends: debhelper (>= 5), dpkg-dev (>= 1.14.13), autotools-dev, pkg-config, gettext, libscim-dev (>= 1.4.6), docbook-xml, docbook-xsl-doc-pdf, xsltproc, fop, perl5, ttf-bitstream-vera, fontconfig
+Build-Depends: debhelper (>= 5), dpkg-dev (>= 1.14.13), autotools-dev, pkg-config, gettext, libscim-dev (>= 1.4.6), ttf-sil-padauk, docbook-xml, docbook-xsl-doc-html, xsltproc, perl5, ttf-bitstream-vera, fontconfig
 Standards-Version: 3.8.0
 
 
@@ -49,7 +49,7 @@ Description: Burmese typing system (IME) for Linux
 Package: scim-waitzar-doc
 Section: doc
 Architecture: all
-Suggests: scim-waitzar, ttf-sil-padauk
+Suggests: scim-waitzar
 Description: documentation for scim-waitzar
  This package provide documentation and setup guidelines for 
  the scim-waitzar Burmese input system.
