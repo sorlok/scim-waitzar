@@ -62,9 +62,10 @@ am__vpath_adj = case $$p in \
     *) f=$$p;; \
   esac;
 am__strip_dir = `echo $$p | sed -e 's|^.*/||'`;
-am__installdirs = "$(DESTDIR)$(mydocdir)"
+am__installdirs = "$(DESTDIR)$(mydocdir)" "$(DESTDIR)$(mydocdir)"
 mydocDATA_INSTALL = $(INSTALL_DATA)
-DATA = $(mydoc_DATA)
+nodist_mydocDATA_INSTALL = $(INSTALL_DATA)
+DATA = $(mydoc_DATA) $(nodist_mydoc_DATA)
 ETAGS = etags
 CTAGS = ctags
 DIST_SUBDIRS = $(SUBDIRS)
@@ -218,13 +219,17 @@ mydoc_DATA = \
                        userconfig.in.xml \
                        custom_layer.xsl \
                        waitzar_users_guide.xml \
+                       wz_styles.css \
                        compile_guide.txt \
-                       waitzar_users_guide.pdf
+                       waitzar_users_guide.pdf \
+                       imghead.html
 
+nodist_mydocdir = $(docdir)
+nodist_mydoc_DATA = waitzar_users_guide.html
 
 #mydoc2dir=$(docdir)
 #mydoc2_DATA = waitzar_users_guide.pdf
-EXTRA_DIST = $(mydoc_DATA) 
+EXTRA_DIST = $(mydoc_DATA)
 all: all-recursive
 
 .SUFFIXES:
@@ -280,6 +285,23 @@ install-mydocDATA: $(mydoc_DATA)
 uninstall-mydocDATA:
 	@$(NORMAL_UNINSTALL)
 	@list='$(mydoc_DATA)'; for p in $$list; do \
+	  f=$(am__strip_dir) \
+	  echo " rm -f '$(DESTDIR)$(mydocdir)/$$f'"; \
+	  rm -f "$(DESTDIR)$(mydocdir)/$$f"; \
+	done
+install-nodist_mydocDATA: $(nodist_mydoc_DATA)
+	@$(NORMAL_INSTALL)
+	test -z "$(mydocdir)" || $(mkdir_p) "$(DESTDIR)$(mydocdir)"
+	@list='$(nodist_mydoc_DATA)'; for p in $$list; do \
+	  if test -f "$$p"; then d=; else d="$(srcdir)/"; fi; \
+	  f=$(am__strip_dir) \
+	  echo " $(nodist_mydocDATA_INSTALL) '$$d$$p' '$(DESTDIR)$(mydocdir)/$$f'"; \
+	  $(nodist_mydocDATA_INSTALL) "$$d$$p" "$(DESTDIR)$(mydocdir)/$$f"; \
+	done
+
+uninstall-nodist_mydocDATA:
+	@$(NORMAL_UNINSTALL)
+	@list='$(nodist_mydoc_DATA)'; for p in $$list; do \
 	  f=$(am__strip_dir) \
 	  echo " rm -f '$(DESTDIR)$(mydocdir)/$$f'"; \
 	  rm -f "$(DESTDIR)$(mydocdir)/$$f"; \
@@ -464,7 +486,7 @@ check: check-recursive
 all-am: Makefile $(DATA)
 installdirs: installdirs-recursive
 installdirs-am:
-	for dir in "$(DESTDIR)$(mydocdir)"; do \
+	for dir in "$(DESTDIR)$(mydocdir)" "$(DESTDIR)$(mydocdir)"; do \
 	  test -z "$$dir" || $(mkdir_p) "$$dir"; \
 	done
 install: install-recursive
@@ -504,13 +526,11 @@ dvi: dvi-recursive
 
 dvi-am:
 
-html: html-recursive
-
 info: info-recursive
 
 info-am:
 
-install-data-am: install-mydocDATA
+install-data-am: install-mydocDATA install-nodist_mydocDATA
 
 install-exec-am:
 
@@ -528,15 +548,14 @@ mostlyclean: mostlyclean-recursive
 
 mostlyclean-am: mostlyclean-generic mostlyclean-libtool
 
-pdf: pdf-recursive
-
 pdf-am:
 
 ps: ps-recursive
 
 ps-am:
 
-uninstall-am: uninstall-info-am uninstall-mydocDATA
+uninstall-am: uninstall-info-am uninstall-mydocDATA \
+	uninstall-nodist_mydocDATA
 
 uninstall-info: uninstall-info-recursive
 
@@ -546,16 +565,22 @@ uninstall-info: uninstall-info-recursive
 	distclean-recursive distclean-tags distdir dvi dvi-am html \
 	html-am info info-am install install-am install-data \
 	install-data-am install-exec install-exec-am install-info \
-	install-info-am install-man install-mydocDATA install-strip \
-	installcheck installcheck-am installdirs installdirs-am \
-	maintainer-clean maintainer-clean-generic \
-	maintainer-clean-recursive mostlyclean mostlyclean-generic \
-	mostlyclean-libtool mostlyclean-recursive pdf pdf-am ps ps-am \
-	tags tags-recursive uninstall uninstall-am uninstall-info-am \
-	uninstall-mydocDATA
+	install-info-am install-man install-mydocDATA \
+	install-nodist_mydocDATA install-strip installcheck \
+	installcheck-am installdirs installdirs-am maintainer-clean \
+	maintainer-clean-generic maintainer-clean-recursive \
+	mostlyclean mostlyclean-generic mostlyclean-libtool \
+	mostlyclean-recursive pdf pdf-am ps ps-am tags tags-recursive \
+	uninstall uninstall-am uninstall-info-am uninstall-mydocDATA \
+	uninstall-nodist_mydocDATA
 
 
-waitzar_users_guide.pdf : userconfig.xml wz_users_guide_temp.fo
+waitzar_users_guide.html : wz_styles.css  waitzar_users_guide.html.xml  imghead.html
+	xsltproc --output @srcdir@/waitzar_users_guide.html --stringparam html.stylesheet  @srcdir@/wz_styles.css  /usr/share/xml/docbook/stylesheet/nwalsh/html/docbook.xsl  @srcdir@/waitzar_users_guide.html.xml
+
+html: waitzar_users_guide.html
+
+pdf : userconfig.xml wz_users_guide_temp.fo
 	cd @srcdir@ && fop -c userconfig.xml -fo wz_users_guide_temp.fo -pdf waitzar_users_guide.pdf
 
 userconfig.xml : userconfig.in.xml config_parser.pl
@@ -564,8 +589,14 @@ userconfig.xml : userconfig.in.xml config_parser.pl
 wz_titlepage.xsl : titlepage.templates.xml
 	xsltproc --output  @srcdir@/wz_titlepage.xsl /usr/share/xml/docbook/stylesheet/nwalsh/template/titlepage.xsl @srcdir@/titlepage.templates.xml
 
-wz_users_guide_temp.fo : custom_layer.xsl waitzar_users_guide.xml wz_titlepage.xsl
-	xsltproc  --output @srcdir@/wz_users_guide_temp.fo  --stringparam fop1.extensions 1  @srcdir@/custom_layer.xsl @srcdir@/waitzar_users_guide.xml
+waitzar_users_guide.html.xml : waitzar_users_guide.xml
+	xsltproc  --output  @srcdir@/waitzar_users_guide.html.xml --stringparam  profile.role  "html" /usr/share/xml/docbook/stylesheet/nwalsh/profiling/profile.xsl @srcdir@/waitzar_users_guide.xml
+
+waitzar_users_guide.pdf.xml : waitzar_users_guide.xml
+	xsltproc  --output  @srcdir@/waitzar_users_guide.pdf.xml --stringparam  profile.role  "pdf" /usr/share/xml/docbook/stylesheet/nwalsh/profiling/profile.xsl @srcdir@/waitzar_users_guide.xml
+
+wz_users_guide_temp.fo : custom_layer.xsl waitzar_users_guide.pdf.xml wz_titlepage.xsl
+	xsltproc  --output @srcdir@/wz_users_guide_temp.fo  --stringparam fop1.extensions 1  @srcdir@/custom_layer.xsl @srcdir@/waitzar_users_guide.pdf.xml
 # Tell versions [3.59,3.63) of GNU make to not export all variables.
 # Otherwise a system limit (for SysV at least) may be exceeded.
 .NOEXPORT:

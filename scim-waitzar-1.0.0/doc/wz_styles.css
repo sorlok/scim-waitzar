@@ -1,0 +1,33 @@
+/* We color program tool names green. */
+span.command {
+	color: green;
+	font-weight: bold;
+}
+
+
+/* Make links bold and blue, no underline. */
+a.ulink {
+	color: blue;
+	font-weight: bold;
+	text-decoration: none;
+}
+
+
+/* Better handling of Myanmar text. */
+em.foreignphrase {
+	font-family: Padauk,Myanmar3,Parabaik;
+}
+
+
+h3.author {
+	visibility: hidden;
+}
+span.firstname {
+	visibility: visible;
+}
+span.othername {
+	visibility: visible;
+}
+span.surname {
+	visibility: visible;
+}
