@@ -1,13 +1,13 @@
 fontsdir=$(docdir)/fonts
 
 fonts_DATA=	\
-             myanmar3-bold.xml \
-             myanmar3.xml \
-             padauk-bold.xml \
-             padauk.xml \
-             vera-italic.xml \
-             vera-bold.xml \
-             vera.xml
+             pdk-bold.xml \
+             pdk.xml \
+             bsver-italic.xml \
+             bsver-bold.xml \
+             bsver.xml \
+	     sil_open_font_license.txt \
+	     bitstream_vera_copyright.txt
 
 EXTRA_DIST = $(fonts_DATA)
 
