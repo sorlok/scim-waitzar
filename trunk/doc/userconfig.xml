@@ -6,31 +6,31 @@
   
     <renderer mime="application/pdf">
       <fonts>
-	<font  metrics-url="fonts/padauk.xml"  
+	<font  metrics-url="fonts/pdk.xml"  
                kerning="yes" 
                embed-url="/usr/share/fonts/truetype/ttf-sil-padauk/Padauk.ttf">
           <font-triplet name="Padauk" style="normal" weight="normal"/>
         </font>
 
-	<font  metrics-url="fonts/myanmar3-bold.xml"  
+	<font  metrics-url="fonts/pdk-bold.xml"  
                kerning="yes" 
                embed-url="/usr/share/fonts/truetype/ttf-sil-padauk/Padauk.ttf">
           <font-triplet name="Padauk" style="normal" weight="bold"/>
         </font>
       
-        <font  metrics-url="fonts/vera.xml" 
+        <font  metrics-url="fonts/bsver.xml" 
                kerning="yes" 
                embed-url="/usr/share/fonts/truetype/ttf-bitstream-vera/Vera.ttf">
           <font-triplet name="Bitstream Vera Sans" style="normal" weight="normal"/>
         </font>
 	
-        <font  metrics-url="fonts/vera-italic.xml" 
+        <font  metrics-url="fonts/bsver-italic.xml" 
                kerning="yes" 
                embed-url="/usr/share/fonts/truetype/ttf-bitstream-vera/Vera.ttf">
           <font-triplet name="Bitstream Vera Sans" style="italic" weight="normal"/>
         </font>
 	
-        <font  metrics-url="fonts/vera-bold.xml" 
+        <font  metrics-url="fonts/bsver-bold.xml" 
                kerning="yes" 
                embed-url="/usr/share/fonts/truetype/ttf-bitstream-vera/Vera.ttf">
           <font-triplet name="Bitstream Vera Sans" style="normal" weight="bold"/>
