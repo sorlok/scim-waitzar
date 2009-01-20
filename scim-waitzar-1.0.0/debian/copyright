@@ -37,6 +37,7 @@ The following files are treated as derivative works, and are licensed under
 the SIL Open Font License Version 1.1:
   doc/fonts/pdk.xml
   doc/fonts/pdk-bold.xml
+  The font "Padauk", embedded in doc/waitzar_users_guide.pdf
 ...a copy of which is distributed with these files.
   
 The following files are treated as derivative works, and are licensed under the
@@ -44,6 +45,7 @@ Bitstream Vera Fonts Copyright, which allows full re-distribution freedom:
   doc/fonts/bsver.xml
   doc/fonts/bsver-bold.xml
   doc/fonts/bsver-italic.xml
+  The font "Bitstream Vera Sans", embedded in doc/waitzar_users_guide.pdf
 ...a copy of which is distributed with these files.
 
 This package relies on the libwaitzar package, which is licensed under the Apache license version 2.
