@@ -1,60 +1,70 @@
+#!/bin/sh
 #
-# ibus-waitzar - The WaitZar engine for IBus
-#     Copyright (c) 2009 Seth N. Hetu <seth.hetu@gmail.com>
+# ibus-waitzar - Burmese Input for iBus
 #
-# main.py file based on ibus-pinyin's file:
-#     Copyright (c) 2007-2008 Huang Peng <shawn.p.huang@gmail.com>
-#     Modified under the terms of the GNU General Public License version 3.
+# Copyright (c) 2009 Seth N. Hetu <sorlok_reaves@yahoo.com>
 #
-# This program is free software; you can redistribute it and/or modify
+# This file is part of ibus-waitzar.
+#
+# ibus-wiatzar is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
-# the Free Software Foundation; either version 2, or (at your option)
-# any later version.
+# the Free Software Foundation, either version 3 of the License, or
+# (at your option) any later version.
 #
-# This program is distributed in the hope that it will be useful,
+#
+# ibus-waitzar is distributed in the hope that it will be useful,
 # but WITHOUT ANY WARRANTY; without even the implied warranty of
 # MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 # GNU General Public License for more details.
 #
 # You should have received a copy of the GNU General Public License
-# along with this program; if not, write to the Free Software
-# Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
+# along with ibus-waitzar.  If not, see <http://www.gnu.org/licenses/>.
+
+# Based on:
+# ibus-tmpl, copyright 2007-2008 Peng Huang <shawn.p.huang@gmail.com>
+# GPL2
 
 import os
 import sys
 import getopt
 import ibus
-import gobject
 import factory
+import gobject
+import datetime
+
+N_ = lambda x: x
+N_("Hello")
 
 class IMApp:
     def __init__(self, exec_by_ibus):
+        print("IM App initialzation begin")
         self.__component = ibus.Component("org.freedesktop.IBus.WaitZar",
-                                          "Myanmar WaitZar Component",
-                                          "0.1.0",
-                                          "GPL",
-                                          "Seth N. Hetu <seth.hetu@gmail.com>")
+                                          "WaitZar Component",
+                                          "1.0.0",
+                                          "GPLv3",
+                                          "Seth N. Hetu <sorlok_reaves@yahoo.com>")
         self.__component.add_engine("waitzar",
                                     "waitzar",
                                     "Myanmar WaitZar",
-                                    "my_MM",
-                                    "GPL",
-                                    "Seth N. Hetu <seth.hetu@gmail.com>",
+                                    "my",
+                                    "GPLv3",
+                                    "Seth N. Hetu <sorlok_reaves@yahoo.com>",
                                     "",
-                                    "")
+                                    "en")
         self.__mainloop = gobject.MainLoop()
-        self.__bus = ibus.Bus()
-        self.__bus.connect("destroy", self.__bus_destroy_cb)
+        self.__bus = ibus.Bus() 
         self.__factory = factory.EngineFactory(self.__bus)
         if exec_by_ibus:
             self.__bus.request_name("org.freedesktop.IBus.WaitZar", 0)
         else:
             self.__bus.register_component(self.__component)
+        
+        print("IM App initialzation end")
 
     def run(self):
         self.__mainloop.run()
 
-    def __bus_destroy_cb(self, bus):
+    def __bus_destroy_cb(self, _ibus):
         self.__mainloop.quit()
 
 
@@ -62,14 +72,19 @@ def launch_engine(exec_by_ibus):
     IMApp(exec_by_ibus).run()
 
 def print_help(out, v = 0):
-    print >> out, "-i, --ibus             execute by ibus."
     print >> out, "-h, --help             show this message."
     print >> out, "-d, --daemonize        daemonize ibus"
+    print >> out, "-i, --ibus             executed by ibus."
     sys.exit(v)
 
 def main():
-    daemonize = False
+    #Reset our log file
+    print("WaitZar initialized")
+    print("Time: " + str(datetime.datetime.now()) )
+
+    #Get command-line arguments
     exec_by_ibus = False
+    daemonize = False
     shortopt = "hdi"
     longopt = ["help", "daemonize", "ibus"]
     try:
@@ -92,6 +107,7 @@ def main():
         if os.fork():
             sys.exit()
 
+    print("Launching with options: " + str(opts) )
     launch_engine(exec_by_ibus)
 
 if __name__ == "__main__":
