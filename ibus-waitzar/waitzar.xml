@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- filename: waitzar.xml -->
+<component>
+	<name>org.freedesktop.IBus.WaitZar</name>
+	<description>WaitZar Component</description>
+	<exec>/usr/lib/ibus-waitzar/ibus-engine-waitzar --ibus</exec>
+	<version>1.0.0</version>
+	<author>Seth N. Hetu &lt;sorlok_reaves@yahoo.com&gt;</author>
+	<license>GPLv3</license>
+	<homepage>http://code.google.com/p/scim-waitzar/</homepage>
+	<textdomain>ibus-waitzar</textdomain>
+
+	<!-- for static engines -->
+	<engines>
+		<engine>
+			<name>waitzar</name>
+			<language>my_MM</language>
+			<license>GPLv3</license>
+			<author>Seth N. Hetu &lt;sorlok_reaves@yahoo.com&gt;</author>
+			<icon>/usr/share/ibus-waitzar/icons/wz.svg</icon>
+			<layout>us</layout>
+			<longname>WaitZar</longname>
+			<description>WaitZar Input Method</description>
+			<rank>99</rank>
+		</engine>
+	</engines>
+</component>

@@ -1,0 +1,115 @@
+import os
+
+
+#Our custom check; does libwaitzar work?
+def CheckLibWaitzarWorks(context):
+    #Inform the user
+    context.Message('Running libwaitzar test cases...')
+    
+    #Link to libwaitar and run our tests
+    result = True
+    try:
+        #Build the object
+        import libwz
+        modelpath = "/usr/share/waitzar/model2/Myanmar.model"
+        mywordspath1 = "/usr/share/waitzar/model2/mywords.txt"
+        mywordspath2 = os.path.join(os.path.join(os.path.expanduser("~"),".wz"), "mywords.txt")
+        model = libwz.WordBuilder(modelpath, [mywordspath1, mywordspath2])
+        
+        #Test the unicode return value for "kote"
+        model.setOutputEncoding(1)
+        model.reset(True)
+        model.typeLetter('k')
+        model.typeLetter('o')
+        model.typeLetter('t')
+        model.typeLetter('e')
+        words = map(lambda x:model.getWordKeyStrokes(x), model.getPossibleWords())
+
+        #There should be more test cases here, such as "shortcuts", output encodings, and other things
+        # No need to go too far overboard, but we should at least ensure that python is linking to ctypes properly
+    except:
+        import traceback
+        traceback.print_exc()
+        result = False
+    
+    #Done
+    context.Result(result)
+    return result
+    
+    
+    
+
+# Import the path from the user's environment
+env = Environment(ENV = {'PATH' : os.environ['PATH']})
+
+# Manage pkgconfig
+env.ParseConfig('pkg-config --cflags --libs waitzar')
+
+# Check for the existence of libwaitzar
+conf = Configure(env, custom_tests = {'CheckLibWaitzarWorks' : CheckLibWaitzarWorks})
+if not conf.CheckLib('waitzar'):
+    print 'ERROR: Did not find libwaitzar.a or waitzar.lib, exiting.'
+    Exit(1)
+if not reduce(lambda x,y:x and conf.CheckCXXHeader(y), [True, 'WordBuilder.h', 'SentenceList.h', 'fontconv.h']):
+    print 'ERROR: libwaitzar main headers not detected.'
+    Exit(1)
+if not conf.CheckLibWaitzarWorks():
+    print 'ERROR: libwaitzar test cases failed'
+    Exit(1)
+env = conf.Finish()
+
+
+
+#NOTE: The following files are probably installed in 
+#   /usr/local/lib/
+#      libwaitzar.a
+#      libwaitzar.la
+#      libwaitzar.so
+#      libwaitzar.so.1
+#      libwaitzar.so.1.0.0
+#NOTE: Normal library (libwaitzar1) installs:
+#         usr/lib/libwaitzar.so.1
+#         usr/lib/libwaitzar.so.1.0.0
+#      Libwaitzar-dev installs:
+#         usr/include/*
+#         usr/lib/libwaitzar.so
+#         usr/lib/libwaitzar.la
+#         usr/lib/pkgconfig/waitzar.pc
+#
+#Expect the model data to be stored in:
+#   /usr/local/share/waitzar/model2
+#      Myanmar.model
+#      mywords.txt
+#
+#Header files in:
+#   /usr/local/include/waitzar
+#      fontconv.h
+#      fontmap.h
+#      lib.h
+#      SentenceList.h
+#      regex.h
+#      WordBuilder.h
+#
+#Pkgconfig data in:
+#   /usr/local/lib/pkgconfig/
+#      waitzar.pc
+
+
+#Install the engine in its appropriate location
+env.Install('/usr/share/ibus-waitzar/engine', 'engine/engine.py')
+env.Install('/usr/share/ibus-waitzar/engine', 'engine/factory.py')
+env.Install('/usr/share/ibus-waitzar/engine', 'engine/main.py')
+env.Install('/usr/share/ibus-waitzar/icons', 'icons/wz.svg')
+env.Install('/usr/share/ibus-waitzar/setup', 'setup/main.py')
+
+env.Install('/usr/lib/ibus-waitzar', 'ibus-engine-waitzar')
+env.Install('/usr/lib/ibus-waitzar', 'ibus-setup-waitzar')
+
+env.Install('/usr/share/ibus/component', 'waitzar.xml')
+
+#Convenience target
+env.Alias('install', Split('/usr/share/ibus-waitzar /usr/lib/ibus-waitzar /usr/share/ibus/component'))
+
+
+
+
