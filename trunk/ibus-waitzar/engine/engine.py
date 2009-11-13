@@ -192,7 +192,8 @@ class Engine(ibus.EngineBase):
         self.__lookup_table.clean()
         if preedit_len > 0:
             attrs.append(ibus.AttributeForeground(0xff0000, 0, preedit_len))
-            self.__lookup_table.append_candidate(ibus.Text("hello"))
+            self.__lookup_table.append_candidate(ibus.Text(u'\u1000\u102D\u102F'))
+            self.__lookup_table.append_candidate(ibus.Text(u'\u1000\u102D\u102F\u101A\u103A'))
         self.update_auxiliary_text(ibus.Text(self.__preedit_string, attrs), preedit_len > 0)
         attrs.append(ibus.AttributeUnderline(pango.UNDERLINE_SINGLE, 0, preedit_len))
         self.update_preedit_text(ibus.Text(self.__preedit_string, attrs), preedit_len, preedit_len > 0)

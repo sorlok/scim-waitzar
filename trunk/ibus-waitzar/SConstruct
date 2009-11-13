@@ -1,5 +1,5 @@
 import os
-
+import sys
 
 #Our custom check; does libwaitzar work?
 def CheckLibWaitzarWorks(context):
@@ -10,6 +10,7 @@ def CheckLibWaitzarWorks(context):
     result = True
     try:
         #Build the object
+        sys.path.append("engine")
         import libwz
         modelpath = "/usr/share/waitzar/model2/Myanmar.model"
         mywordspath1 = "/usr/share/waitzar/model2/mywords.txt"
