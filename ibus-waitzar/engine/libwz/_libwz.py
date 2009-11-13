@@ -8,6 +8,9 @@ from ctypes import *
 from ctypes.util import find_library
 
 # Locate and load the libwaitzar shared object.
+#   NOTE: On Posix, this runs: "gcc -Wl,-t -l waitzar", which fails (we use pkgconfig for linking... something's amiss)
+#   ....however, it's not that easy (enchant ALSO fails to load this way, from the command line)
+# Maybe we can hardcode the path in? Something like: 'libwaitzar.so.1'? (This works on the command line)
 lwz_path = find_library("waitzar")
 if not lwz_path or os.path.isdir(lwz_path):
     lwz_path = find_library("libwaitzar")
