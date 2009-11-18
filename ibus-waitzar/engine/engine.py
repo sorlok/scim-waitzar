@@ -87,12 +87,12 @@ class Engine(ibus.EngineBase):
         append_log("Engine created")
         
         modelPath = '/usr/share/waitzar/model2/Myanmar.model'
-        mywordsPaths = StringVec()
+        mywordsPaths = libwaitzar.StringVec()
         mywordsPaths.append('/usr/share/waitzar/model2/mywords.txt')
         
         self.model = libwaitzar.WordBuilder(modelPath, mywordsPaths)
         
-        append_log("Model created"
+        append_log("Model created")
         
     if ibus.get_version() >= '1.2.0':
         def process_key_event(self, keyval, keycode, state):
@@ -115,7 +115,7 @@ class Engine(ibus.EngineBase):
         if not is_press:
             return False
 
-        append_log('key press: ' + str(keyval) + ' , ' + str(keycode) + ' , ' + str(state))
+        #append_log('key press: ' + str(keyval) + ' , ' + str(keycode) + ' , ' + str(state))
 
         if self.__preedit_string:
             if keyval == keysyms.Return:
@@ -211,6 +211,9 @@ class Engine(ibus.EngineBase):
         self.updateGuessString()
         self.updateTableEntries()
 
+        #Update log (temp)
+        append_log('update called: ' + self.__preedit_string)
+
         #Cache lengths
         preedit_len = len(self.__preedit_string)
         aux_len = len(self.__aux_string)
@@ -245,15 +248,16 @@ class Engine(ibus.EngineBase):
     
     def updateAuxString(self):
         #Update our auxiliary string
-        parenStr = model.getParenString()
-        parenStr = '('+parenStr+')' if parenStr
+        parenStr = self.model.getParenString()
+        if parenStr :
+            parenStr = '('+parenStr+')'
         self.__aux_string = self.__typed_string + parenStr
 
     def updateGuessString(self):
         #Update the current guess
         self.__guess_string = u""
-        if model.getPossibleWords():
-            self.__guess_string = model.getWordKeyStrokes(model.getPossibleWords()[model.getCurrSelectedID()]))
+        if self.model.getPossibleWords():
+            self.__guess_string = model.getWordKeyStrokes(model.getPossibleWords()[model.getCurrSelectedID()])
         self.__preedit_string = '%s%s%s' % (self.__prefix_string, self.__guess_string, self.__postfix_string)
 
     def updateTableEntries(self):
@@ -262,9 +266,11 @@ class Engine(ibus.EngineBase):
         if self.__preedit_string:
             #Loop through each entry; add its unicode value (for display)
             for word in model.getPossibleWords():
-                candidate = model.getWordKeyStrokes(word, libwaitzar.encoding.unicode
+                candidate = model.getWordKeyStrokes(word, libwaitzar.encoding.unicode)
                 self.__lookup_table.append_candidate(ibus.Text(candidate))
 
+    def testUpdate(self):
+        self.__update()
 
     def reset(self):
         #Reset the model

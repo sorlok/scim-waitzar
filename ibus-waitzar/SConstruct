@@ -52,6 +52,40 @@ def CheckLibWaitzarWorks(context):
     return result
     
     
+#Our custom check; do basic engine tasks work?
+def CheckEngineWorks(context):
+    #Inform the user
+    context.Message('Running ibus-waitzar engine checks...\n')
+    
+    #Load the engine, run our tests
+    result = True
+    try:
+        #Import the libraries
+        from libwaitzar import WordBuilder, encoding, StringVec
+        sys.path.append('engine')
+        import engine
+        import ibus
+
+        #Load a temporary engine, test it out
+        from getpass import getuser
+        if (getuser() == 'root'):
+            context.Message('Skipping engine test (fails for root user)\n')
+        else:
+            myengine = engine.Engine(ibus.Bus(), '/com/redhat/IBus/engines/WaitZar/Engine/2')
+            myengine.reset()
+            myengine.testUpdate()
+            myengine.reset()
+            myengine.testUpdate()
+    except:
+        import traceback
+        traceback.print_exc()
+        result = False
+    
+    #Done
+    context.Result(result)
+    return result    
+    
+    
     
 
 # Import the path from the user's environment
@@ -60,12 +94,20 @@ env = Environment(ENV = {'PATH' : os.environ['PATH']})
 # Manage pkgconfig
 env.ParseConfig('pkg-config --cflags --libs waitzar')
 
-# Check for the existence of libwaitzar
+# Checks
 if not env.GetOption('clean'):
-    conf = Configure(env, custom_tests = {'CheckLibWaitzarWorks' : CheckLibWaitzarWorks})
+    conf = Configure(env, custom_tests = {'CheckLibWaitzarWorks' : CheckLibWaitzarWorks, 'CheckEngineWorks' : CheckEngineWorks})
+
+    # Check for the existence of libwaitzar
     if not conf.CheckLibWaitzarWorks():
         print 'ERROR: libwaitzar test cases failed'
         Exit(1)
+
+    #General engine check
+    if not conf.CheckEngineWorks():
+        print 'ERROR: ibus-waitzar engine test failed'
+        Exit(1)
+
     env = conf.Finish()
 
 
