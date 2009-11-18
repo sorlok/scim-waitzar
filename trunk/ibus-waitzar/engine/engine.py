@@ -117,23 +117,23 @@ class Engine(ibus.EngineBase):
 
         #append_log('key press: ' + str(keyval) + ' , ' + str(keycode) + ' , ' + str(state))
 
-        if self.__preedit_string:
+        if self.__typed_string:
             if keyval == keysyms.Return:
-                self.__commit_string(self.__preedit_string)
+                self.__commit_string(self.__typed_string)
                 return True
             elif keyval == keysyms.Escape:
-                self.__preedit_string = u""
+                self.__typed_string = u""
                 self.__update()
                 return True
             elif keyval == keysyms.BackSpace:
-                self.__preedit_string = self.__preedit_string[:-1]
+                self.__typed_string = self.__typed_string[:-1]
                 self.__invalidate()
                 return True
             elif keyval == keysyms.space:
                 if self.__lookup_table.get_number_of_candidates() > 0:
                     self.__commit_string(self.__lookup_table.get_current_candidate().text)
                 else:
-                    self.__commit_string(self.__preedit_string)
+                    self.__commit_string(self.__typed_string)
                 return False
             elif keyval >= keysyms._1 and keyval <= keysyms._9:
                 index = keyval - keysyms._1
@@ -160,12 +160,13 @@ class Engine(ibus.EngineBase):
         if keyval in xrange(keysyms.a, keysyms.z + 1) or \
             keyval in xrange(keysyms.A, keysyms.Z + 1):
             if state & (modifier.CONTROL_MASK | modifier.ALT_MASK) == 0:
-                self.__preedit_string += unichr(keyval)
-                self.__invalidate()
+                if self.model.typeLetter(chr(keyval)):
+                     self.__typed_string += unichr(keyval)
+                     self.__invalidate()
                 return True
         else:
-            if keyval < 128 and self.__preedit_string:
-                self.__commit_string(self.__preedit_string)
+            if keyval < 128 and self.__typed_string:
+                self.__commit_string(self.__typed_string)
 
         return False
 
@@ -202,7 +203,7 @@ class Engine(ibus.EngineBase):
 
     def __commit_string(self, text):
         self.commit_text(ibus.Text(text))
-        self.__preedit_string = u""
+        self.__typed_string = u""
         self.__update()
 
     def __update(self):
@@ -212,7 +213,7 @@ class Engine(ibus.EngineBase):
         self.updateTableEntries()
 
         #Update log (temp)
-        append_log('update called: ' + self.__preedit_string)
+        append_log('update called: ' + str([self.__typed_string, self.__preedit_string]))
 
         #Cache lengths
         preedit_len = len(self.__preedit_string)
@@ -257,7 +258,7 @@ class Engine(ibus.EngineBase):
         #Update the current guess
         self.__guess_string = u""
         if self.model.getPossibleWords():
-            self.__guess_string = model.getWordKeyStrokes(model.getPossibleWords()[model.getCurrSelectedID()])
+            self.__guess_string = self.model.getWordKeyStrokes(self.model.getPossibleWords()[self.model.getCurrSelectedID()])
         self.__preedit_string = '%s%s%s' % (self.__prefix_string, self.__guess_string, self.__postfix_string)
 
     def updateTableEntries(self):
@@ -265,8 +266,9 @@ class Engine(ibus.EngineBase):
         self.__lookup_table.clean()
         if self.__preedit_string:
             #Loop through each entry; add its unicode value (for display)
-            for word in model.getPossibleWords():
-                candidate = model.getWordKeyStrokes(word, libwaitzar.encoding.unicode)
+            words = self.model.getPossibleWords()
+            for word in words:
+                candidate = self.model.getWordKeyStrokes(word, libwaitzar.encoding.unicode)
                 self.__lookup_table.append_candidate(ibus.Text(candidate))
 
     def testUpdate(self):
