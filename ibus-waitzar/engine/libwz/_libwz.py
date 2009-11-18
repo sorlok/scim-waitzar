@@ -7,6 +7,9 @@ import sys, os, os.path
 from ctypes import *
 from ctypes.util import find_library
 
+#Temp
+curr_api = 1
+
 # Locate and load the libwaitzar shared object.
 #   NOTE: On Posix, this runs: "gcc -Wl,-t -l waitzar", which fails (we use pkgconfig for linking... something's amiss)
 #   ....however, it's not that easy (enchant ALSO fails to load this way, from the command line)
@@ -15,13 +18,14 @@ lwz_path = find_library("waitzar")
 if not lwz_path or os.path.isdir(lwz_path):
     lwz_path = find_library("libwaitzar")
 if not lwz_path or os.path.isdir(lwz_path):
-    raise ImportError("waitzar C++ library not found")
-lwz = cdll.LoadLibrary(lwz)
+    #raise ImportError("waitzar C++ library not found")
+    lwz_path = 'libwaitzar.so.%d' % curr_api  #Last chance... for debug only. Fix for release
+lwz = cdll.LoadLibrary(lwz_path)
 
 
 # Define various callback function types
 #t_broker_desc_func = CFUNCTYPE(None,c_char_p,c_char_p,c_char_p,c_void_p)
-t_wordbuilder_desc_func = CFUNCTYPE(None,c_char_p,c_char_p,c_char_p,c_char_p,c_void_p)
+#t_wordbuilder_desc_func = CFUNCTYPE(None,c_char_p,c_char_p,c_char_p,c_char_p,c_void_p)
 
 
 # Simple typedefs for readability

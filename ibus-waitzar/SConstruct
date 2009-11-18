@@ -4,30 +4,44 @@ import sys
 #Our custom check; does libwaitzar work?
 def CheckLibWaitzarWorks(context):
     #Inform the user
-    context.Message('Running libwaitzar test cases...')
+    context.Message('Running libwaitzar test cases...\n')
     
     #Link to libwaitar and run our tests
     result = True
     try:
+        #Import the library
+        from libwaitzar import WordBuilder, encoding, StringVec
+
         #Build the object
-        sys.path.append("engine")
-        import libwz
         modelpath = "/usr/share/waitzar/model2/Myanmar.model"
-        mywordspath1 = "/usr/share/waitzar/model2/mywords.txt"
-        mywordspath2 = os.path.join(os.path.join(os.path.expanduser("~"),".wz"), "mywords.txt")
-        model = libwz.WordBuilder(modelpath, [mywordspath1, mywordspath2])
+        mywordspath = StringVec()
+        mywordspath.append("/usr/share/waitzar/model2/mywords.txt")
+        localmw = os.path.join(os.path.join(os.path.expanduser("~"),".wz"), "mywords.txt")
+        if os.path.isfile(localmw):
+            mywordspath.append(localmw)
+        model = WordBuilder(modelpath, mywordspath)
         
-        #Test the unicode return value for "kote"
-        model.setOutputEncoding(1)
+        #Test the return value for "kote"
         model.reset(True)
         model.typeLetter('k')
         model.typeLetter('o')
         model.typeLetter('t')
         model.typeLetter('e')
-        words = map(lambda x:model.getWordKeyStrokes(x), model.getPossibleWords())
+
+        #Test all key values: unicode, zawgyi, ascii
+        tests = {encoding.unicode     : [u'\u1000\u102F\u1000\u103A', u'\u1000\u102F\u100B\u103A', u'\u1000\u102F\u1010\u103A', u'\u1000\u102F\u1015\u103A', u'\u1000\u102F\u1017\u103A'],
+                              encoding.zawgyi       : [u'\u1000\u102F\u1000\u1039', u'\u1000\u102F\u100B\u1039', u'\u1000\u102F\u1010\u1039', u'\u1000\u102F\u1015\u1039', u'\u1000\u102F\u1017\u1039'], 
+                              encoding.wininnwa   : [u'ukuf', u'uk#f', u'ukwf', u'ukyf', u'ukAf']}
+        for enc,res in tests.iteritems():
+            possibleWords = map(lambda x:model.getWordKeyStrokes(x, enc), model.getPossibleWords())
+            if (possibleWords != res):
+                context.Message('ERROR: WaitZar output failed for encoding: ' + str(enc) + '\n')
+                context.Message('    ' + str(possibleWords) + '\n')
+                context.Message('    ' + str(res) + '\n')
+                result = False
 
         #There should be more test cases here, such as "shortcuts", output encodings, and other things
-        # No need to go too far overboard, but we should at least ensure that python is linking to ctypes properly
+        # No need to go too far overboard, but we should at least ensure that python is linking ttro ctypes properly
     except:
         import traceback
         traceback.print_exc()
@@ -47,17 +61,12 @@ env = Environment(ENV = {'PATH' : os.environ['PATH']})
 env.ParseConfig('pkg-config --cflags --libs waitzar')
 
 # Check for the existence of libwaitzar
-conf = Configure(env, custom_tests = {'CheckLibWaitzarWorks' : CheckLibWaitzarWorks})
-if not conf.CheckLib('waitzar'):
-    print 'ERROR: Did not find libwaitzar.a or waitzar.lib, exiting.'
-    Exit(1)
-if not reduce(lambda x,y:x and conf.CheckCXXHeader(y), [True, 'WordBuilder.h', 'SentenceList.h', 'fontconv.h']):
-    print 'ERROR: libwaitzar main headers not detected.'
-    Exit(1)
-if not conf.CheckLibWaitzarWorks():
-    print 'ERROR: libwaitzar test cases failed'
-    Exit(1)
-env = conf.Finish()
+if not env.GetOption('clean'):
+    conf = Configure(env, custom_tests = {'CheckLibWaitzarWorks' : CheckLibWaitzarWorks})
+    if not conf.CheckLibWaitzarWorks():
+        print 'ERROR: libwaitzar test cases failed'
+        Exit(1)
+    env = conf.Finish()
 
 
 

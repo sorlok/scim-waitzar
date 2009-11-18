@@ -33,6 +33,8 @@ import datetime
 from ibus import keysyms
 from ibus import modifier
 
+import libwaitzar
+
 log_debug = True
 
 def delete_log():
@@ -66,14 +68,31 @@ class Engine(ibus.EngineBase):
         delete_log()
         append_log("Creating engine... ibus version " + ibus.get_version())
         append_log("Time: " + str(datetime.datetime.now()))
+        
+        self.has_focus = False
+
+        #My strings
+        self.__typed_string = u""
+        self.__aux_string = u""
+        self.__guess_string = u""
+        self.__prefix_string = u""
+        self.__postfix_string = u""
+        self.__preedit_string = u""
 
         self.__is_invalidate = False
-        self.__preedit_string = u""
         self.__lookup_table = ibus.LookupTable()
         self.__prop_list = ibus.PropList()
-        self.__prop_list.append(ibus.Property(u"test", icon = u"ibus-locale"))
+        self.__prop_list.append(ibus.Property(u"Unicode 5.1", icon = u"input_uni"))
         	
         append_log("Engine created")
+        
+        modelPath = '/usr/share/waitzar/model2/Myanmar.model'
+        mywordsPaths = StringVec()
+        mywordsPaths.append('/usr/share/waitzar/model2/mywords.txt')
+        
+        self.model = libwaitzar.WordBuilder(modelPath, mywordsPaths)
+        
+        append_log("Model created"
         
     if ibus.get_version() >= '1.2.0':
         def process_key_event(self, keyval, keycode, state):
@@ -187,17 +206,27 @@ class Engine(ibus.EngineBase):
         self.__update()
 
     def __update(self):
+        #First, update our strings
+        self.updateAuxString()
+        self.updateGuessString()
+        self.updateTableEntries()
+
+        #Cache lengths
         preedit_len = len(self.__preedit_string)
+        aux_len = len(self.__aux_string)
+
+        #Get an attribute list
         attrs = ibus.AttrList()
-        self.__lookup_table.clean()
-        if preedit_len > 0:
+        if self.__preedit_string:
             attrs.append(ibus.AttributeForeground(0xff0000, 0, preedit_len))
-            self.__lookup_table.append_candidate(ibus.Text(u'\u1000\u102D\u102F'))
-            self.__lookup_table.append_candidate(ibus.Text(u'\u1000\u102D\u102F\u101A\u103A'))
-        self.update_auxiliary_text(ibus.Text(self.__preedit_string, attrs), preedit_len > 0)
+
+        #Now update all strings
+        self.update_auxiliary_text(ibus.Text(self.__aux_string, attrs), aux_len > 0)
         attrs.append(ibus.AttributeUnderline(pango.UNDERLINE_SINGLE, 0, preedit_len))
         self.update_preedit_text(ibus.Text(self.__preedit_string, attrs), preedit_len, preedit_len > 0)
         self.__update_lookup_table()
+
+        #Done - now in a valid state
         self.__is_invalidate = False
 
     def __update_lookup_table(self):
@@ -207,13 +236,53 @@ class Engine(ibus.EngineBase):
 
     def focus_in(self):
         self.register_properties(self.__prop_list)
+        self.has_focus = True
+        self.reset()
 
     def focus_out(self):
-        pass
+        self.has_focus = False
+        self.reset()
+    
+    def updateAuxString(self):
+        #Update our auxiliary string
+        parenStr = model.getParenString()
+        parenStr = '('+parenStr+')' if parenStr
+        self.__aux_string = self.__typed_string + parenStr
+
+    def updateGuessString(self):
+        #Update the current guess
+        self.__guess_string = u""
+        if model.getPossibleWords():
+            self.__guess_string = model.getWordKeyStrokes(model.getPossibleWords()[model.getCurrSelectedID()]))
+        self.__preedit_string = '%s%s%s' % (self.__prefix_string, self.__guess_string, self.__postfix_string)
+
+    def updateTableEntries(self):
+        #Update our lookup table entries
+        self.__lookup_table.clean()
+        if self.__preedit_string:
+            #Loop through each entry; add its unicode value (for display)
+            for word in model.getPossibleWords():
+                candidate = model.getWordKeyStrokes(word, libwaitzar.encoding.unicode
+                self.__lookup_table.append_candidate(ibus.Text(candidate))
+
 
     def reset(self):
-        pass
+        #Reset the model
+        self.model.reset(True)
+        
+        #Reset our array and counter
+        #self.sentence.clear()
+
+        #Reset all strings
+        self.__typed_string = u""
+        self.__prefix_string = u""
+        self.__postfix_string = u""
+        self.__update()
 
     def property_activate(self, prop_name):
         print "PropertyActivate(%s)" % prop_name
+
+
+
+
 
