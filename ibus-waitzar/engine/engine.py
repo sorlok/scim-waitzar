@@ -69,7 +69,7 @@ class Engine(ibus.EngineBase):
         append_log("Creating engine... ibus version " + ibus.get_version())
         append_log("Time: " + str(datetime.datetime.now()))
         
-        self.has_focus = False
+        self.__has_focus = False
 
         #My strings
         self.__typed_string = u""
@@ -91,6 +91,7 @@ class Engine(ibus.EngineBase):
         mywordsPaths.append('/usr/share/waitzar/model2/mywords.txt')
         
         self.model = libwaitzar.WordBuilder(modelPath, mywordsPaths)
+        self.sentence = libwaitzar.SentenceList()
         
         append_log("Model created")
         
@@ -110,66 +111,242 @@ class Engine(ibus.EngineBase):
                 return False
 
     def process_key_event_internal(self, keyval, keycode, state):
-        # ignore key release events
-        is_press = ((state & modifier.RELEASE_MASK) == 0)
-        if not is_press:
+        #Ignore if: 
+        #    - The key is being released
+        #    - The keycode is (somehow) zero
+        #    - The program does not have focus
+        if (keycode==0 or not self.__has_focus or (state & modifier.RELEASE_MASK)):
             return False
 
+        #If any modifiers are pressed besides shift, ignore this key event
+        if (state & (modifier.CONTROL_MASK | modifier.ALT_MASK)):
+            return False;
+
+        #Debug: output key information
         #append_log('key press: ' + str(keyval) + ' , ' + str(keycode) + ' , ' + str(state))
 
-        if self.__typed_string:
-            if keyval == keysyms.Return:
-                self.__commit_string(self.__typed_string)
-                return True
-            elif keyval == keysyms.Escape:
-                self.__typed_string = u""
-                self.__update()
-                return True
-            elif keyval == keysyms.BackSpace:
-                self.__typed_string = self.__typed_string[:-1]
+        #
+        # MAIN INPUT LOOP -- respond to user key presses, trigger calls for __update() if necessary
+        #
+        #First check: are we typing a letter from [a..z]? (Capitals included)
+        #   If so, type this letter into our model
+        #
+        letter = keyval - (keysyms.a - keysyms.A) if keyval in xrange(keysyms.A, keysyms.Z + 1) else keyval
+        if letter in xrange(keysyms.a, keysyms.z + 1):
+            if model.typeLetter(letter):
+                #Append this letter to our typed_string, and update all guesses
+                self.__typed_string += unichr(letter)
                 self.__invalidate()
-                return True
-            elif keyval == keysyms.space:
-                if self.__lookup_table.get_number_of_candidates() > 0:
-                    self.__commit_string(self.__lookup_table.get_current_candidate().text)
+            return True
+
+
+        # 
+        # Space/Enter - type to commit the word or sentence. Space also advances the cursor
+        #
+        elif keyval == keysyms.space or keyval == keysyms.Return:
+            if self.isGuessingWord():
+                #If we've typed a word, pick the current selection
+                if self.__guess_string:
+                    self.pickGuess(-1)
+            elif self.isHangingPhrase():
+                #If we're typing a sentence, the space bar serves two different functions
+                if keyval == keysyms.space and (self.sentence.getCursorIndex()==-1 or self.sentence.getCursorIndex()<self.sentence.size()-1):
+                    #We're not at the end of the sentence; advance the cursor
+                    self.sentence.moveCursorRight(1, self.model)
+                    self.recalcPrefixString()
                 else:
-                    self.__commit_string(self.__typed_string)
+                    #We're at the end of the sentence. Commit it to the editor
+                    self.typeSentence('')
+            else:
                 return False
-            elif keyval >= keysyms._1 and keyval <= keysyms._9:
-                index = keyval - keysyms._1
-                candidates = self.__lookup_table.get_canidates_in_current_page()
-                if index >= len(candidates):
-                    return False
-                candidate = candidates[index].text
-                self.__commit_string(candidate)
+            return True
+
+        # 
+        # Numerals - Shortcut to that candidate word, or type the number
+        #
+        elif keyval == keyval >= keysyms._1 and keyval <= keysyms._9:
+            number = keyval-keysyms._1 if keyval!=keyval <= keysyms._0 else 9
+            if self.isGuessingWord():
+                #Shortcut to that word
+                self.pickGuess(number)
+            elif self.isHangingPhrase():
+                #Insert that number, or its Myanmar equivalent
+                sentence.insert(keyval - keysysms._0)
+                sentence.moveCursorRight(0, True, self.model)
+                self.recalcPrefixString()
+            else:
+                return False
+            return True
+
+        # 
+        # Left/Right/Up/Down - Change the selected candidate, or move the prefix cursor
+        #
+        elif keyval==keysyms.Up or keyval==keysyms.Down or keyval==keysyms.Left or keyval==keysyms.Right:
+            amount = 1 if (keyval==keysyms.Down or keyval==keysyms.Right) else -1
+            if self.isGuessingWord():
+                #Shortcut to that word
+                self.moveRight(amount)
+            elif self.isHangingPhrase():
+                #Move the sentence cursor
+                sentence.moveCursorRight(amount, self.model)
+                self.recalcPrefixString()
+            else:
+                return False
+            return True
+
+        # 
+        # PgUp/PgDown - Change the lookup table's page
+        #
+        elif keyval==keysyms.Page_Up or keyval==keysyms.KP_Page_Up or keyval==keysyms.Page_Down or keyval==keysyms.KP_Page_Down:
+            go_down = True if keyval==keysyms.Page_Down or keyval==keysyms.KP_Page_Down else False
+            if self.isGuessingWord():
+                if go_down:
+                    self.page_down()
+                else:
+                    self.page_up()
                 return True
-            elif keyval == keysyms.Page_Up or keyval == keysyms.KP_Page_Up:
-                self.page_up()
+            else:
+                return False
+
+        # 
+        # Period/Comma - Type the sentence, add punctuation
+        #
+        elif keyval==keysyms.leftcaret or keyval==keysyms.rightcaret:
+            if self.isGuessingWord():
+                return True #Consume input
+            else:
+                #Insert this character and type the sentence
+                self.typeSentence(self.model.getStopCharacter(keyval==keysyms.rightcaret))
                 return True
-            elif keyval == keysyms.Page_Down or keyval == keysyms.KP_Page_Down:
-                self.page_down()
+
+        # 
+        # Delete/Backspace - Modify our letter string (or sentence string)
+        #
+        elif keyval==keysyms.Delete or keyval==keysyms.BackSpace:
+            if self.isGuessingWord():
+                if keyval==keysyms.BackSpace:
+                    #Delete the previous letter
+                    self.model.backspace()
+                    if self.__typed_string:
+                        self.__typed_string = self.__typed_string[:-1]
+                        self.__invalidate()
+            elif self.isHangingPhrase():
+                didDelete = False
+                if keyval==keysyms.BackSpace:
+                    #Delete the previous word
+                    didDelete = self.sentence.deletePrev(self.model)
+                else:
+                    #Delete the next word
+                    didDelete = self.sentence.deleteNext()
+
+                #Perform local deletion operations
+                if didDelete:
+                    self.recalcPrefixString()
+            else:
+                return False
+            return True
+
+
+        # 
+        # Escape - general cancel key
+        #
+        elif keyval == keysyms.Escape:
+            if self.isGuessingWord():
+                #Soft reset
+                self.model.reset(True)
+                self.__typed_string = ''
+                self.recalcPrefixString()
+            elif self.isHangingPhrase():
+                #Regular reset
+                self.reset()
+            else:
+                return False
+            return True
+
+
+        # 
+        # Home/End - just consume these events to avoid interface confusion
+        #
+        elif keyval==keysyms.Home or keyval==keysyms.End:
+            if self.isGuessingWord() or self.isHangingPhrase():
                 return True
-            elif keyval == keysyms.Up:
-                self.cursor_up()
-                return True
-            elif keyval == keysyms.Down:
-                self.cursor_down()
-                return True
-            elif keyval == keysyms.Left or keyval == keysyms.Right:
-                return True
-        if keyval in xrange(keysyms.a, keysyms.z + 1) or \
-            keyval in xrange(keysyms.A, keysyms.Z + 1):
-            if state & (modifier.CONTROL_MASK | modifier.ALT_MASK) == 0:
-                if self.model.typeLetter(chr(keyval)):
-                     self.__typed_string += unichr(keyval)
-                     self.__invalidate()
-                return True
+
+
+        # 
+        # Anything Else - don't process it
+        #
         else:
-            if keyval < 128 and self.__typed_string:
-                self.__commit_string(self.__typed_string)
+            return False
 
-        return False
 
+
+    #Are we currently guessing a word?
+    def isGuessingWord(self):
+        return bool(self.__aux_string)
+
+    #Are we currently in the middle of typing a sentence?
+    def isHangingPhrase(self):
+        return bool(self.__prefix_string) or bool(self.__postfix_string)
+
+    #Move the cursor based on the model
+    def moveRight(self, amount):
+        if model.moveRight(amount):
+            #TODO: amount can be something besides -1 and 1; we should allow for this.
+            if amount>0:
+                self.cursor_down()
+            else if amount <0:
+                self.cursor_up()
+        self.__invalidate()
+
+    #Pick the guess with a given id, -1 for the currently-selected guess
+    def pickGuess(self, id):
+        #Get this guess
+        guess = model.typeSpace(id)
+        if (guess.first):
+            sentence.insert(guess.second)
+
+        #Update the prefix string and model
+        self.recalcPrefixString()
+        self.model.reset(False)
+        self.__typed_string = ''
+
+    #Type the current sentence, appending an "Extra" string if requested to
+    def typeSentence(self, extra):
+        #Commit the modified string
+        self.__prefix_string += self.__postfix_string
+        if extra:
+            self.__prefix_string += extra
+        self.__commit_string(self.__prefix_string)
+
+        #Reset
+        self.reset()
+
+    #Calculate our prefix string, which is essentially the sentence we've typed with the current "guess" inserted wherever the cursor is
+    def recalcPrefixString(self):
+        #Init
+        self.__prefix_string = ''
+        self.__postfix_string = ''
+        put_count = 0
+
+        #For each word, append it to either prefix or postfix
+        for wordID in self.sentence.words:
+            word = self.model.getWordKeyStrokes(wordID)
+            
+            #Append to prefix or postfix?
+            if sentence.getCursorIndex() >= put_count:
+                self.__prefix_string += word
+            else:
+                self.__postfix_string += word
+
+            #Increment
+            put_count += 1
+
+        #Force a call to invalidate()
+        self.__invalidate()
+
+
+
+    #Schedule a recalculation for later
     def __invalidate(self):
         if self.__is_invalidate:
             return
@@ -180,12 +357,14 @@ class Engine(ibus.EngineBase):
     def page_up(self):
         if self.__lookup_table.page_up():
             self.page_up_lookup_table()
+            self.__invalidate()
             return True
         return False
 
     def page_down(self):
         if self.__lookup_table.page_down():
             self.page_down_lookup_table()
+            self.__invalidate()
             return True
         return False
 
@@ -212,8 +391,8 @@ class Engine(ibus.EngineBase):
         self.updateGuessString()
         self.updateTableEntries()
 
-        #Update log (temp)
-        append_log('update called: ' + str([self.__typed_string, self.__preedit_string]))
+        #Debug: update log
+        #append_log('update called: ' + str([self.__typed_string, self.__preedit_string]))
 
         #Cache lengths
         preedit_len = len(self.__preedit_string)
@@ -240,11 +419,11 @@ class Engine(ibus.EngineBase):
 
     def focus_in(self):
         self.register_properties(self.__prop_list)
-        self.has_focus = True
+        self.__has_focus = True
         self.reset()
 
     def focus_out(self):
-        self.has_focus = False
+        self.__has_focus = False
         self.reset()
     
     def updateAuxString(self):
@@ -279,7 +458,7 @@ class Engine(ibus.EngineBase):
         self.model.reset(True)
         
         #Reset our array and counter
-        #self.sentence.clear()
+        self.sentence.clear()
 
         #Reset all strings
         self.__typed_string = u""
