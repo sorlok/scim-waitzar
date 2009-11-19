@@ -329,17 +329,20 @@ class Engine(ibus.EngineBase):
         put_count = 0
 
         #For each word, append it to either prefix or postfix
-        for wordID in self.sentence.words:
-            word = self.model.getWordKeyStrokes(wordID)
+        atID = self.sentence.__iter__()
+        try: 
+            while True:
+                word = self.model.getWordKeyStrokes(atID.next())
             
-            #Append to prefix or postfix?
-            if sentence.getCursorIndex() >= put_count:
-                self.__prefix_string += word
-            else:
-                self.__postfix_string += word
+                #Append to prefix or postfix?
+                if sentence.getCursorIndex() >= put_count:
+                    self.__prefix_string += word
+                else:
+                    self.__postfix_string += word
 
-            #Increment
-            put_count += 1
+                #Increment
+                put_count += 1
+        except StopIteration: pass #Python's way of doing iterators
 
         #Force a call to invalidate()
         self.__invalidate()
@@ -386,31 +389,35 @@ class Engine(ibus.EngineBase):
         self.__update()
 
     def __update(self):
-        #First, update our strings
-        self.updateAuxString()
-        self.updateGuessString()
-        self.updateTableEntries()
+        try:
+            #First, update our strings
+            self.updateAuxString()
+            self.updateGuessString()
+            self.updateTableEntries()
 
-        #Debug: update log
-        #append_log('update called: ' + str([self.__typed_string, self.__preedit_string]))
+            #Debug: update log
+            #append_log('update called: ' + str([self.__typed_string, self.__preedit_string]))
 
-        #Cache lengths
-        preedit_len = len(self.__preedit_string)
-        aux_len = len(self.__aux_string)
+            #Cache lengths
+            preedit_len = len(self.__preedit_string)
+            aux_len = len(self.__aux_string)
 
-        #Get an attribute list
-        attrs = ibus.AttrList()
-        if self.__preedit_string:
-            attrs.append(ibus.AttributeForeground(0xff0000, 0, preedit_len))
+            #Get an attribute list
+            attrs = ibus.AttrList()
+            if self.__preedit_string:
+                attrs.append(ibus.AttributeForeground(0xff0000, 0, preedit_len))
 
-        #Now update all strings
-        self.update_auxiliary_text(ibus.Text(self.__aux_string, attrs), aux_len > 0)
-        attrs.append(ibus.AttributeUnderline(pango.UNDERLINE_SINGLE, 0, preedit_len))
-        self.update_preedit_text(ibus.Text(self.__preedit_string, attrs), preedit_len, preedit_len > 0)
-        self.__update_lookup_table()
+            #Now update all strings
+            self.update_auxiliary_text(ibus.Text(self.__aux_string, attrs), aux_len > 0)
+            attrs.append(ibus.AttributeUnderline(pango.UNDERLINE_SINGLE, 0, preedit_len))
+            self.update_preedit_text(ibus.Text(self.__preedit_string, attrs), preedit_len, preedit_len > 0)
+            self.__update_lookup_table()
 
-        #Done - now in a valid state
-        self.__is_invalidate = False
+            #Done - now in a valid state
+            self.__is_invalidate = False
+        except:
+           append_error()
+           return False
 
     def __update_lookup_table(self):
         visible = self.__lookup_table.get_number_of_candidates() > 0
@@ -450,6 +457,7 @@ class Engine(ibus.EngineBase):
                 candidate = self.model.getWordKeyStrokes(word, libwaitzar.encoding.unicode)
                 self.__lookup_table.append_candidate(ibus.Text(candidate))
 
+    #For external debugging ONLY
     def testUpdate(self):
         self.__update()
 
