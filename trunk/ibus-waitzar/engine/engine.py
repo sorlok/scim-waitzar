@@ -133,7 +133,7 @@ class Engine(ibus.EngineBase):
         #
         letter = keyval - (keysyms.a - keysyms.A) if keyval in xrange(keysyms.A, keysyms.Z + 1) else keyval
         if letter in xrange(keysyms.a, keysyms.z + 1):
-            if model.typeLetter(letter):
+            if self.model.typeLetter(chr(letter)):
                 #Append this letter to our typed_string, and update all guesses
                 self.__typed_string += unichr(letter)
                 self.__invalidate()
@@ -171,8 +171,8 @@ class Engine(ibus.EngineBase):
                 self.pickGuess(number)
             elif self.isHangingPhrase():
                 #Insert that number, or its Myanmar equivalent
-                sentence.insert(keyval - keysysms._0)
-                sentence.moveCursorRight(0, True, self.model)
+                self.sentence.insert(keyval - keysysms._0)
+                self.sentence.moveCursorRight(0, True, self.model)
                 self.recalcPrefixString()
             else:
                 return False
@@ -188,7 +188,7 @@ class Engine(ibus.EngineBase):
                 self.moveRight(amount)
             elif self.isHangingPhrase():
                 #Move the sentence cursor
-                sentence.moveCursorRight(amount, self.model)
+                self.sentence.moveCursorRight(amount, self.model)
                 self.recalcPrefixString()
             else:
                 return False
@@ -290,20 +290,20 @@ class Engine(ibus.EngineBase):
 
     #Move the cursor based on the model
     def moveRight(self, amount):
-        if model.moveRight(amount):
+        if self.model.moveRight(amount):
             #TODO: amount can be something besides -1 and 1; we should allow for this.
             if amount>0:
                 self.cursor_down()
-            else if amount <0:
+            elif amount <0:
                 self.cursor_up()
         self.__invalidate()
 
     #Pick the guess with a given id, -1 for the currently-selected guess
     def pickGuess(self, id):
         #Get this guess
-        guess = model.typeSpace(id)
-        if (guess.first):
-            sentence.insert(guess.second)
+        guess = self.model.typeSpace(id)
+        if (guess[0]):
+            self.sentence.insert(guess[1])
 
         #Update the prefix string and model
         self.recalcPrefixString()
@@ -335,7 +335,7 @@ class Engine(ibus.EngineBase):
                 word = self.model.getWordKeyStrokes(atID.next())
             
                 #Append to prefix or postfix?
-                if sentence.getCursorIndex() >= put_count:
+                if self.sentence.getCursorIndex() >= put_count:
                     self.__prefix_string += word
                 else:
                     self.__postfix_string += word
