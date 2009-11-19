@@ -164,8 +164,8 @@ class Engine(ibus.EngineBase):
         # 
         # Numerals - Shortcut to that candidate word, or type the number
         #
-        elif keyval == keyval >= keysyms._1 and keyval <= keysyms._9:
-            number = keyval-keysyms._1 if keyval!=keyval <= keysyms._0 else 9
+        elif keyval == keyval >= keysyms._0 and keyval <= keysyms._9:
+            number = keyval-keysyms._1 if keyval > keysyms._0 else 9
             if self.isGuessingWord():
                 #Shortcut to that word
                 self.pickGuess(number)
@@ -211,12 +211,12 @@ class Engine(ibus.EngineBase):
         # 
         # Period/Comma - Type the sentence, add punctuation
         #
-        elif keyval==keysyms.leftcaret or keyval==keysyms.rightcaret:
+        elif keyval==keysyms.comma or keyval==keysyms.period:
             if self.isGuessingWord():
                 return True #Consume input
             else:
                 #Insert this character and type the sentence
-                self.typeSentence(self.model.getStopCharacter(keyval==keysyms.rightcaret))
+                self.typeSentence(unichr(self.model.getStopCharacter(keyval==keysyms.period)))
                 return True
 
         # 
@@ -302,8 +302,16 @@ class Engine(ibus.EngineBase):
     def pickGuess(self, id):
         #Get this guess
         guess = self.model.typeSpace(id)
-        if (guess[0]):
-            self.sentence.insert(guess[1])
+        if not guess[0]:
+            return
+
+        #Add it to our sentence
+        self.sentence.insert(guess[1])
+
+        #TEMP
+        #append_log('guessing: ' + str(id)) 
+        #append_log('res: ' + str(guess[0])) 
+        #append_log('res: ' + str(guess[1])) 
 
         #Update the prefix string and model
         self.recalcPrefixString()
@@ -401,17 +409,19 @@ class Engine(ibus.EngineBase):
             #Cache lengths
             preedit_len = len(self.__preedit_string)
             aux_len = len(self.__aux_string)
+            prefix_len = len(self.__prefix_string)
+            guess_len = len(self.__guess_string)
 
             #Get an attribute list
             attrs = ibus.AttrList()
             if self.__preedit_string:
                 #Put the entire string in red; underline only the current "guessed" part
                 attrs.append(ibus.AttributeForeground(0xff0000, 0, preedit_len))
-                attrs.append(ibus.AttributeUnderline(pango.UNDERLINE_SINGLE, len(self.__prefix_string), len(self.__guess_string)))
+                attrs.append(ibus.AttributeUnderline(pango.UNDERLINE_SINGLE, prefix_len, prefix_len + guess_len))
 
             #Now update all strings
             self.update_auxiliary_text(ibus.Text(self.__aux_string, attrs), aux_len > 0)
-            self.update_preedit_text(ibus.Text(self.__preedit_string, attrs), len(self.__prefix_string), preedit_len > 0)
+            self.update_preedit_text(ibus.Text(self.__preedit_string, attrs), prefix_len, preedit_len > 0)
 
             #Update our lookup table, too
             self.__lookup_table.set_cursor_pos(self.model.getCurrSelectedID())
