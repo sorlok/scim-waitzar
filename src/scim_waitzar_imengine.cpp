@@ -421,7 +421,7 @@ bool WaitZarInstance::process_key_event (const KeyEvent& key)
 	    return true;
 	}
     } else if (key.code==SCIM_KEY_Up || key.code==SCIM_KEY_Down) {
-	int amt = key.code==SCIM_KEY_Right ? 1 : -1;
+	int amt = key.code==SCIM_KEY_Down ? 1 : -1;
 	if (isGuessingWord()) {
 	    //Page Up/Down
 	    if (key.code==SCIM_KEY_Up && lookup.number_of_candidates()>0) {
