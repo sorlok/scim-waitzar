@@ -412,7 +412,7 @@ class Engine(ibus.EngineBase):
             prefix_len = len(self.__prefix_string)
             guess_len = len(self.__guess_string)
 
-            #Get an attribute list
+            #Get an attribute list for the preedit string
             attrs = ibus.AttrList()
             if self.__preedit_string:
                 #Put the entire string in red; underline only the current "guessed" part
@@ -420,8 +420,14 @@ class Engine(ibus.EngineBase):
                 attrs.append(ibus.AttributeUnderline(pango.UNDERLINE_SINGLE, prefix_len, prefix_len + guess_len))
 
             #Now update all strings
-            self.update_auxiliary_text(ibus.Text(self.__aux_string, attrs), aux_len > 0)
             self.update_preedit_text(ibus.Text(self.__preedit_string, attrs), prefix_len, preedit_len > 0)
+
+            #Additional attributes
+            attrs = ibus.AttrList()
+            attrs.append(ibus.AttributeForeground(0x000000, 0, aux_len))
+            attrs.append(ibus.AttributeUnderline(pango.UNDERLINE_SINGLE, 0, 0))
+            self.update_auxiliary_text(ibus.Text(self.__aux_string, attrs), aux_len > 0)
+            
 
             #Update our lookup table, too
             self.__lookup_table.set_cursor_pos(self.model.getCurrSelectedID())
