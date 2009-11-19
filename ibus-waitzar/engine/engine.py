@@ -405,23 +405,23 @@ class Engine(ibus.EngineBase):
             #Get an attribute list
             attrs = ibus.AttrList()
             if self.__preedit_string:
+                #Put the entire string in red; underline only the current "guessed" part
                 attrs.append(ibus.AttributeForeground(0xff0000, 0, preedit_len))
+                attrs.append(ibus.AttributeUnderline(pango.UNDERLINE_SINGLE, len(self.__prefix_string), len(self.__guess_string)))
 
             #Now update all strings
             self.update_auxiliary_text(ibus.Text(self.__aux_string, attrs), aux_len > 0)
-            attrs.append(ibus.AttributeUnderline(pango.UNDERLINE_SINGLE, 0, preedit_len))
-            self.update_preedit_text(ibus.Text(self.__preedit_string, attrs), preedit_len, preedit_len > 0)
-            self.__update_lookup_table()
+            self.update_preedit_text(ibus.Text(self.__preedit_string, attrs), len(self.__prefix_string), preedit_len > 0)
+
+            #Update our lookup table, too
+            self.__lookup_table.set_cursor_pos(self.model.getCurrSelectedID())
+            self.update_lookup_table(self.__lookup_table, aux_len>0)
 
             #Done - now in a valid state
             self.__is_invalidate = False
         except:
            append_error()
            return False
-
-    def __update_lookup_table(self):
-        visible = self.__lookup_table.get_number_of_candidates() > 0
-        self.update_lookup_table(self.__lookup_table, visible)
 
 
     def focus_in(self):
@@ -436,7 +436,7 @@ class Engine(ibus.EngineBase):
     def updateAuxString(self):
         #Update our auxiliary string
         parenStr = self.model.getParenString()
-        if parenStr :
+        if parenStr:
             parenStr = '('+parenStr+')'
         self.__aux_string = self.__typed_string + parenStr
 
